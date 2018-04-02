@@ -7,12 +7,6 @@ import SignUp from '../../src/containers/login/SignUp';
 const AppNavigation = StackNavigator({
     LoginScreen: { screen: Login },
     SignUpScreen:{ screen: SignUp },
-  },{
-    navigationOptions :{
-      headerStyle:{
-        marginTop : 20
-      }
-    }
-  });
+  },);
 
   export default AppNavigation;
