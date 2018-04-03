@@ -6,7 +6,7 @@
  */
 
 import React, { Component  } from 'react';
-import { View, Image } from 'react-native';
+import { View, Image, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import {
   Container,
   Content,
@@ -18,6 +18,7 @@ import {
   Text,
   Toast
 } from 'native-base';
+import Assets from "../../assets/index";
 export default class Login extends Component {
 
   constructor(props) {
@@ -31,11 +32,14 @@ export default class Login extends Component {
   render() {
     const { navigate } = this.props.navigation;
     return (
+      <TouchableWithoutFeedback onPress={() => {
+        Keyboard.dismiss();
+      }} >
       <Container style = {{backgroundColor:'white'}}>
         <View  style = {{ marginTop: 30, flexDirection : 'row',justifyContent:'center'}}>
         <Image
           style={{width: 150, height: 150}}
-          source={require('../../assets/ipl_icon.png')}
+          source={Assets.iPLLogo}
         />
         </View>
         <View style = {{margin : 30}}>
@@ -54,39 +58,43 @@ export default class Login extends Component {
             </Item>
           </Form>
         </View>
-        <View style= {{flexDirection : 'row', alignItems: 'center'}}>
-          <Button style= {{justifyContent:'center'}} onPress={() => navigate('SignUpScreen')} >
-            <Text> Sign Up  </Text>
-          </Button>
-          <Button style= {{justifyContent:'center'}} onPress={() => this._loginButtonPress()}>
+        <View style= {{flexDirection : 'row', alignItems: 'center',  marginStart: 'auto', marginEnd: 'auto'}}>
+          <Button style= {{justifyContent:'center', marginEnd: 35}} onPress={() => this._loginButtonPress()}>
             <Text> Sign In </Text>
+          </Button>
+          <Button style= {{justifyContent:'center', marginStart: 35}} onPress={() => navigate('SignUpScreen')} >
+            <Text> Sign Up  </Text>
           </Button>
         </View>
       </Container>
+      </TouchableWithoutFeedback>
     );
   }
 
   _loginButtonPress = () => {
-    var isValidate = true
-    var errormsg = ""
-    if (this.state.email.length == 0) {
-      isValidate = false
-      errormsg = "Please enter email";
-    }
-    if (this.state.password.length == 0) {
-      isValidate = false
-      errormsg = "Please enter password";
-    }
-    if (this.state.password.length >= 8) {
-      isValidate = false
-      errormsg = "Password atleast 8 character login";
-    }
+    const { navigate } = this.props.navigation;
 
-    Toast.show({
-      text: errormsg,
-      position: 'top',
-      buttonText: 'Okay'
-    })
+    navigate('CreateGroupScreen')
+    // var isValidate = true
+    // var errormsg = ""
+    // if (this.state.email.length == 0) {
+    //   isValidate = false
+    //   errormsg = "Please enter email";
+    // }
+    // if (this.state.password.length == 0) {
+    //   isValidate = false
+    //   errormsg = "Please enter password";
+    // }
+    // if (this.state.password.length >= 8) {
+    //   isValidate = false
+    //   errormsg = "Password atleast 8 character login";
+    // }
+
+    // Toast.show({
+    //   text: errormsg,
+    //   position: 'top',
+    //   buttonText: 'Okay'
+    // })
   }
 }
 
