@@ -8,15 +8,13 @@
 import React, { Component  } from 'react';
 import { View, Image, TouchableWithoutFeedback, Keyboard, TextInput, FlatList, TouchableOpacity } from 'react-native';
 import {
-  Text,
+  Text, Row,
 } from 'native-base';
-import Assets from "../../assets/index";
-import GridView from "react-native-super-grid";
 
-export default class GroupList extends Component {
+export default class PointTable extends Component {
 
     state = {
-        itemDataSource: ['pranav']
+        itemDataSource: [{member_name:'Pranav Manikpure',total_point:'50'}, {member_name:'Sumit Chavan',total_point:'30'}, {member_name:'Atul Bhangire',total_point:'40'}]
     };
     render() {
         return (
@@ -25,9 +23,15 @@ export default class GroupList extends Component {
             }} >
                 <View style={{ flex: 1, backgroundColor: 'white' }}>
                     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-                        <Text style={{ fontWeight: 'bold', fontSize: 18 }}>Group List</Text>
+                        <Text style={{ fontWeight: 'bold', fontSize: 25 , marginTop: 10 }}>Point Table</Text>
+                        <Text style={{ fontWeight: 'bold', fontSize: 20, marginTop: 10 }}>Flat 28</Text>
                     </View>
-                    {this._renderFlatList()}
+                    <View style={{flexDirection: 'row', borderWidth: 1 }}>
+                          <Text style={{ marginStart:10,  fontSize: 18, width: 200 }}> Member Name </Text>
+                          <Text style={{  marginStart:10, fontSize: 18 }}> Points</Text>
+                        </View>
+
+                {this._renderFlatList()}
                 </View>
             </TouchableWithoutFeedback>
         );
@@ -40,14 +44,10 @@ export default class GroupList extends Component {
                 <FlatList
                     data={this.state.itemDataSource}
                     renderItem={item => (
-                        <TouchableOpacity onPress={() => {
-                            navigate('PointTableScreen')
-                        }}>
-                        <View style={{ margin: 5, alignItems: 'center', justifyContent: 'center', borderWidth: 1, borderRadius: 10 }}>
-                            <Text> Group Name:  Flat 28  </Text>
-                            />
+                        <View style={{flexDirection: 'row' }}>
+                          <Text style={{ margin:10,   fontSize: 18, width: 200 }}>{item.item.member_name} </Text>
+                          <Text style={{  margin:10, fontSize: 18 }}> {item.item.total_point}</Text>
                         </View>
-                        </TouchableOpacity>
                     )}
                 />
             </View>

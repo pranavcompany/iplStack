@@ -32,7 +32,7 @@ export default class CreateGroup extends Component {
                 Keyboard.dismiss();
             }} >
             <View style={ {flex:1, backgroundColor: 'white'}}>
-                <View style={{flex:1, marginTop: 30, alignItems:'center',justifyContent: 'center' }}>
+                <View style={{flex:1, marginTop: 30, alignItems:'center',justifyContent: 'center', borderBottomWidth: 2 }}>
                     <Text style={{ fontWeight: 'bold', fontSize: 18 }}>Create Group</Text>
                     <View style ={ {flexDirection: 'row', marginTop: 20}}> 
                     <Text style={{ fontWeight: 'bold', fontSize: 18 }}>Create Name</Text>
@@ -71,7 +71,7 @@ export default class CreateGroup extends Component {
 
     _renderFlatList() {
         return (
-          <View style= {{flex:6}}>
+          <View style= {{flex:6, marginTop: 10}}>
             <FlatList
               data={this.state.itemDataSource}
                 renderItem={item => (<View style={{margin: 5, alignItems:'center',
