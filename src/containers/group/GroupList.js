@@ -21,7 +21,7 @@ export default class GroupList extends Component {
     render() {
         return (
             <TouchableWithoutFeedback onPress={() => {
-                Keyboard.dismiss();
+                Keyboard.dismiss()
             }} >
                 <View style={{ flex: 1, backgroundColor: 'white' }}>
                     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
