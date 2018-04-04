@@ -51,8 +51,10 @@ class MatchBid extends Component{
                                 source={require('../../assets/CSK.png')} />
                         </TouchableOpacity>
                     </View>
-                    <View style={[styles.rowView, { justifyContent: 'space-evenly', borderBottom:'#ffffff' }]}>
-                        <Text style = {{fontSize: 18 , color:'#ECF0F1'}}>Quote</Text>
+                    <View style={[styles.rowView,
+                         { justifyContent: 'space-evenly', borderBottom:'#ffffff' }]}>
+                        <Text 
+                        style = {{fontSize: 18 , color:'#ECF0F1'}}>Quote</Text>
                         <TextInput
                             style={styles.inputText}
                             keyboardType={'numeric'}
@@ -62,8 +64,10 @@ class MatchBid extends Component{
                             value={this.state.text}
                         />
                         <TouchableOpacity style={{ marginStart: 30, backgroundColor: '#E7E7E7', borderWidth: 1, borderRadius:10}}>
-                            <Text style={{color: 'black', fontWeight: 'bold', fontSize: 18, padding: 10 }}> let's Quote </Text>
-                            />
+                            <Text
+                             style={{color: 'black', fontWeight: 'bold', fontSize: 18, padding: 10 }}>
+                              let's Quote </Text>
+                            
                         </TouchableOpacity>
                     </View>
                     </ImageBackground>
@@ -107,7 +111,7 @@ class MatchBid extends Component{
                         />
                         <TouchableOpacity style={{ marginStart: 30, backgroundColor: '#E7E7E7', borderWidth: 1, borderRadius:10}}>
                             <Text style={{color: 'black', fontWeight: 'bold', fontSize: 18, padding: 10 }}> let's Quote </Text>
-                            />
+                            
                         </TouchableOpacity>
                     </View>
                     </ImageBackground>

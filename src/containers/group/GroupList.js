@@ -23,7 +23,7 @@ export default class GroupList extends Component {
             <TouchableWithoutFeedback onPress={() => {
                 Keyboard.dismiss()
             }} >
-                <View style={{ flex: 1, backgroundColor: 'white', }}>
+                <View style={{ flex: 1, backgroundColor: 'white' }}>
                 <GenericHeader
                     isShow={true}
                     navigation={this.props.navigation}
@@ -45,9 +45,13 @@ export default class GroupList extends Component {
                         <TouchableOpacity onPress={() => {
                             navigate('DashboardScreen')
                         }}>
-                        <View style={{ margin: 5, backgroundColor: '#7F86B1', alignItems: 'center', justifyContent: 'center', borderWidth: 1, borderRadius: 10 , marginTop: 20}}>
-                            <Text style={{color: 'white', fontWeight: 'bold', fontSize: 18, padding: 10}}> Group Name:  Flat 28  </Text>
-                            />
+                        <View style={{ 
+                            margin: 5, backgroundColor: '#7F86B1',
+                             alignItems: 'center', justifyContent: 'center', 
+                             borderWidth: 1, borderRadius: 10 , marginTop: 20}}>
+                            <Text 
+                            style={{color: 'white', fontWeight: 'bold', 
+                            fontSize: 18, padding: 10}}> Group Name:  Flat 28  </Text>
                         </View>
                         </TouchableOpacity>
                     )}

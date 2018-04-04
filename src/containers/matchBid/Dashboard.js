@@ -1,21 +1,20 @@
 import React, { Component } from "react";
 import { View, Image } from "react-native";
-import { Tab, Tabs, TabHeading, Icon } from "native-base";
+import { Tab, Tabs, TabHeading } from "native-base";
 import Schedule from "./Schedule";
 import GenericHeader from '../../universal/components/GenericHeader';
 import MatchBid from './MatchBid'
 import PointTable from './PointTable'
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 class Dashboard extends Component {
   header({ iconName }) {
     return (
-      <TabHeading style={{backgroundColor: '#7F86B1' }}>
-        <Icon
-          name={iconName}
-          type={"MaterialCommunityIcons"}
-          style={{ color: "#2A367D" }}
-          size={50}
-        />
+      <TabHeading 
+      activeTabStyle= {{backgroundColor:'black'}}
+      style={{backgroundColor: '#11BCCA' }}>
+        <Icon 
+       name= {iconName} size={30} color="#4F8EF7" />
       </TabHeading>
     );
   }
@@ -40,9 +39,9 @@ class Dashboard extends Component {
             backgroundColor: "#2A367D"
           }}
         >
-          {this.tabView("format-list-bulleted", MatchBid)}
-          {this.tabView("bell-ring", PointTable)}
-          {this.tabView("pill", Schedule)}
+          {this.tabView("calendar-check", MatchBid)}
+          {this.tabView("sort-numeric-up", PointTable)}
+          {this.tabView("calendar-alt", Schedule)}
         </Tabs>
         </View>
     );

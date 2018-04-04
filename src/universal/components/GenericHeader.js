@@ -20,8 +20,8 @@ export default class GenericHeader extends Component {
                 <Icon
                     onPress={() => this.props.isShow ? navigate('Dashboard') : goBack()}
                     name='arrow-back'
-                    style={{ color: 'white', marginLeft: 10, width: 30 }}
-                    fontSize={50}
+                    style={{ color: 'white', }}
+                    fontSize={40}
                 />
             </Left>
         )
