@@ -38,7 +38,7 @@ export default class Login extends Component {
       <Container style = {{backgroundColor:'white'}}>
         <View  style = {{ marginTop: 30, flexDirection : 'row',justifyContent:'center'}}>
         <Image
-          style={{width: 150, height: 150}}
+          style={{width: 200, height: 200, resizeMode:'contain'}}
           source={Assets.iPLLogo}
         />
         </View>
@@ -59,10 +59,10 @@ export default class Login extends Component {
           </Form>
         </View>
         <View style= {{flexDirection : 'row', alignItems: 'center',  marginStart: 'auto', marginEnd: 'auto'}}>
-          <Button style= {{justifyContent:'center', marginEnd: 35}} onPress={() => this._loginButtonPress()}>
+          <Button style= {{justifyContent:'center', marginEnd: 35, backgroundColor: '#2A367D'}} onPress={() => this._loginButtonPress()}>
             <Text> Sign In </Text>
           </Button>
-          <Button style= {{justifyContent:'center', marginStart: 35}} onPress={() => navigate('SignUpScreen')} >
+          <Button style= {{justifyContent:'center', marginStart: 35,backgroundColor: '#2A367D'}} onPress={() => navigate('SignUpScreen')} >
             <Text> Sign Up  </Text>
           </Button>
         </View>
@@ -74,7 +74,7 @@ export default class Login extends Component {
   _loginButtonPress = () => {
     const { navigate } = this.props.navigation;
 
-    navigate('CreateGroupScreen')
+    navigate('GroupListScreen')
     // var isValidate = true
     // var errormsg = ""
     // if (this.state.email.length == 0) {

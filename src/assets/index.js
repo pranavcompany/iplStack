@@ -1,4 +1,4 @@
 const Assets = {
-    iPLLogo : require('./ipl_icon.png')
+    iPLLogo : require('./ipl.jpg')
 }
 export default Assets

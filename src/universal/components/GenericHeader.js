@@ -5,7 +5,7 @@ import {TouchableOpacity } from 'react-native'
 export default class GenericHeader extends Component {
     render() {
         return (
-            <Header style={{ backgroundColor: "white" }} >
+            <Header style={{ backgroundColor: '#2A367D' }} >
                 {this._renderHeaderLeftButton()}
                 {this._renderHeaderTitle()}
                 {this._renderHeaderRightButton()}
@@ -20,7 +20,7 @@ export default class GenericHeader extends Component {
                 <Icon
                     onPress={() => this.props.isShow ? navigate('Dashboard') : goBack()}
                     name='arrow-back'
-                    style={{ color: 'black', marginLeft: 10, width: 30 }}
+                    style={{ color: 'white', marginLeft: 10, width: 30 }}
                     fontSize={50}
                 />
             </Left>
@@ -30,7 +30,7 @@ export default class GenericHeader extends Component {
         return (
             <Body>
                 <Title
-                    style={{ color: 'black', width: 200 }}>{this.props.headerTitle}</Title>
+                    style={{ fontWeight: 'bold', fontSize: 20,  color: 'white', width: 200 }}>{this.props.headerTitle}</Title>
             </Body>
         )
     }
@@ -44,7 +44,7 @@ export default class GenericHeader extends Component {
                         <TouchableOpacity onPress={() => push(navigateTo)} >
                             <Icon
                                 name='add'
-                                style={{ color: 'red', marginRight: 10 }}
+                                style={{ color: 'white', marginRight: 10 }}
                                 fontSize={50}
                             />
                         </TouchableOpacity> : null

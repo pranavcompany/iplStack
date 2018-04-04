@@ -12,7 +12,7 @@ import {
 } from 'native-base';
 import Assets from "../../assets/index";
 import GridView from "react-native-super-grid";
-
+import GenericHeader from '../../universal/components/GenericHeader'
 export default class GroupList extends Component {
 
     state = {
@@ -23,10 +23,12 @@ export default class GroupList extends Component {
             <TouchableWithoutFeedback onPress={() => {
                 Keyboard.dismiss()
             }} >
-                <View style={{ flex: 1, backgroundColor: 'white' }}>
-                    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-                        <Text style={{ fontWeight: 'bold', fontSize: 18 }}>Group List</Text>
-                    </View>
+                <View style={{ flex: 1, backgroundColor: 'white', }}>
+                <GenericHeader
+                    isShow={true}
+                    navigation={this.props.navigation}
+                    navigateTo = 'CreateGroupScreen'
+                    headerTitle={"Group List"} />
                     {this._renderFlatList()}
                 </View>
             </TouchableWithoutFeedback>
@@ -41,9 +43,9 @@ export default class GroupList extends Component {
                     data={this.state.itemDataSource}
                     renderItem={item => (
                         <TouchableOpacity onPress={() => {
-                            navigate('PointTableScreen')
+                            navigate('DashboardScreen')
                         }}>
-                        <View style={{ margin: 5, alignItems: 'center', justifyContent: 'center', borderWidth: 1, borderRadius: 10 }}>
+                        <View style={{ margin: 5, alignItems: 'center', justifyContent: 'center', borderWidth: 1, borderRadius: 10 , marginTop: 20}}>
                             <Text> Group Name:  Flat 28  </Text>
                             />
                         </View>

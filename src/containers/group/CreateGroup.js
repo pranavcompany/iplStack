@@ -19,6 +19,7 @@ import {
 } from 'native-base';
 import Assets from "../../assets/index";
 import GridView from "react-native-super-grid";
+import GenericHeader from '../../universal/components/GenericHeader'
 
 export default class CreateGroup extends Component {
 
@@ -32,8 +33,10 @@ export default class CreateGroup extends Component {
                 Keyboard.dismiss();
             }} >
             <View style={ {flex:1, backgroundColor: 'white'}}>
+            <GenericHeader
+            navigation={this.props.navigation}
+            headerTitle={"Create Group"} />
                 <View style={{flex:1, marginTop: 30, alignItems:'center',justifyContent: 'center', borderBottomWidth: 2 }}>
-                    <Text style={{ fontWeight: 'bold', fontSize: 18 }}>Create Group</Text>
                     <View style ={ {flexDirection: 'row', marginTop: 20}}> 
                     <Text style={{ fontWeight: 'bold', fontSize: 18 }}>Create Name</Text>
                     <TextInput

@@ -7,14 +7,16 @@ import CreateGroup from '../../src/containers/group/CreateGroup';
 import GroupList from '../../src/containers/group/GroupList'; 
 import PointTable from '../containers/pointDetails/PointTable'
 import MatchBid from '../containers/matchBid/MatchBid'
+import Dashboard from '../containers/matchBid/Dashboard'
 
 const AppNavigation = StackNavigator({
-  MatchBid: { screen: MatchBid },
   LoginScreen: { screen: Login },
   SignUpScreen: { screen: SignUp },
   CreateGroupScreen: { screen: CreateGroup },
   GroupListScreen: {screen: GroupList},
-  PointTableScreen: {screen: PointTable}
+  PointTableScreen: {screen: PointTable},
+  MatchBidScreen: { screen: MatchBid },
+  DashboardScreen:{screen: Dashboard}
 }, {
     // see next line
     mode: "none",
