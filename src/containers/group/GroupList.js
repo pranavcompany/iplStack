@@ -45,8 +45,8 @@ export default class GroupList extends Component {
                         <TouchableOpacity onPress={() => {
                             navigate('DashboardScreen')
                         }}>
-                        <View style={{ margin: 5, alignItems: 'center', justifyContent: 'center', borderWidth: 1, borderRadius: 10 , marginTop: 20}}>
-                            <Text> Group Name:  Flat 28  </Text>
+                        <View style={{ margin: 5, backgroundColor: '#7F86B1', alignItems: 'center', justifyContent: 'center', borderWidth: 1, borderRadius: 10 , marginTop: 20}}>
+                            <Text style={{color: 'white', fontWeight: 'bold', fontSize: 18, padding: 10}}> Group Name:  Flat 28  </Text>
                             />
                         </View>
                         </TouchableOpacity>

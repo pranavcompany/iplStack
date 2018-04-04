@@ -25,7 +25,7 @@ class MatchBid extends Component{
                         style={styles.textView}>Today's Matches</Text>
                         <ImageBackground 
                         source={require("../../assets/iplCard.jpg")}
-                        style = {{ backgroundColor:'#fff',shadowOpacity:.5,
+                        style = {{ backgroundColor:'#ffffff',shadowOpacity:.5,
                                     shadowRadius:10,margin:10, padding: 5}}>
                     <View
                         style={styles.rowView}>
@@ -37,7 +37,7 @@ class MatchBid extends Component{
                             })}>
                             <Image
                                 style={styles.iconView}
-                                source={require('../../assets/ipl_dd.png')} />
+                                source={require('../../assets/MI.png')} />
                         </TouchableOpacity>
                         <H2>Vs</H2>
                         <TouchableOpacity
@@ -48,12 +48,11 @@ class MatchBid extends Component{
                             })}>
                             <Image
                                 style={styles.iconView}
-                                source={require('../../assets/ipl_dd.png')} />
+                                source={require('../../assets/CSK.png')} />
                         </TouchableOpacity>
                     </View>
-                    <View
-                        style={[styles.rowView, { justifyContent: 'center', borderBottom:'#fff' }]}>
-                        <Text style = {{fontSize: 18 , color:'#ECF0F1'}}>Points</Text>
+                    <View style={[styles.rowView, { justifyContent: 'space-evenly', borderBottom:'#ffffff' }]}>
+                        <Text style = {{fontSize: 18 , color:'#ECF0F1'}}>Quote</Text>
                         <TextInput
                             style={styles.inputText}
                             keyboardType={'numeric'}
@@ -62,6 +61,54 @@ class MatchBid extends Component{
                             onChangeText={(text) => this.setState({ text })}
                             value={this.state.text}
                         />
+                        <TouchableOpacity style={{ marginStart: 30, backgroundColor: '#E7E7E7', borderWidth: 1, borderRadius:10}}>
+                            <Text style={{color: 'black', fontWeight: 'bold', fontSize: 18, padding: 10 }}> let's Quote </Text>
+                            />
+                        </TouchableOpacity>
+                    </View>
+                    </ImageBackground>
+                    <ImageBackground 
+                        source={require("../../assets/iplCard.jpg")}
+                        style = {{ backgroundColor:'#ffffff',shadowOpacity:.5,
+                                    shadowRadius:10,margin:10, padding: 5}}>
+                    <View
+                        style={styles.rowView}>
+                        <TouchableOpacity
+                            style={[styles.touchable, { borderColor: this.state.firstSelect }]}
+                            onPress={() => this.setState({
+                                firstSelect: '#ECF0F1',
+                                secondSelect: 'transparent'
+                            })}>
+                            <Image
+                                style={styles.iconView}
+                                source={require('../../assets/MI.png')} />
+                        </TouchableOpacity>
+                        <H2>Vs</H2>
+                        <TouchableOpacity
+                            style={[styles.touchable, { borderColor: this.state.secondSelect }]}
+                            onPress={() => this.setState({
+                                secondSelect: '#ECF0F1',
+                                firstSelect: 'transparent'
+                            })}>
+                            <Image
+                                style={styles.iconView}
+                                source={require('../../assets/CSK.png')} />
+                        </TouchableOpacity>
+                    </View>
+                    <View style={[styles.rowView, { justifyContent: 'space-evenly', borderBottom:'#ffffff' }]}>
+                        <Text style = {{fontSize: 18 , color:'#ECF0F1'}}>Quote</Text>
+                        <TextInput
+                            style={styles.inputText}
+                            keyboardType={'numeric'}
+                            maxLength= {4}
+                            underlineColorAndroid={'transparent'}
+                            onChangeText={(text) => this.setState({ text })}
+                            value={this.state.text}
+                        />
+                        <TouchableOpacity style={{ marginStart: 30, backgroundColor: '#E7E7E7', borderWidth: 1, borderRadius:10}}>
+                            <Text style={{color: 'black', fontWeight: 'bold', fontSize: 18, padding: 10 }}> let's Quote </Text>
+                            />
+                        </TouchableOpacity>
                     </View>
                     </ImageBackground>
                 </View>
@@ -76,7 +123,7 @@ const styles = {
          width: 80, 
          fontSize: 20 , 
          paddingLeft:10, 
-         borderBottomWidth:1,
+         borderWidth:1,
          borderColor: '#ECF0F1',
          color:'#ECF0F1'
         },

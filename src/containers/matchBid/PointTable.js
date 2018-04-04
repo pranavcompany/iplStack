@@ -24,10 +24,12 @@ export default class PointTable extends Component {
                     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
                         <Text style={{ fontWeight: 'bold', fontSize: 20 }}>Flat 28</Text>
                     </View>
-                    <View style={{flexDirection: 'row'}}>
-                          <Text style={{ marginStart:10,  fontWeight: 'bold', fontSize: 18, width: 200 }}> Member Name </Text>
-                          <Text style={{  marginStart:10,  fontWeight: 'bold', fontSize: 18 }}> Points</Text>
+                    <View style={{flexDirection: 'row', borderTopWidth:1, borderBottomWidth:1}}>
+                        <View style={{ borderRightWidth: 1}}>
+                            <Text style={{ margin:10, fontWeight: 'bold', fontSize: 18, width: 175 }}> Member Name </Text>
                         </View>
+                        <Text style={{  margin:10,  fontWeight: 'bold', fontSize: 18 }}> Points</Text>
+                    </View>
                 {this._renderFlatList()}
                 </View>
             </TouchableWithoutFeedback>
@@ -40,9 +42,13 @@ export default class PointTable extends Component {
                 <FlatList
                     data={this.state.itemDataSource}
                     renderItem={item => (
-                        <View style={{flexDirection: 'row' }}>
-                          <Text style={{ margin:10,   fontSize: 16, width: 200 }}>{item.item.member_name} </Text>
+                        <View style={{flexDirection: 'row',  borderBottomWidth:1}}>
+                         <View style={{ borderRightWidth: 1}}>
+                          <Text style={{ margin:10,  fontSize: 16, width: 175 }}>{item.item.member_name} </Text>
+                          </View>
+                          <View>
                           <Text style={{  margin:10, fontSize: 16 }}> {item.item.total_point}</Text>
+                          </View>
                         </View>
                     )}
                 />

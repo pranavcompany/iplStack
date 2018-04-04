@@ -32,95 +32,52 @@ export default class CreateGroup extends Component {
             <TouchableWithoutFeedback onPress={() => {
                 Keyboard.dismiss();
             }} >
-            <View style={ {flex:1, backgroundColor: 'white'}}>
+            <View style={ {backgroundColor: 'white' }}>
             <GenericHeader
             navigation={this.props.navigation}
             headerTitle={"Create Group"} />
-                <View style={{flex:1, marginTop: 30, alignItems:'center',justifyContent: 'center', borderBottomWidth: 2 }}>
-                    <View style ={ {flexDirection: 'row', marginTop: 20}}> 
-                    <Text style={{ fontWeight: 'bold', fontSize: 18 }}>Create Name</Text>
+                <View style={{marginTop: 10, alignItems:'center',justifyContent: 'center', borderBottomWidth: 1}}>
+                    <View style ={ {flexDirection: 'row', marginTop: 10}}> 
+                    <View style = {{width: "50%"}}>
+                    <Text style={{ marginStart: 10, fontWeight: 'bold', fontSize: 18 }}>Group Name</Text>
+                    </View>
+                    <View style = {{width: "50%"}}>
                     <TextInput
                     placeholder={"Enter Group Name"}
                     underlineColorAndroid="transparent"
                     onChangeText={text => this.setState({ GroupName: text })}
-                    style={{ fontSize: 15, paddingStart: 10, width: "50%"}}
+                    style={{ fontSize: 15, paddingStart: 10, borderBottomWidth: 1, marginEnd:10}}
                     />
                     </View>
-                    <View style ={ {flexDirection: 'row'}}> 
-                    <Text style={{ fontWeight: 'bold', fontSize: 18 }}>Member Count</Text>
+                    </View>
+                    <View style ={ {flexDirection: 'row', marginTop:10}}> 
+                    <View style = {{width: "50%"}}>
+                    <Text style={{ marginStart: 10, fontWeight: 'bold', fontSize: 18 }}>Member Count</Text>
+                    </View>
+                    <View style = {{width: "50%"}}>
                     <TextInput
                     maxLength={2}
-                    placeholder={"Enter Group Member Count"}
+                    placeholder={"Enter Member Count"}
                     keyboardType={"numeric"}
                     underlineColorAndroid="transparent"
                     onChangeText={text => this.setState({ MemberCount: text })}
-                    style={{ marginBottom: 10,fontSize: 15, paddingStart: 10, width: "50%"}}
-                    />        
+                    style={{ marginBottom: 10,fontSize: 15, paddingStart: 10, borderBottomWidth: 1, marginEnd:10}}
+                    />     
+                    </View>   
                     </View>
                 </View>
-                {this._renderFlatList()}
-                    <TouchableOpacity style={{
-                        flex: .5, margin: 15, backgroundColor: '#6666ff', justifyContent: 'center',
-                        alignItems: 'center', borderRadius: 10
+                    <TouchableOpacity style={{ margin: 15, backgroundColor: '#2A367D', justifyContent: 'center',
+                        alignItems: 'center', borderRadius: 10, padding:10
                     }} onPress={() => {
-                        navigate('GroupListScreen')
+                        navigate('AddMemberScreen')
                     }}>
-                  <Text> Create  </Text>
+                  <Text style={{color: 'white', fontSize: 18}}> C R E A T E </Text>
                 </TouchableOpacity>
                 </View>
             </TouchableWithoutFeedback>
         );
     }
 
-    _renderFlatList() {
-        return (
-          <View style= {{flex:6, marginTop: 10}}>
-            <FlatList
-              data={this.state.itemDataSource}
-                renderItem={item => (<View style={{margin: 5, alignItems:'center',
-                justifyContent: 'center', borderWidth: 1, borderRadius: 10}}>
-                <TextInput
-                placeholder={"Member Name"}
-                underlineColorAndroid="transparent"
-                onChangeText={text => this.setState({ GroupName: text })}
-                style={{ marginTop: 10,fontSize: 15, paddingStart: 10, width: "90%"}}
-                />
-                <TextInput
-                placeholder={"Member email Id"}
-                keyboardType={"email-address"}
-                underlineColorAndroid="transparent"
-                onChangeText={text => this.setState({ MemberCount: text })}
-                style={{ marginTop: 10, marginBottom: 10,fontSize: 15, paddingStart: 10, width: "90%"}}
-                />        
-            </View>
-        )}
-            />
-          </View>
-        );
-      }
-
-  _loginButtonPress = () => {
-    var isValidate = true
-    var errormsg = ""
-    if (this.state.email.length == 0) {
-      isValidate = false
-      errormsg = "Please enter email";
-    }
-    if (this.state.password.length == 0) {
-      isValidate = false
-      errormsg = "Please enter password";
-    }
-    if (this.state.password.length >= 8) {
-      isValidate = false
-      errormsg = "Password atleast 8 character login";
-    }
-
-    Toast.show({
-      text: errormsg,
-      position: 'top',
-      buttonText: 'Okay'
-    })
-  }
 }
 
 const styles = {

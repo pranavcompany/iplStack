@@ -5,8 +5,7 @@ import Login from '../../src/containers/login/Login';
 import SignUp from '../../src/containers/login/SignUp'; 
 import CreateGroup from '../../src/containers/group/CreateGroup'; 
 import GroupList from '../../src/containers/group/GroupList'; 
-import PointTable from '../containers/pointDetails/PointTable'
-import MatchBid from '../containers/matchBid/MatchBid'
+import AddMember from '../../src/containers/group/AddMember'; 
 import Dashboard from '../containers/matchBid/Dashboard'
 
 const AppNavigation = StackNavigator({
@@ -14,8 +13,7 @@ const AppNavigation = StackNavigator({
   SignUpScreen: { screen: SignUp },
   CreateGroupScreen: { screen: CreateGroup },
   GroupListScreen: {screen: GroupList},
-  PointTableScreen: {screen: PointTable},
-  MatchBidScreen: { screen: MatchBid },
+  AddMemberScreen:{screen: AddMember},
   DashboardScreen:{screen: Dashboard}
 }, {
     // see next line
