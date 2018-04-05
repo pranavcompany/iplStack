@@ -125,7 +125,8 @@ if (isValidate) {
   postApiCallWithPromise(Url.userLoginUrl, body)
     .then(response => {
       this.setState({ isLoading: false })
-       navigate('GroupListScreen',{token:response.data.token})
+     
+       navigate('GroupListScreen',{token:response.data.token, userId: response.data.user_id})
     })
     .catch(function(error) {
       this.setState({ isLoading: false })

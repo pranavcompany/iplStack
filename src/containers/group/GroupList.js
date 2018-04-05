@@ -6,7 +6,7 @@
  */
 
 import React, { Component  } from 'react';
-import { View, Image, TouchableWithoutFeedback, Keyboard, TextInput, FlatList, TouchableOpacity } from 'react-native';
+import { View, Image, AsyncStorage, TouchableWithoutFeedback, Keyboard, TextInput, FlatList, TouchableOpacity } from 'react-native';
 import {
   Text,
 } from 'native-base';
@@ -21,15 +21,29 @@ import Drawer from '../../universal/components/Drawer/Drawer'
 let ViewSpinner = Spinner(View);
 
 export default class GroupList extends Component {
-
-    componentDidMount(){
-        const {params}= this.props.navigation.state
-        {this._getAllGroup(params.token)}
-    }
-
     state = {
         itemDataSource: []
     };
+
+
+    componentDidMount(){
+        const {params}= this.props.navigation.state
+
+        {this._getAllGroup(params.token)}
+        this.saveKey(params.token,params.userId)
+    }
+
+    async saveKey(token,userId ) {
+        try {
+          await AsyncStorage.setItem('token', token);
+          await AsyncStorage.setItem('userId', userId);
+        } catch (error) {
+          console.log("Error saving data" + error);
+        }
+    }
+
+
+   
     render() {
         return (
             <ViewSpinner
@@ -53,6 +67,7 @@ export default class GroupList extends Component {
     }
 
     _renderFlatList() {
+        console.log("#$#$#"+ AsyncStorage.getItem('userId'))
         const { navigate } = this.props.navigation;
         return (
             <View style={{ flex: 6 , marginTop:20}}>
@@ -65,7 +80,7 @@ export default class GroupList extends Component {
                         <View style={{ marginStart: 30, marginEnd: 30, backgroundColor: '#919cda', alignItems: 'center', justifyContent: 'center', borderWidth: 1, borderColor: "#2A367D", borderRadius: 10 , marginTop: 20, shadowOpacity:.5, shadowRadius:1}}>
                             <Text style={{color: 'white', fontWeight: 'bold', fontSize: 24, marginTop: 10}}>  {item.item.name}  </Text>
                             <Text style={{color: 'white', fontWeight: 'bold', fontSize: 14, marginBottom: 10}}>  Members:  {item.item.members.length}  </Text>
-                            />
+                            
                         </View>
                         </TouchableOpacity>
                     )}

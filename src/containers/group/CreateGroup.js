@@ -24,18 +24,8 @@ import GenericHeader from '../../universal/components/GenericHeader'
 
 export default class CreateGroup extends Component {
   state = {
-    itemDataSource: [
-      "pranav",
-      "pranav",
-      "pranav",
-      "pranav",
-      "pranav",
-      "pranav",
-      "pranav",
-      "pranav",
-      "pranav",
-      "pranav"
-    ]
+    groupName:'',
+    memberCount:0
   };
   render() {
     const { navigate } = this.props.navigation;
@@ -48,12 +38,18 @@ export default class CreateGroup extends Component {
         <Content scrollEnabled={true} style={{ marginTop: 50 }}>
           <Form style={{ margin: 5 }}>
             <Item floatingLabel>
-              <Label>Enter Group Name</Label>
-              <Input />
+              <Label>Group Name</Label>
+              <Input
+              onChangeText={(groupName) => this.setState({groupName})}
+              value={this.state.groupName}
+            />
             </Item>
             <Item floatingLabel last>
               <Label>Member Count</Label>
-              <Input />
+              <Input
+              onChangeText={(memberCount) => this.setState({memberCount})}
+              value={this.state.memberCount}
+            />
             </Item>
           </Form>
           <TouchableOpacity
@@ -66,7 +62,8 @@ export default class CreateGroup extends Component {
               padding: 10
             }}
             onPress={() => {
-              navigate("AddMemberScreen");
+              navigate("AddMemberScreen",{
+                 memberCount: this.state.memberCount,groupName: this.state.groupName });
             }}
           >
             <Text style={{ color: "white", fontSize: 18 }}> C R E A T E </Text>
