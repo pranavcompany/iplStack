@@ -13,13 +13,30 @@ import {
 import Assets from "../../assets/index";
 import GridView from "react-native-super-grid";
 import GenericHeader from '../../universal/components/GenericHeader'
+import {getApiCallWithPromise} from "../../utils/PromiseApiCall"
+import {Url} from '../../utils/constant/Url'
+import Spinner from '../../universal/components/Spinner'
+
+let ViewSpinner = Spinner(View);
+
 export default class GroupList extends Component {
 
+    componentDidMount(){
+        const {params}= this.props.navigation.state
+        {this._getAllGroup(params.token)}
+    }
+
     state = {
-        itemDataSource: ['pranav']
+        itemDataSource: []
     };
     render() {
         return (
+            <ViewSpinner
+            style={{ flex: 1,
+              backgroundColor: 'white',
+              justifyContent: 'center'}}
+            isLoading={this.state.isLoading}
+          >
             <TouchableWithoutFeedback onPress={() => {
                 Keyboard.dismiss()
             }} >
@@ -29,9 +46,10 @@ export default class GroupList extends Component {
                     navigation={this.props.navigation}
                     navigateTo = 'CreateGroupScreen'
                     headerTitle={"Group List"} />
-                    {this._renderFlatList()}
+                    {this.state.itemDataSource.length > 0 ? this._renderFlatList() : this._emptyView()}
                 </View>
             </TouchableWithoutFeedback>
+            </ViewSpinner>
         );
     }
 
@@ -45,25 +63,37 @@ export default class GroupList extends Component {
                         <TouchableOpacity onPress={() => {
                             navigate('DashboardScreen')
                         }}>
-<<<<<<< Updated upstream
-                        <View style={{ 
-                            margin: 5, backgroundColor: '#7F86B1',
-                             alignItems: 'center', justifyContent: 'center', 
-                             borderWidth: 1, borderRadius: 10 , marginTop: 20}}>
-                            <Text 
-                            style={{color: 'white', fontWeight: 'bold', 
-                            fontSize: 18, padding: 10}}> Group Name:  Flat 28  </Text>
-=======
                         <View style={{ marginStart: 30, marginEnd: 30, backgroundColor: '#919cda', alignItems: 'center', justifyContent: 'center', borderWidth: 1, borderColor: "#2A367D", borderRadius: 10 , marginTop: 20, shadowOpacity:.5, shadowRadius:1}}>
-                            <Text style={{color: 'white', fontWeight: 'bold', fontSize: 24, marginTop: 10}}>  Flat 28  </Text>
-                            <Text style={{color: 'white', fontWeight: 'bold', fontSize: 14, marginBottom: 10}}>  Members: 8 </Text>
+                            <Text style={{color: 'white', fontWeight: 'bold', fontSize: 24, marginTop: 10}}>  {item.item.name}  </Text>
+                            <Text style={{color: 'white', fontWeight: 'bold', fontSize: 14, marginBottom: 10}}>  Members:  {item.item.members.length}  </Text>
                             />
->>>>>>> Stashed changes
                         </View>
                         </TouchableOpacity>
                     )}
                 />
             </View>
         )
+    }
+    _emptyView(){
+        return(
+        <View style={{margin: 20,
+            alignItems: 'center'}}>
+        <Text>Click Add Button to add group </Text>
+      </View>
+        )
+    }
+
+    _getAllGroup(token){
+        getApiCallWithPromise(Url.userGroupsUrl, token)
+    .then(response => {
+      this.setState({ isLoading: false, 
+                    itemDataSource: response.data })
+      console.log(response.data)
+    })
+    .catch(function(error) {
+      this.setState({ isLoading: false })
+      console.log(error)
+      reject(error);
+    });
     }
 }

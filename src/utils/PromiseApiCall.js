@@ -10,7 +10,7 @@ export const getApiCallWithPromise = (url,token) => {
                  {
                     headers: {
                         "Content-Type": "application/json",
-                        Authorization: "Bearer " + token
+                        token: token
                       }
                  }
                  ).then(response => {
@@ -29,15 +29,15 @@ export const getApiCallWithPromise = (url,token) => {
                      {
                         headers: {
                             "Content-Type": "application/json",
-                            Authorization: "Bearer " + token
-                          }
+                            token:  token
+                        }
                      }
                      ).then(response => {
                              resolve(response);
                      })
                      .catch(error => {
                          reject(error);
-                     Alert.alert('Error');
+                     Alert.alert(error.response.data);
                      })          
                 })
         }

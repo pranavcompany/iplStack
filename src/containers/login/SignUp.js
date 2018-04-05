@@ -6,7 +6,7 @@
  */
 
 import React, { Component  } from 'react';
-import { View, Image, TouchableWithoutFeedback, Keyboard } from 'react-native';
+import { View, Image, TouchableWithoutFeedback, Keyboard, Alert } from 'react-native';
 import {
   Container,
   Content,
@@ -19,6 +19,14 @@ import {
   Toast
 } from 'native-base';
 import Assets from "../../assets/index";
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import {Url} from '../../utils/constant/Url'
+import validator from 'validator';
+import Spinner from '../../universal/components/Spinner'
+import {postApiCallWithPromise} from "../../utils/PromiseApiCall"
+
+let ViewSpinner = Spinner(View);
+
 export default class SignUp extends Component {
 
   constructor(props) {
@@ -28,24 +36,40 @@ export default class SignUp extends Component {
       email: '',
       phone: '',
       password: '',
-      confrimPassword: ''
+      conformPassword: '',
+      isLoading: false
     };
   }
 
   render() {
     const { navigate } = this.props.navigation;
     return (
+
+      <ViewSpinner
+      style={{ flex: 1,
+        backgroundColor: 'white',
+        justifyContent: 'center'}}
+      isLoading={this.state.isLoading}
+    >
+
+      <KeyboardAwareScrollView
+      style={{ backgroundColor: '#4c69a5' }}
+      resetScrollToCoords={{ x: 0, y: 0 }}
+      contentContainerStyle={styles.keyboardAvoidingViewStyle}
+      scrollEnabled={true}
+    >
+
       <TouchableWithoutFeedback onPress={() => {
         Keyboard.dismiss();
       }} >
       <Container style = {{backgroundColor:'white'}}>
         <View  style = {{ marginTop: 10, flexDirection : 'row',justifyContent:'center'}}>
         <Image
-          style={{width: 200, height: 200, resizeMode:'contain'}}
+          style={{width: 200, height: 120, marginTop:20, resizeMode:'contain'}}
           source={Assets.iPLLogo}
         />
         </View>
-        <View style = {{margin : 10}}>
+        <View style = {{margin : 5, padding:10}}>
           <Form>
             <Item floatingLabel >
               <Label>Name</Label>
@@ -55,13 +79,13 @@ export default class SignUp extends Component {
             </Item>
             <Item floatingLabel last>
               <Label>Email</Label>
-              <Input secureTextEntry={true}
+              <Input 
                 onChangeText={(email) => this.setState({ email })}
               />
             </Item>
             <Item floatingLabel last>
               <Label>Phone Number</Label>
-              <Input secureTextEntry={true}
+              <Input 
               keyboardType = {'number-pad'}
                 onChangeText={(phone) => this.setState({ phone })}
               />
@@ -75,12 +99,12 @@ export default class SignUp extends Component {
             <Item floatingLabel last>
               <Label>Confirm Password</Label>
               <Input secureTextEntry={true}
-                onChangeText={(confrimPassword) => this.setState({ confrimPassword })}
+                onChangeText={(conformPassword) => this.setState({ conformPassword })}
               />
             </Item>
           </Form>
         </View>
-        <View style= {{flexDirection : 'row', alignItems: 'center',  marginStart: 'auto', marginEnd: 'auto'}}>
+        <View style= {{flexDirection : 'row', alignItems: 'center',  marginStart: 'auto', marginEnd: 'auto', marginTop: 10}}>
         <Button style= {{justifyContent:'center', marginEnd: 35,  backgroundColor: '#2A367D'}} onPress={() => this._loginButtonPress()}>
             <Text> B A C K </Text>
           </Button>
@@ -90,34 +114,59 @@ export default class SignUp extends Component {
         </View>
       </Container>
       </TouchableWithoutFeedback>
+      </KeyboardAwareScrollView>
+      </ViewSpinner>
     );
   }
 
   _loginButtonPress = () => {
     const { navigate } = this.props.navigation;
-
-    navigate('LoginScreen')
-    // var isValidate = true
-    // var errormsg = ""
-    // if (this.state.email.length == 0) {
-    //   isValidate = false
-    //   errormsg = "Please enter email";
-    // }
-    // if (this.state.password.length == 0) {
-    //   isValidate = false
-    //   errormsg = "Please enter password";
-    // }
-    // if (this.state.password.length >= 8) {
-    //   isValidate = false
-    //   errormsg = "Password atleast 8 character login";
-    // }
-
-    // Toast.show({
-    //   text: errormsg,
-    //   position: 'top',
-    //   buttonText: 'Okay'
-    // })
-  }
+    var isValidate = true
+    var errorMsg = ""
+    if ( validator.isEmpty(this.state.name)) {
+      isValidate = false
+      Alert.alert("Please enter name")
+    }else if ( validator.isEmpty(this.state.email)) {
+      isValidate = false
+      Alert.alert("Please enter email")
+    }else if (validator.isEmail(this.state.email) === false) {
+      isValidate = false
+      Alert.alert("Please enter valid emailId")
+    } else if (validator.isEmpty(this.state.phone)) {
+      isValidate = false
+      Alert.alert( "Please enter phone")
+    } else if(this.state.phone.length != 10) {
+      isValidate = false
+      Alert.alert( "Please enter only 10 digit mobile number")
+     } else if (validator.isEmpty(this.state.password)) {
+      isValidate = false
+      Alert.alert( "Please enter password")
+    } else if (validator.isEmpty(this.state.conformPassword)) {
+      isValidate = false
+      Alert.alert( "Please enter conform conformPassword")
+    } else if (!validator.equals(this.state.conformPassword, this.state.password)) {
+      isValidate = false
+      Alert.alert( "Please enter conform conformPassword")
+    } 
+if (isValidate) {
+  const body = {
+    "name": this.state.name,
+    "email": this.state.email,
+    "password": this.state.password,
+    "phone":this.state.conformPassword,
+    }
+    this.setState({ isLoading: true })
+  postApiCallWithPromise(Url.userRegisterUrl, body)
+    .then(response => {
+      this.setState({ isLoading: false })
+       navigate('LoginScreen')
+    })
+    .catch(function(error) {
+      this.setState({ isLoading: false })
+      reject(error);
+    });
+}
+ }
 }
 
 const styles = {
