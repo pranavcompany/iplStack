@@ -47,6 +47,7 @@ export default class CreateGroup extends Component {
             <Item floatingLabel last>
               <Label>Member Count</Label>
               <Input
+              keyboardType={'numeric'}
               onChangeText={(memberCount) => this.setState({memberCount})}
               value={this.state.memberCount}
             />

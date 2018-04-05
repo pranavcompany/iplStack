@@ -1,5 +1,5 @@
 
-const baseURL =   'http://34.217.175.162/api/'
+const baseURL =   'http://34.208.227.151/api/'
 
 export const Url = {
     userLoginUrl: baseURL + 'login',

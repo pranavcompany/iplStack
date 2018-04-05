@@ -13,6 +13,7 @@ import {
   Form,
   Item,
   Label,
+  H2,
   Button,
   Text,
   Toast
@@ -25,9 +26,20 @@ export default class AddMember extends Component {
 
   state = { 
     itemDataSource :['pranav','pranav','pranav','pranav','pranav','pranav','pranav','pranav','pranav','pranav']
+    ,count:[]
   };
+
+  componentDidMount(){
+    const { params } = this.props.navigation.state;
+    const array = 'Abhishek'
+    for(var int = 0; int>= parseInt(params.memberCount); int++){
+        this.state.count.push(array)
+    }
+  }
+
     render() {
         const { navigate } = this.props.navigation;
+        const { params } = this.props.navigation.state;
         return (
             <TouchableWithoutFeedback onPress={() => {
                 Keyboard.dismiss();
@@ -36,9 +48,11 @@ export default class AddMember extends Component {
             <GenericHeader
             navigation={this.props.navigation}
             headerTitle={"Add Members"} />
-                {this._renderFlatList()}
+
+             <H2 style={{color: 'black', textAlign:'center', margin:5}}>{ params.groupName} </H2>
+                {this._renderFlatList(params.memberCount)}
                     <TouchableOpacity style={{
-                        flex: .5, margin: 15, backgroundColor: '#2A367D', justifyContent: 'center',
+                        flex: .1, margin: 15,backgroundColor: '#2A367D', justifyContent: 'center',
                         alignItems: 'center', borderRadius: 10
                     }} onPress={() => {
                         navigate('GroupListScreen')
@@ -50,32 +64,36 @@ export default class AddMember extends Component {
         );
     }
 
-    _renderFlatList() {
-        return (
-          <View style= {{flex:6, marginTop: 10}}>
-            <FlatList
-              data={this.state.itemDataSource}
-                renderItem={item => (<View style={{marginLeft: 20, marginRight: 20, alignItems:'center',
-                justifyContent: 'center', borderBottomWidth: 1}}>
-                <TextInput
-                placeholder={"Member Name"}
-                underlineColorAndroid="transparent"
-                onChangeText={text => this.setState({ GroupName: text })}
-                style={{ marginTop: 10,fontSize: 15, paddingStart: 10, width: "90%"}}
-                />
-                <TextInput
-                placeholder={"Member email Id"}
-                keyboardType={"email-address"}
-                underlineColorAndroid="transparent"
-                onChangeText={text => this.setState({ MemberCount: text })}
-                style={{ marginTop: 10, marginBottom: 10,fontSize: 15, paddingStart: 10, width: "90%"}}
-                />        
-            </View>
-        )}
-            />
-          </View>
-        );
-      }
+    _renderFlatList(int) {
+      // const count = []
+      // for (var i= 0; i>=int ; i++){
+      //   count.push('count')
+      // }
+      // this.setState({count : count})
+
+
+      this.state.count.map((data)=> {
+         return(
+
+   <View style={{marginLeft: 20, marginRight: 20, alignItems:'center',
+        justifyContent: 'center', borderBottomWidth: 1}}>
+        <TextInput
+        placeholder={"Member Name"}
+        underlineColorAndroid="transparent"
+        onChangeText={text => this.setState({ GroupName: text })}
+        style={{ marginTop: 10,fontSize: 15, paddingStart: 10, width: "90%"}}
+        />
+        <TextInput
+        placeholder={"Member email Id"}
+        keyboardType={"email-address"}
+        underlineColorAndroid="transparent"
+        onChangeText={text => this.setState({ MemberCount: text })}
+        style={{ marginTop: 10, marginBottom: 10,fontSize: 15, paddingStart: 10, width: "90%"}}
+        />        
+    </View>
+        )
+       })
+   }
 
   _loginButtonPress = () => {
     var isValidate = true
