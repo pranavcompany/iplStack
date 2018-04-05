@@ -21,8 +21,6 @@ class MatchBid extends Component{
         return (
             <View style={styles.parentView}>
                 <View style={styles.childView}>
-                    <Text
-                        style={styles.textView}>Today's Matches</Text>
                         <ImageBackground 
                         source={require("../../assets/iplCard.jpg")}
                         style = {{ backgroundColor:'#ffffff',shadowOpacity:.5,

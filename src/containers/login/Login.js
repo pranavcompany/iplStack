@@ -36,13 +36,13 @@ export default class Login extends Component {
         Keyboard.dismiss();
       }} >
       <Container style = {{backgroundColor:'white'}}>
-        <View  style = {{ marginTop: 30, flexDirection : 'row',justifyContent:'center'}}>
+        <View  style = {{ marginTop: 80, flexDirection : 'row',justifyContent:'center'}}>
         <Image
           style={{width: 200, height: 200, resizeMode:'contain'}}
           source={Assets.iPLLogo}
         />
         </View>
-        <View style = {{margin : 30}}>
+        <View style = {{margin : 10}}>
           <Form>
             <Item floatingLabel >
               <Label>Username</Label>
@@ -52,13 +52,14 @@ export default class Login extends Component {
             </Item>
             <Item floatingLabel last>
               <Label>Password</Label>
-              <Input secureTextEntry={true}
-                onChangeText={(password) => this.setState({ password })}
+              <Input 
+              secureTextEntry={true}
+               onChangeText={(password) => this.setState({ password })}
               />
             </Item>
           </Form>
         </View>
-        <View style= {{flexDirection : 'row', alignItems: 'center',  marginStart: 'auto', marginEnd: 'auto'}}>
+        <View style= {{marginTp:10,flexDirection : 'row', alignItems: 'center',  marginStart: 'auto', marginEnd: 'auto'}}>
           <Button style= {{justifyContent:'center', marginEnd: 35, backgroundColor: '#2A367D'}} onPress={() => this._loginButtonPress()}>
             <Text> Sign In </Text>
           </Button>

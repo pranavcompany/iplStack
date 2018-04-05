@@ -38,13 +38,14 @@ export default class GroupList extends Component {
     _renderFlatList() {
         const { navigate } = this.props.navigation;
         return (
-            <View style={{ flex: 6 }}>
+            <View style={{ flex: 6 , marginTop:20}}>
                 <FlatList
                     data={this.state.itemDataSource}
                     renderItem={item => (
                         <TouchableOpacity onPress={() => {
                             navigate('DashboardScreen')
                         }}>
+<<<<<<< Updated upstream
                         <View style={{ 
                             margin: 5, backgroundColor: '#7F86B1',
                              alignItems: 'center', justifyContent: 'center', 
@@ -52,6 +53,12 @@ export default class GroupList extends Component {
                             <Text 
                             style={{color: 'white', fontWeight: 'bold', 
                             fontSize: 18, padding: 10}}> Group Name:  Flat 28  </Text>
+=======
+                        <View style={{ marginStart: 30, marginEnd: 30, backgroundColor: '#919cda', alignItems: 'center', justifyContent: 'center', borderWidth: 1, borderColor: "#2A367D", borderRadius: 10 , marginTop: 20, shadowOpacity:.5, shadowRadius:1}}>
+                            <Text style={{color: 'white', fontWeight: 'bold', fontSize: 24, marginTop: 10}}>  Flat 28  </Text>
+                            <Text style={{color: 'white', fontWeight: 'bold', fontSize: 14, marginBottom: 10}}>  Members: 8 </Text>
+                            />
+>>>>>>> Stashed changes
                         </View>
                         </TouchableOpacity>
                     )}

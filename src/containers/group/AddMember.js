@@ -35,7 +35,7 @@ export default class AddMember extends Component {
             <View style={ {flex:1, backgroundColor: 'white'}}>
             <GenericHeader
             navigation={this.props.navigation}
-            headerTitle={"Add Member"} />
+            headerTitle={"Add Members"} />
                 {this._renderFlatList()}
                     <TouchableOpacity style={{
                         flex: .5, margin: 15, backgroundColor: '#2A367D', justifyContent: 'center',
@@ -55,8 +55,8 @@ export default class AddMember extends Component {
           <View style= {{flex:6, marginTop: 10}}>
             <FlatList
               data={this.state.itemDataSource}
-                renderItem={item => (<View style={{margin: 5, alignItems:'center',
-                justifyContent: 'center', borderWidth: 1, borderRadius: 10}}>
+                renderItem={item => (<View style={{marginLeft: 20, marginRight: 20, alignItems:'center',
+                justifyContent: 'center', borderBottomWidth: 1}}>
                 <TextInput
                 placeholder={"Member Name"}
                 underlineColorAndroid="transparent"

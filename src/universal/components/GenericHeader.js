@@ -5,7 +5,7 @@ import {TouchableOpacity } from 'react-native'
 export default class GenericHeader extends Component {
     render() {
         return (
-            <Header style={{ backgroundColor: '#2A367D' }} >
+            <Header style={{ backgroundColor: '#2A367D', height: 80 }} >
                 {this._renderHeaderLeftButton()}
                 {this._renderHeaderTitle()}
                 {this._renderHeaderRightButton()}
