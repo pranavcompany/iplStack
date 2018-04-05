@@ -6,7 +6,7 @@ export default class Headers extends Component {
   render() {
     const {navigate} = this.props.navigation
     return (
-      <Header style={{ backgroundColor: '#2A367D' }}>
+      <Header style={{ backgroundColor: '#2A367D', height: 80 }}>
         <Left>
           <Button transparent onPress={this.props.onOpen}>
             <Icon
@@ -18,7 +18,7 @@ export default class Headers extends Component {
           </Button>
         </Left>
         <Body>
-          <Title style={{ color: "white" }}>Group List</Title>
+          <Title style={{ color: "white", fontWeight: 'bold', fontSize: 20 }}>Group List</Title>
         </Body>
         <Right>
           <TouchableOpacity onPress={() => navigate("CreateGroupScreen")} >

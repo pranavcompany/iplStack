@@ -28,7 +28,6 @@ export default class GroupList extends Component {
 
     componentDidMount(){
         const {params}= this.props.navigation.state
-
         {this._getAllGroup(params.token)}
         this.saveKey(params.token,params.userId)
     }
@@ -36,7 +35,7 @@ export default class GroupList extends Component {
     async saveKey(token,userId ) {
         try {
           await AsyncStorage.setItem('token', token);
-          await AsyncStorage.setItem('userId', userId);
+          await AsyncStorage.setItem('userId', userId.toString());
         } catch (error) {
           console.log("Error saving data" + error);
         }
@@ -75,12 +74,11 @@ export default class GroupList extends Component {
                     data={this.state.itemDataSource}
                     renderItem={item => (
                         <TouchableOpacity onPress={() => {
-                            navigate('DashboardScreen')
+                            navigate('DashboardScreen', {groupId:item.item.id, memberId:item.item.member_id})
                         }}>
                         <View style={{ marginStart: 30, marginEnd: 30, backgroundColor: '#919cda', alignItems: 'center', justifyContent: 'center', borderWidth: 1, borderColor: "#2A367D", borderRadius: 10 , marginTop: 20, shadowOpacity:.5, shadowRadius:1}}>
                             <Text style={{color: 'white', fontWeight: 'bold', fontSize: 24, marginTop: 10}}>  {item.item.name}  </Text>
-                            <Text style={{color: 'white', fontWeight: 'bold', fontSize: 14, marginBottom: 10}}>  Members:  {item.item.members.length}  </Text>
-                            
+                            <Text style={{color: 'white', fontWeight: 'bold', fontSize: 14, marginBottom: 10}}>  Members:  {item.item.members}  </Text>
                         </View>
                         </TouchableOpacity>
                     )}

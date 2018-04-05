@@ -11,10 +11,18 @@ import {
 } from "react-native";
 import { H1, H2, H3 } from "native-base";
 import Icon from "react-native-vector-icons/SimpleLineIcons";
+import {getApiCallWithPromise} from "../../utils/PromiseApiCall";
+import {Url} from '../../utils/constant/Url';
+import Spinner from '../../universal/components/Spinner';
+import Assets from '../../assets'
+
+
+let ViewSpinner = Spinner(View);
 
 export default class Schedule extends Component {
   state = {
-    itemDataSource: [{ member_name: 'Pranav Manikpure', total_point: '50' }, { member_name: 'Sumit Chavan', total_point: '30' }, { member_name: 'Atul Bhangire', total_point: '40' }]
+    itemDataSource: [],
+    isLoading: false
   };
   render() {
     return (
@@ -22,8 +30,18 @@ export default class Schedule extends Component {
     );
   }
 
+  componentDidMount(){
+    {this._getAllMatchesList()}
+}
+
   _renderFlatList() {
     return (
+      <ViewSpinner
+            style={{ flex: 1,
+              backgroundColor: 'white',
+              justifyContent: 'center'}}
+            isLoading={this.state.isLoading}
+          >
       <View style={{ flex: 6 }}>
         <FlatList
           data={this.state.itemDataSource}
@@ -34,36 +52,70 @@ export default class Schedule extends Component {
                 backgroundColor: '#ffffff', shadowOpacity: .5,
                 shadowRadius: 10, margin: 10, padding: 5
               }}>
+              <View style={{ flexDirection: 'column' }}>
+                <Text
+                  style={styles.textView}>Match - {item.item.id}</Text>
+                <Text
+                  style={styles.dateTextView}> {item.item.date}  {item.item.time} </Text>
+              </View>
               <View
                 style={styles.rowView}>
-                <TouchableOpacity
-                  style={[styles.touchable, { borderColor: this.state.firstSelect }]}
-                  onPress={() => this.setState({
-                    firstSelect: '#ECF0F1',
-                    secondSelect: 'transparent'
-                  })}>
                   <Image
                     style={styles.iconView}
-                    source={require('../../assets/MI.png')} />
-                </TouchableOpacity>
-                <H2>Vs</H2>
-                <TouchableOpacity
-                  style={[styles.touchable, { borderColor: this.state.secondSelect }]}
-                  onPress={() => this.setState({
-                    secondSelect: '#ECF0F1',
-                    firstSelect: 'transparent'
-                  })}>
+                    source={this._matchIconWithServerName(item.item.abb1)} />
+                <H2 style={{color: 'white'}}>Vs</H2>
                   <Image
                     style={styles.iconView}
-                    source={require('../../assets/CSK.png')} />
-                </TouchableOpacity>
+                    source={this._matchIconWithServerName(item.item.abb2)} />
               </View>
+              {item.item.winner_statement ?  <View style={{ flexDirection: 'column' }}>
+              <Text
+                style={styles.textView}>Winner - {item.item.winner_statement}</Text>
+            </View>: null }
            </ImageBackground>
           )}
         />
       </View>
+      </ViewSpinner>
     )
   }
+
+
+  _matchIconWithServerName(name){
+    switch (name) {
+      case 'MI':
+        return Assets.MI
+      case 'CSK':  
+      return Assets.CSK
+      case 'SRH':  
+      return Assets.SRH
+      case 'RCB':  
+      return Assets.RCB
+      case 'KKR':
+      return Assets.KKR
+      case 'DD':
+      return Assets.DD
+      case 'KXIP':
+      return Assets.KXIP
+      case 'RR':
+      return Assets.RR
+      default:
+      return Assets.TBD
+    }
+  }
+
+  _getAllMatchesList(){
+    getApiCallWithPromise(Url.allMatchesList)
+    .then(response => {
+      this.setState({ isLoading: false, 
+                    itemDataSource: response.data })
+    })
+    .catch(function(error) {
+      this.setState({ isLoading: false })
+      console.log(error)
+      reject(error);
+    });
+}
 }
 
 
@@ -115,5 +167,10 @@ const styles = {
   parentView: {
     flex: 1,
     backgroundColor: '#fff'
-  }
+  },dateTextView:{
+    fontSize:18,
+    color:'#ffffff',
+    textAlign:'center',
+    fontWeight:'500', 
+}
 }

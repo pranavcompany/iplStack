@@ -48,7 +48,6 @@ export default class AddMember extends Component {
             <GenericHeader
             navigation={this.props.navigation}
             headerTitle={"Add Members"} />
-
              <H2 style={{color: 'black', textAlign:'center', margin:5}}>{ params.groupName} </H2>
                 {this._renderFlatList(params.memberCount)}
                     <TouchableOpacity style={{
@@ -65,34 +64,29 @@ export default class AddMember extends Component {
     }
 
     _renderFlatList(int) {
-      // const count = []
-      // for (var i= 0; i>=int ; i++){
-      //   count.push('count')
-      // }
-      // this.setState({count : count})
 
-
-      this.state.count.map((data)=> {
-         return(
-
-   <View style={{marginLeft: 20, marginRight: 20, alignItems:'center',
-        justifyContent: 'center', borderBottomWidth: 1}}>
-        <TextInput
-        placeholder={"Member Name"}
-        underlineColorAndroid="transparent"
-        onChangeText={text => this.setState({ GroupName: text })}
-        style={{ marginTop: 10,fontSize: 15, paddingStart: 10, width: "90%"}}
-        />
-        <TextInput
-        placeholder={"Member email Id"}
-        keyboardType={"email-address"}
-        underlineColorAndroid="transparent"
-        onChangeText={text => this.setState({ MemberCount: text })}
-        style={{ marginTop: 10, marginBottom: 10,fontSize: 15, paddingStart: 10, width: "90%"}}
-        />        
-    </View>
-        )
-       })
+        this.state.count.map((data) => {
+            return (
+                <View style={{
+                    marginLeft: 20, marginRight: 20, alignItems: 'center',
+                    justifyContent: 'center', borderBottomWidth: 1
+                }}>
+                    <TextInput
+                        placeholder={"Member Name"}
+                        underlineColorAndroid="transparent"
+                        onChangeText={text => this.setState({ GroupName: text })}
+                        style={{ marginTop: 10, fontSize: 15, paddingStart: 10, width: "90%" }}
+                    />
+                    <TextInput
+                        placeholder={"Member email Id"}
+                        keyboardType={"email-address"}
+                        underlineColorAndroid="transparent"
+                        onChangeText={text => this.setState({ MemberCount: text })}
+                        style={{ marginTop: 10, marginBottom: 10, fontSize: 15, paddingStart: 10, width: "90%" }}
+                    />
+                </View>
+            )
+        })
    }
 
   _loginButtonPress = () => {

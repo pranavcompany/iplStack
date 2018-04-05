@@ -22,6 +22,19 @@ class Dashboard extends Component {
       </TabHeading>
     );
   }
+  componentDidMount(){
+    const {params}= this.props.navigation.state
+    this.saveKey(params.groupId,params.memberId)
+}
+
+  async saveKey(groupId,memberId) {
+    try {
+      await AsyncStorage.setItem('groupId', groupId.toString());
+      await AsyncStorage.setItem('memberId', memberId.toString());
+    } catch (error) {
+      console.log("Error saving data" + error);
+    }
+}
 
   tabView(iconName, Comp) {
     return (
@@ -32,7 +45,7 @@ class Dashboard extends Component {
   }
   
   state = {
-    headerTitle: "Today's Match"
+    headerTitle: "Today's Matches"
   }
 
   render() {
@@ -47,7 +60,7 @@ class Dashboard extends Component {
             backgroundColor: "#2A367D"
           }}
           onChangeTab={(index) => this.setState({
-            headerTitle: index.i == 0 ? "Today's Matches" : index.i == 1 ?  "Point Table" : index.i == 2 ? "Match Wise Quotes" :  index.i == 3 ? "Schedule" : "Home"
+            headerTitle: index.i == 0 ? "Today's Matches" : index.i == 1 ?  "Point Table" : index.i == 2 ? "Matchwise Quotes" :  index.i == 3 ? "Schedule" : "Home"
         })}>
           {this.tabView("bell-ring", MatchBid)}
           {this.tabView("chart-bar", PointTable)}
