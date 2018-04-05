@@ -16,6 +16,7 @@ import GenericHeader from '../../universal/components/GenericHeader'
 import {getApiCallWithPromise} from "../../utils/PromiseApiCall"
 import {Url} from '../../utils/constant/Url'
 import Spinner from '../../universal/components/Spinner'
+import Drawer from '../../universal/components/Drawer/Drawer'
 
 let ViewSpinner = Spinner(View);
 
@@ -41,12 +42,9 @@ export default class GroupList extends Component {
                 Keyboard.dismiss()
             }} >
                 <View style={{ flex: 1, backgroundColor: 'white' }}>
-                <GenericHeader
-                    isShow={true}
-                    navigation={this.props.navigation}
-                    navigateTo = 'CreateGroupScreen'
-                    headerTitle={"Group List"} />
+                <Drawer navigation={this.props.navigation}>
                     {this.state.itemDataSource.length > 0 ? this._renderFlatList() : this._emptyView()}
+                </Drawer>
                 </View>
             </TouchableWithoutFeedback>
             </ViewSpinner>

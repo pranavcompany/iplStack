@@ -3,7 +3,6 @@ import { Url } from '../utils/Constant/Url';
 import {Alert } from 'react-native';
 import {Toast} from "native-base";
 import axios from 'axios';
-import {strings} from '../universal/i18n'
 
 
 export const  _postApiCall = (url, type, token, body, dispatch) => {   

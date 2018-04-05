@@ -105,18 +105,22 @@ export default class SignUp extends Component {
           </Form>
         </View>
         <View style= {{flexDirection : 'row', alignItems: 'center',  marginStart: 'auto', marginEnd: 'auto', marginTop: 10}}>
-        <Button style= {{justifyContent:'center', marginEnd: 35,  backgroundColor: '#2A367D'}} onPress={() => this._loginButtonPress()}>
-            <Text> B A C K </Text>
-          </Button>
-          <Button style= {{justifyContent:'center', marginStart: 35,  backgroundColor: '#2A367D'}} onPress={() => this._loginButtonPress()}>
+          <Button style= {{justifyContent:'center', marginEnd: 35,  backgroundColor: '#2A367D'}} onPress={() => this._loginButtonPress()}>
             <Text> R E G I S T E R </Text>
           </Button>
+          <Button style= {{justifyContent:'center', marginStart: 35,  backgroundColor: '#2A367D'}} onPress={() => this._backButtonPress()}>
+          <Text> B A C K </Text>
+        </Button>
         </View>
       </Container>
       </TouchableWithoutFeedback>
       </KeyboardAwareScrollView>
       </ViewSpinner>
     );
+  }
+  _backButtonPress = () => {
+    const { goBack } = this.props.navigation;
+    goBack()
   }
 
   _loginButtonPress = () => {

@@ -7,6 +7,7 @@ import CreateGroup from '../../src/containers/group/CreateGroup';
 import GroupList from '../../src/containers/group/GroupList'; 
 import AddMember from '../../src/containers/group/AddMember'; 
 import Dashboard from '../containers/matchBid/Dashboard'
+import ChangePassword from '../containers/menu/ChangePassword'
 
 const AppNavigation = StackNavigator({
   LoginScreen: { screen: Login },
@@ -14,7 +15,9 @@ const AppNavigation = StackNavigator({
   CreateGroupScreen: { screen: CreateGroup },
   GroupListScreen: {screen: GroupList},
   AddMemberScreen:{screen: AddMember},
-  DashboardScreen:{screen: Dashboard}
+  DashboardScreen:{screen: Dashboard},
+  ChangePasswordScreen:{screen: ChangePassword},
+  
 }, {
     // see next line
     mode: "none",
