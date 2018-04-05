@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { Drawer } from "native-base";
 import SideBar from "./SideBar";
-
 import Headers from "./Header";
 export default class DrawerBar extends Component {
   closeDrawer = () => {
@@ -24,7 +23,9 @@ export default class DrawerBar extends Component {
         }
         onClose={() => this.closeDrawer()}
       >
-        <Headers onOpen={() => this.openDrawer()} />
+        <Headers 
+          navigation= {this.props.navigation}
+          onOpen={() => this.openDrawer()} />
         {this.props.children}
       </Drawer>
     );

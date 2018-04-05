@@ -42,7 +42,8 @@ export default class GroupList extends Component {
                 Keyboard.dismiss()
             }} >
                 <View style={{ flex: 1, backgroundColor: 'white' }}>
-                <Drawer navigation={this.props.navigation}>
+                <Drawer 
+                navigation={this.props.navigation}>
                     {this.state.itemDataSource.length > 0 ? this._renderFlatList() : this._emptyView()}
                 </Drawer>
                 </View>
