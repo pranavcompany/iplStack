@@ -41,7 +41,7 @@ class MatchWisePoint extends Component {
         return (
             <View style={styles.parentView}>
                 <View style={styles.childView}>
-               {this._renderFlatListForMatch()}    
+              {this._renderFlatListForMatch()}    
                 </View>
             </View>
         )
@@ -76,7 +76,7 @@ class MatchWisePoint extends Component {
                 renderItem={item => (
                     <View style={{ marginTop: 10}}>
                     <ImageBackground
-                        source={require("../../assets/iplCard.jpg")}
+                        source={require("../../assets/backg.jpg")}
                         style={{
                             backgroundColor: '#ffffff', shadowOpacity: .5,
                             shadowRadius: 10, margin: 10, padding: 5

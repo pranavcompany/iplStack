@@ -78,12 +78,13 @@ class MatchBid extends Component{
                                     </View>
                                     <View style={[styles.rowView,
                                     { justifyContent: 'space-evenly', borderBottom: '#ffffff' }]}>
-                                        <Text
-                                            style={{ fontSize: 18, color: '#ECF0F1' }}>Quote</Text>
+                                      
                                         <TextInput
                                             style={styles.inputText}
                                             keyboardType={'numeric'}
                                             maxLength={4}
+                                            placeholder={'Enter Quote'}
+                                            placeholderTextColor={'#000'}
                                             underlineColorAndroid={'transparent'}
                                             value={item.item.bids[0].bid_point}
                                             onChangeText={(quote) => { this._createQuoteDetails(item.item, null, quote) }}
@@ -93,7 +94,7 @@ class MatchBid extends Component{
                                         >
                                             <Text
                                                 style={{ color: 'black', fontWeight: 'bold', fontSize: 18, padding: 10 }}>
-                                                let's Quote </Text>
+                                                Quote </Text>
                                         </TouchableOpacity>
                                     </View>
                                 </ImageBackground>
@@ -222,14 +223,15 @@ class MatchBid extends Component{
 const styles = {
     inputText:{
         textAlign:'center',
-         height: 40, 
-         marginLeft: 10, 
-         width: 80, 
+         padding: 10, 
+         backgroundColor:'rgba(255,255,255,.5)',
+         marginLeft: 20, 
+         width: 150, 
+         borderRadius:10,
          fontSize: 20 , 
-         paddingLeft:10, 
+         paddingLeft:10,
          borderWidth:1,
-         borderColor: '#ECF0F1',
-         color:'#ECF0F1'
+         color:'#FFFF'
         },
     touchable:
         {borderWidth:1, 

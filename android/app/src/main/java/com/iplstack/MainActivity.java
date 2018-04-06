@@ -1,4 +1,4 @@
-package com.iplstack;
+package com.sport.iplbaaz;
 
 import com.facebook.react.ReactActivity;
 import com.reactnativecomponent.splashscreen.RCTSplashScreen;    //import RCTSplashScreen

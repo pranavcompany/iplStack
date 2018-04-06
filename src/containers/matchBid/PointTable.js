@@ -89,7 +89,7 @@ export default class PointTable extends Component {
         getApiCallWithPromise(mergeURL,this.state.token)
         .then(response => {
           this.setState({ isLoading: false, 
-                        itemDataSource: response.data,
+                        itemDataSource: response.data.members,
                         groupName: response.data.name })
         })
         .catch(function(error) {

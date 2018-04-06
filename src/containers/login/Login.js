@@ -6,7 +6,7 @@
  */
 
 import React, { Component  } from 'react';
-import { View, Image, TouchableWithoutFeedback, Keyboard ,TouchableOpacity,  Alert} from 'react-native';
+import { View, Image, TouchableWithoutFeedback, Keyboard ,TouchableOpacity, Alert, PermissionsAndroid } from 'react-native';
 import SplashScreen from 'react-native-smart-splash-screen'
 import {
   Container,
@@ -28,7 +28,7 @@ import Spinner from '../../universal/components/Spinner'
 
 let ViewSpinner = Spinner(View);
 export default class Login extends Component {
-
+//atul@e-arth.in, atul123
   constructor(props) {
     super(props);
     this.state = {
@@ -39,11 +39,29 @@ export default class Login extends Component {
   }
   componentDidMount () {
     SplashScreen.close({
-      animationType: SplashScreen.animationType.scale,
-      duration: 850,
-      delay: 500,
-  })
-  }
+       animationType: SplashScreen.animationType.scale,
+       duration: 850,
+       delay: 500,
+    })
+// async function requestCameraPermission() {
+//   try {
+//     const granted = await PermissionsAndroid.request(
+//       PermissionsAndroid.PERMISSIONS.READ_PHONE_STATE,
+//       {
+//         'title': 'Needed some local storage',
+//         'message': 'please do it'
+//       }
+//     )
+//     if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+//       console.log("You can use the camera")
+//     } else {
+//       console.log("Camera permission denied")
+//     }
+//   } catch (err) {
+//     console.warn(err)
+//     }
+//   }
+}
 
   render() {
     const { navigate } = this.props.navigation;
@@ -67,7 +85,7 @@ export default class Login extends Component {
         <View style = {{margin : 10, padding:10}}>
           <Form>
             <Item floatingLabel >
-              <Label>Username</Label>
+              <Label>Email Id</Label>
               <Input
                 value={this.state.username}
                 onChangeText={(username) => this.setState({ username })}
@@ -102,7 +120,7 @@ export default class Login extends Component {
   }
 
   _loginButtonPress = () => {
-    const { navigate } = this.props.navigation;
+    const { replace } = this.props.navigation;
     var isValidate = true
     var errorMsg = ""
     if ( validator.isEmpty(this.state.username)) {
@@ -124,7 +142,7 @@ if (isValidate) {
   postApiCallWithPromise(Url.userLoginUrl, body)
     .then(response => {
       this.setState({ isLoading: false })
-       navigate('GroupListScreen',{token:response.data.token, userId: response.data.user_id})
+       replace('GroupListScreen',{token:response.data.token, userId: response.data.user_id})
     })
     .catch(function(error) {
       this.setState({ isLoading: false })

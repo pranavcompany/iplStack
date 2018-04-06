@@ -124,7 +124,7 @@ export default class SignUp extends Component {
   }
 
   _loginButtonPress = () => {
-    const { navigate } = this.props.navigation;
+    const { replace } = this.props.navigation;
     var isValidate = true
     var errorMsg = ""
     if ( validator.isEmpty(this.state.name)) {
@@ -163,7 +163,7 @@ if (isValidate) {
   postApiCallWithPromise(Url.userRegisterUrl, body)
     .then(response => {
       this.setState({ isLoading: false })
-       navigate('LoginScreen')
+       replace('LoginScreen')
     })
     .catch(function(error) {
       this.setState({ isLoading: false })
@@ -171,7 +171,7 @@ if (isValidate) {
     });
 }
  }
-}
+}  
 
 const styles = {
   container: {

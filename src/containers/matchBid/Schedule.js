@@ -47,27 +47,28 @@ export default class Schedule extends Component {
           data={this.state.itemDataSource}
           renderItem={item => (
             <ImageBackground
-              source={require("../../assets/iplCard.jpg")}
+              source={require("../../assets/imageBackground.jpg")}
               style={{
                 backgroundColor: '#ffffff', shadowOpacity: .5,
-                shadowRadius: 10, margin: 10, padding: 5
+                shadowRadius: 10, margin: 10
               }}>
               <View style={{ flexDirection: 'column' }}>
                 <Text
                   style={styles.textView}>Match - {item.item.id}</Text>
+                    <Text
+                  style={styles.dateTextView}> {item.item.date}  {item.item.time} </Text>
               </View>
               <View
                 style={styles.rowView}>
                   <Image
                     style={styles.iconView}
                     source={this._matchIconWithServerName(item.item.abb1)} />
-                <H2 style={{color: 'white'}}>Vs</H2>
+                <H2 style={{color: 'black'}}>Vs</H2>
                   <Image
                     style={styles.iconView}
                     source={this._matchIconWithServerName(item.item.abb2)} />
               </View>
-              <Text
-                  style={styles.dateTextView}> {item.item.date}  {item.item.time} </Text>
+            
               {item.item.winner_statement ?  <View style={{ flexDirection: 'column' }}>
               <Text
                 style={styles.textView}>Winner - {item.item.winner_statement}</Text>
@@ -139,15 +140,16 @@ const styles = {
     },
   rowView: {
     alignItems: 'center',
+    marginBottom:10,
     flexDirection: 'row',
     justifyContent: 'space-around'
   },
   textView: {
-    fontSize: 25,
-    color: '#ff8533',
+    fontSize: 20,
+    color: '#fff',
     textAlign: 'center',
     fontWeight: '500',
-    margin: 20
+    margin: 10
   },
   iconView: {
     resizeMode: 'contain',
@@ -159,6 +161,7 @@ const styles = {
     justifyContent: 'space-between',
     flexDirection: 'row',
     alignItems: 'center',
+    margin:10,
     backgroundColor: '#E7E7E7'
   },
   childView: {
