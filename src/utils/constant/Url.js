@@ -9,9 +9,8 @@ export const Url = {
     todayUrl: baseURL + 'matches/today',
     allMatchesList: baseURL + 'matches',
     letsBid: baseURL + 'bid',
-    matchWisePoint: baseURL + '/matches/till/group/',
-    
-    
+    matchWisePoint: baseURL + 'matches/till/group/',
+    createGroup: baseURL + 'groups',
 }
 
 

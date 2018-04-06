@@ -26,13 +26,14 @@ class MatchWisePoint extends Component {
         groupId:''
     };
     componentDidMount(){
-        AsyncStorage.getItem("token").then((value2) => {
-            this.setState({token:value2});
+        AsyncStorage.getItem("groupId").then((value2) => {
+            this.setState({groupId:value2});
             this._getMatchWiseDetails()
           }).done();
-          AsyncStorage.getItem("groupId").then((value2) => {
-            this.setState({groupId:value2});
+        AsyncStorage.getItem("token").then((value2) => {
+            this.setState({token:value2});
           }).done();
+          
     }
 
     render() {

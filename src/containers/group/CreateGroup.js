@@ -6,7 +6,7 @@
  */
 
 import React, { Component } from 'react';
-import { View, Image, TouchableWithoutFeedback, Keyboard, TextInput, FlatList, TouchableOpacity } from 'react-native';
+import { View, Image, TouchableWithoutFeedback, Keyboard, TextInput, FlatList, TouchableOpacity, Alert} from 'react-native';
 import {
     Container,
     Content,
@@ -16,7 +16,6 @@ import {
     Button,
     Text,
     Input,
-    Toast
 } from 'native-base';
 import Assets from "../../assets/index";
 import GridView from "react-native-super-grid";
@@ -28,7 +27,6 @@ export default class CreateGroup extends Component {
     memberCount:0
   };
   render() {
-    const { navigate } = this.props.navigation;
     return (
       <Container>
         <GenericHeader
@@ -47,6 +45,7 @@ export default class CreateGroup extends Component {
             <Item floatingLabel last>
               <Label>Member Count</Label>
               <Input
+              maxLength = {2}
               keyboardType={'numeric'}
               onChangeText={(memberCount) => this.setState({memberCount})}
               value={this.state.memberCount}
@@ -63,8 +62,7 @@ export default class CreateGroup extends Component {
               padding: 10
             }}
             onPress={() => {
-              navigate("AddMemberScreen",{
-                 memberCount: this.state.memberCount,groupName: this.state.groupName });
+              {this._onCreatePress()}
             }}
           >
             <Text style={{ color: "white", fontSize: 18 }}> C R E A T E </Text>
@@ -72,6 +70,24 @@ export default class CreateGroup extends Component {
         </Content>
       </Container>
     );
+  }
+
+  _onCreatePress(){
+    const { navigate } = this.props.navigation;
+    var isValidate = true
+    var errorMsg = ""
+    var memberCount = Number(this.state.memberCount) 
+    if (this.state.groupName.length == 0) {
+      isValidate = false
+      Alert.alert( "Please enter group name")
+    }else if (!(memberCount < 24)) {
+      isValidate = false
+      Alert.alert( "You can add only 25 member")
+    }
+    if (isValidate){
+      navigate("AddMemberScreen",{
+        memberCount: this.state.memberCount,groupName: this.state.groupName }); 
+    }
   }
 }
 

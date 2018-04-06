@@ -22,11 +22,15 @@ import Assets from "../../assets/index";
 import GridView from "react-native-super-grid";
 import GenericHeader from '../../universal/components/GenericHeader'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import {postApiCallWithPromise} from "../../utils/PromiseApiCall"
+import {Url} from '../../utils/constant/Url'
+import validator from 'validator';
+import Spinner from '../../universal/components/Spinner'
+
 export default class AddMember extends Component {
 
   state = { 
-    itemDataSource :['pranav','pranav','pranav','pranav','pranav','pranav','pranav','pranav','pranav','pranav']
-    ,count:[]
+    count:[]
   };
 
   componentDidMount(){
@@ -53,22 +57,20 @@ export default class AddMember extends Component {
             navigation={this.props.navigation}
             headerTitle={"Add Members"} />
             <KeyboardAwareScrollView
-
             resetScrollToCoords={{ x: 0, y: 0 }}
-            contentContainerStyle={styles.keyboardAvoidingViewStyle}
             scrollEnabled={true}
           >
              <H2 style={{color: 'black', textAlign:'center', marginStart:10}}>{ params.groupName} </H2>
                 {this._renderFlatList()}
-                    <TouchableOpacity style={{
-                        flex: .1, margin: 10,backgroundColor: '#2A367D', justifyContent: 'center',
-                        alignItems: 'center', borderRadius: 10
-                    }} onPress={() => {
-                        navigate('GroupListScreen')
-                    }}>
-                  <Text style={{color: 'white'}}> S U B M I T  </Text>
-                </TouchableOpacity>
                 </KeyboardAwareScrollView>
+                <TouchableOpacity style={{
+                    flex: .1, margin: 10,backgroundColor: '#2A367D', justifyContent: 'center',
+                    alignItems: 'center', borderRadius: 10
+                }} onPress={() => {
+                    {this._createGroup()}
+                }}>
+              <Text style={{color: 'white'}}> S U B M I T  </Text>
+            </TouchableOpacity>
                 </View>
             </TouchableWithoutFeedback>
         );
@@ -76,7 +78,6 @@ export default class AddMember extends Component {
 
     _renderFlatList() {
            return(
-
             <FlatList
             style={{flex:.9}}
             data = {this.state.count}
@@ -108,29 +109,22 @@ export default class AddMember extends Component {
         )
             
    }
-
-  _loginButtonPress = () => {
-    var isValidate = true
-    var errorMsg = ""
-    if (this.state.email.length == 0) {
-      isValidate = false
-      errorMsg = "Please enter email";
-    }
-    if (this.state.password.length == 0) {
-      isValidate = false
-      errorMsg = "Please enter password";
-    }
-    if (this.state.password.length >= 8) {
-      isValidate = false
-      errorMsg = "Password at least 8 character login";
-    }
-
-    Toast.show({
-      text: errorMsg,
-      position: 'top',
-      buttonText: 'Okay'
-    })
-  }
+ _createGroup(){
+    const body = {
+        "group": this.state.username,
+        "password":this.state.password,
+        }
+        this.setState({ isLoading: true })
+      postApiCallWithPromise(Url.createGroup, body)
+        .then(response => {
+          this.setState({ isLoading: false })
+           navigate('GroupListScreen')
+        })
+        .catch(function(error) {
+          this.setState({ isLoading: false })
+          reject(error);
+        });
+ }
 }
 
 const styles = {

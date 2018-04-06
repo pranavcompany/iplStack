@@ -20,18 +20,20 @@ import Assets from '../../assets'
 let ViewSpinner = Spinner(View);
 class MatchBid extends Component{
     state = {
-        quote:'',
-        firstSelect:'transparent',
-        secondSelect:'transparent',
         player:'Select Player',
         itemDataSource: [],
+        manageQuote: [],
         isLoading: false,
-        token:""
+        token:"",
+        memberId:"",
     }
 
     componentDidMount(){
         AsyncStorage.getItem("token").then((value2) => {
             this.setState({token:value2});
+          }).done();
+          AsyncStorage.getItem("memberId").then((value2) => {
+            this.setState({memberId:value2});
             this._getTodayMatchDetails()
           }).done();
     }
@@ -55,28 +57,19 @@ class MatchBid extends Component{
                                     shadowRadius:10,margin:10, padding: 5}}>
                     <View
                         style={styles.rowView}>
-                        <TouchableOpacity
-                            style={[styles.touchable, { borderColor: this.state.firstSelect }]}
-                            onPress={() => this.setState({
-                                firstSelect: '#ECF0F1',
-                                secondSelect: 'transparent'
-                            })}>
-                            <Image
-                                style={styles.iconView}
-                                source={this._matchIconWithServerName(item.item.abb1)} />
-                        </TouchableOpacity>
-                        <H2>Vs</H2>
-                        <TouchableOpacity
-                            style={[styles.touchable, { borderColor: this.state.secondSelect }]}
-                            onPress={() => this.setState({
-                                secondSelect: '#ECF0F1',
-                                firstSelect: 'transparent'
+                        {this.state.manageQuote.length == 0 ? this._renderFirstTeam(item,1) : 
+                            this.state.manageQuote.map((currentData,index)=> 
+                            {
+                                 currentData.match_id  == item.item.id ? this._renderFirstTeam(item,2,currentData) : this._renderFirstTeam(item,3)
                             })
-                            }>
-                            <Image
-                                style={styles.iconView}
-                                source={this._matchIconWithServerName(item.item.abb2)} />
-                        </TouchableOpacity>
+                         }
+                        <H2>Vs</H2>
+                        {this.state.manageQuote.length == 0 ? this._renderSecondTeam(item,1) : 
+                            this.state.manageQuote.map((currentData,index)=> 
+                            {
+                                 currentData.match_id  == item.item.id ? this._renderSecondTeam(item,2,currentData) : this._renderSecondTeam(item,3)
+                            })
+                         }
                     </View>
                     <View style={[styles.rowView,
                          { justifyContent: 'space-evenly', borderBottom:'#ffffff' }]}>
@@ -87,11 +80,11 @@ class MatchBid extends Component{
                             keyboardType={'numeric'}
                             maxLength= {4}
                             underlineColorAndroid={'transparent'}
-                            onChangeText={(quote) => enterQoute = quote }
-                            value={this.state.quote}
+                            value = {item.item.bids[0].bid_point}
+                            onChangeText={(quote) =>  {this._createQuoteDetails(item.item, null ,quote)}}
                         />
                         <TouchableOpacity style={{ marginStart: 30, backgroundColor: '#E7E7E7', borderWidth: 1, borderRadius:10}}
-                        onPress={() => {this._letsQuote(item.item, enterQoute)}}
+                        onPress={() => {this._letsQuote(item.item)}}
                         >
                             <Text
                              style={{color: 'black', fontWeight: 'bold', fontSize: 18, padding: 10 }}>
@@ -103,6 +96,63 @@ class MatchBid extends Component{
                 </View>
             </View>
             </ViewSpinner>
+        )
+    }
+
+
+    _renderFirstTeam(item,number,currentData){
+        return(
+          number == 1 ? 
+          <TouchableOpacity
+          style={ [styles.touchable, item.item.bids[0].bid_team == item.item.abb1 ? {borderColor: 'white'} :  {borderColor: 'transparent'}] }
+          onPress={() => {this._createQuoteDetails(item.item, item.item.abb1,null)}}>
+          <Image
+              style={styles.iconView}
+              source={this._matchIconWithServerName(item.item.abb1)} />
+           </TouchableOpacity> :
+           number == 2 ? 
+           <TouchableOpacity
+          style={ [styles.touchable, currentData.bid_team == item.item.abb1 ? {borderColor: 'white'} :  {borderColor: 'transparent'}] }
+          onPress={() => {this._createQuoteDetails(item.item, item.item.abb1,null)}}>
+          <Image
+              style={styles.iconView}
+              source={this._matchIconWithServerName(item.item.abb1)} />
+           </TouchableOpacity>
+           :  
+          <TouchableOpacity
+          style={ [styles.touchable, item.item.bids[0].bid_team == item.item.abb1  ? {borderColor: 'transparent'} :  {borderColor: 'white'}] }
+          onPress={() => {this._createQuoteDetails(item.item, item.item.abb1,null)}}>
+          <Image
+              style={styles.iconView}
+              source={this._matchIconWithServerName(item.item.abb1)} />
+           </TouchableOpacity>
+        )
+    }
+
+    _renderSecondTeam(item,number,currentData){
+        return(
+            number == 1 ?         <TouchableOpacity
+        style={ [styles.touchable, item.item.bids[0].bid_team == item.item.abb2 ? {borderColor: 'white'} : {borderColor: 'transparent'}] }
+        onPress={() => {this._createQuoteDetails(item.item, item.item.abb2, null)}}>
+            <Image
+                style={styles.iconView}
+                source={this._matchIconWithServerName(item.item.abb2)} />
+        </TouchableOpacity>
+        : number == 2 ?         <TouchableOpacity
+        style={ [styles.touchable, currentData.bid_team == item.item.abb2 ? {borderColor: 'white'} : {borderColor: 'transparent'}] }
+        onPress={() => {this._createQuoteDetails(item.item, item.item.abb2, null)}}>
+            <Image
+                style={styles.iconView}
+                source={this._matchIconWithServerName(item.item.abb2)} />
+        </TouchableOpacity>
+        :
+        <TouchableOpacity
+        style={ [styles.touchable, item.item.bids[0].bid_team == item.item.abb2 ? {borderColor: 'transparent'} : {borderColor: 'white'}] }
+        onPress={() => {this._createQuoteDetails(item.item, item.item.abb2, null)}}>
+            <Image
+                style={styles.iconView}
+                source={this._matchIconWithServerName(item.item.abb2)} />
+        </TouchableOpacity>
         )
     }
 
@@ -142,25 +192,73 @@ class MatchBid extends Component{
         }
     }
 
-    _letsQuote = (matchDetails, enterQoute, selectedTeam) => {
+    _createQuoteDetails(matchDetails,selectedTeam, enterQuote){
+        if (this.state.manageQuote.length > 0) {
+            var quoteDetails = this.state.manageQuote 
+            this.state.manageQuote.map((currentDetails, index) => {
+                if (currentDetails.match_id === matchDetails.id) {
+                var selected_bid_team =  selectedTeam == null ?  currentDetails.bid_team  :  selectedTeam
+                var selected_bid_point = enterQuote == null ?  enterQuote != "" ? currentDetails.bid_point : enterQuote : enterQuote
+                var selected = {
+                    "match_id": matchDetails.id,
+                    "bid_team": selected_bid_team,
+                    "bid_point": selected_bid_point
+                }
+                    quoteDetails[index] = selected 
+                }else{
+                var selected_bid_team =  selectedTeam == null ?  currentDetails.bid_team  :  selectedTeam
+                var selected_bid_point = enterQuote == null ?  enterQuote != "" ? currentDetails.bid_point : enterQuote : enterQuote
+                var selected = {
+                    "match_id": matchDetails.id,
+                    "bid_team": selected_bid_team,
+                    "bid_point": selected_bid_point
+                }
+                    quoteDetails.push(selected)          
+                }
+            })
+            this.setState({
+                manageQuote : quoteDetails
+            })
+        }else{
+            var detailsArray = []
+            var selected = {
+                "match_id": matchDetails.id,
+                "bid_team": selectedTeam,
+                "bid_point": enterQuote
+            }
+            detailsArray.push(selected)  
+            this.setState({manageQuote: detailsArray})
+        }       
+    }
+
+    _letsQuote = (matchDetails) => {
+        var quoteDetails = {}
+        this.state.manageQuote.map((currentDetails, index) => {
+            if (matchDetails.id === currentDetails.match_id) {
+                quoteDetails = currentDetails
+            }
+        })
         var isValidate = true
         var errorMsg = ""
-        if (enterQoute >= matchDetails.max_bid ) {
-          isValidate = false
-          Alert.alert("Please enter quote between "+ matchDetails.min_bid+ "to"+ matchDetails.max_bid+"")
-        } else if (selectedTeam) {
+        if (quoteDetails.bid_team == null) {
             isValidate = false
             Alert.alert("Please select team")
-        } 
+        }else if (quoteDetails.bid_point == null || quoteDetails.bid_point.length == 0) {
+          isValidate = false
+          Alert.alert("Please enter quote")
+        } else if (quoteDetails.bid_point < matchDetails.min_bid || quoteDetails.bid_point >= matchDetails.max_bid) {
+            isValidate = false
+            Alert.alert("Please enter quote between "+ matchDetails.min_bid+ "to"+ matchDetails.max_bid+"")
+        }
     if (isValidate) {
         const body = {
-            "match_id": matchDetails.id,
-            "member_id": AsyncStorage.getItem('memberId'),
-            "bid_team": "MI",
-            "bid_point": enterQoute
+            "match_id": quoteDetails.match_id,
+            "member_id": this.state.memberId,
+            "bid_team": quoteDetails.bid_team,
+            "bid_point": quoteDetails.bid_point
         }
         this.setState({ isLoading: true })
-      postApiCallWithPromise(Url.letsBid, body, AsyncStorage.getItem('token'))
+      postApiCallWithPromise(Url.letsBid, body, this.state.token)
         .then(response => {
           this.setState({ isLoading: false })
         })
@@ -175,6 +273,7 @@ class MatchBid extends Component{
 
 const styles = {
     inputText:{
+        textAlign:'center',
          height: 40, 
          marginLeft: 10, 
          width: 80, 
