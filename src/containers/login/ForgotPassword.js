@@ -28,23 +28,15 @@ import Spinner from '../../universal/components/Spinner'
 
 let ViewSpinner = Spinner(View);
 export default class Login extends Component {
-//atul@e-arth.in, atul123
-  constructor(props) {
+
+constructor(props) {
     super(props);
     this.state = {
-      username: 'atul@e-arth.in',
-      password: 'atul123',
+      email: '',
       isLoading: false
     };
   }
-  componentDidMount () {
-    SplashScreen.close({
-       animationType: SplashScreen.animationType.scale,
-       duration: 850,
-       delay: 500,
-    })
-}
-
+ 
   render() {
     const { navigate } = this.props.navigation;
     return (
@@ -69,30 +61,18 @@ export default class Login extends Component {
             <Item floatingLabel >
               <Label>Email Id</Label>
               <Input
-                value={this.state.username}
-                onChangeText={(username) => this.setState({ username })}
-              />
-            </Item>
-            <Item floatingLabel last>
-              <Label>Password</Label>
-              <Input 
-              value={this.state.password}
-              secureTextEntry={true}
-               onChangeText={(password) => this.setState({ password })}
+                value={this.state.email}
+                onChangeText={(email) => this.setState({ email })}
               />
             </Item>
           </Form>
         </View>
-        <TouchableOpacity
-        style ={{margin:10, alignItems:'flex-end', paddingEnd:10}}  onPress={() => navigate('ForgotPasswordScreen')}>
-        <Text>Forgot Password</Text>
-        </TouchableOpacity>
         <View style= {{marginTop:10,flexDirection : 'row', alignItems: 'center',  marginStart: 'auto', marginEnd: 'auto'}}>
           <Button style= {{justifyContent:'center', marginEnd: 35, backgroundColor: '#2A367D'}} onPress={() => this._loginButtonPress()}>
-            <Text> Sign In </Text>
+            <Text> Submit </Text>
           </Button>
-          <Button style= {{justifyContent:'center', marginStart: 35,backgroundColor: '#2A367D'}} onPress={() => navigate('SignUpScreen')} >
-            <Text> Sign Up  </Text>
+          <Button style= {{justifyContent:'center', marginStart: 35,backgroundColor: '#2A367D'}} onPress={() => this._backButtonPress()} >
+            <Text> Back  </Text>
           </Button>
         </View>
       </Container>
@@ -101,30 +81,30 @@ export default class Login extends Component {
     );
   }
 
+  _backButtonPress(){
+    const { goBack } = this.props.navigation;
+    goBack()
+  }
   _loginButtonPress = () => {
-    const { replace } = this.props.navigation;
+    const { navigate } = this.props.navigation;
     var isValidate = true
     var errorMsg = ""
-    if ( validator.isEmpty(this.state.username)) {
+    if ( validator.isEmpty(this.state.email)) {
       isValidate = false
       Alert.alert("Please enter email")
-    }else if (validator.isEmail(this.state.username) === false) {
+    }else if (validator.isEmail(this.state.email) === false) {
       isValidate = false
       Alert.alert("Please enter valid emailId")
-    } else if (validator.isEmpty(this.state.password)) {
-      isValidate = false
-      Alert.alert( "Please enter password")
     } 
 if (isValidate) {
   const body = {
-    "email": this.state.username,
-    "password":this.state.password,
+    "email": this.state.email,
     }
     this.setState({ isLoading: true })
-  postApiCallWithPromise(Url.userLoginUrl, body)
+  postApiCallWithPromise(Url.forgot, body)
     .then(response => {
       this.setState({ isLoading: false })
-       replace('GroupListScreen',{token:response.data.token, userId: response.data.user_id})
+      navigate('LoginScreen')
     })
     .catch(function(error) {
       this.setState({ isLoading: false })

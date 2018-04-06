@@ -86,7 +86,8 @@ export default class SignUp extends Component {
             <Item floatingLabel last>
               <Label>Phone Number</Label>
               <Input 
-              keyboardType = {'number-pad'}
+              keyboardType = {'numeric'}
+              maxLength = {10}
                 onChangeText={(phone) => this.setState({ phone })}
               />
             </Item>
@@ -152,6 +153,7 @@ export default class SignUp extends Component {
       isValidate = false
       Alert.alert( "Please enter conform conformPassword")
     } 
+    
 if (isValidate) {
   const body = {
     "name": this.state.name,

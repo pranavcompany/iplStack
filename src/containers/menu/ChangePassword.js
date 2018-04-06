@@ -6,12 +6,13 @@
  */
 
 import React, { Component  } from 'react';
-import { View, Image, TouchableWithoutFeedback, Keyboard ,TouchableOpacity, Alert} from 'react-native';
+import { View, Image, TouchableWithoutFeedback, Keyboard ,TouchableOpacity, AsyncStorage, Alert} from 'react-native';
 import {
   Container,
   Content,
   Form,
   Item,
+  H2,
   Input,
   Label,
   Button,
@@ -23,7 +24,7 @@ import {postApiCallWithPromise} from "../../utils/PromiseApiCall"
 import {Url} from '../../utils/constant/Url'
 import validator from 'validator';
 import Spinner from '../../universal/components/Spinner'
-
+import GenericHeader from '../../universal/components/GenericHeader'
 
 let ViewSpinner = Spinner(View);
 export default class ChangePassword extends Component {
@@ -34,9 +35,16 @@ export default class ChangePassword extends Component {
       oldPassword: '',
       newPassword: '',
       conformPassword: '',
-      isLoading: false
+      isLoading: false,
+      token:''
     };
   }
+
+  componentDidMount(){
+    AsyncStorage.getItem("token").then((value2) => {
+        this.setState({token:value2});
+      }).done();
+}
 
   render() {
     const { navigate } = this.props.navigation;
@@ -51,42 +59,38 @@ export default class ChangePassword extends Component {
         Keyboard.dismiss();
       }} >
       <Container style = {{backgroundColor:'white'}}>
-        <View  style = {{ marginTop: 80, flexDirection : 'row',justifyContent:'center'}}>
-        <Image
-          style={{width: 200, height: 150, resizeMode:'contain'}}
-          source={Assets.iPLLogo}
-        />
-        </View>
+      <GenericHeader
+      navigation={this.props.navigation}
+      headerTitle={'Change Password'} />
         <View style = {{margin : 10, padding:10}}>
           <Form>
             <Item floatingLabel >
               <Label>Old Password</Label>
               <Input
-                onChangeText={(username) => this.setState({ oldPassword })}
+                onChangeText={(oldPassword) => this.setState({ oldPassword })}
               />
             </Item>
             <Item floatingLabel last>
               <Label>New Password</Label>
               <Input 
               secureTextEntry={true}
-               onChangeText={(password) => this.setState({ newPassword })}
+               onChangeText={(newPassword) => this.setState({ newPassword })}
               />
             </Item>
             <Item floatingLabel last>
             <Label>Conform Password</Label>
             <Input 
             secureTextEntry={true}
-             onChangeText={(password) => this.setState({ conformPassword })}
+             onChangeText={(conformPassword) => this.setState({ conformPassword })}
             />
           </Item>
           </Form>
         </View>
-        <View style= {{marginTop:10,flexDirection : 'row', alignItems: 'center',  marginStart: 'auto', marginEnd: 'auto'}}>
-          <Button style= {{justifyContent:'center', marginEnd: 35, backgroundColor: '#2A367D'}} onPress={() => this._loginButtonPress()}>
+        <View style= {{marginTop:20,
+        alignItems: 'center',  marginStart: 'auto', marginEnd: 'auto'}}>
+          <Button style= {{justifyContent:'center', 
+           backgroundColor: '#2A367D'}} onPress={() => this._loginButtonPress()}>
             <Text> Submit </Text>
-          </Button>
-          <Button style= {{justifyContent:'center', marginStart: 35,backgroundColor: '#2A367D'}} onPress={() =>this._backButtonPress()} >
-            <Text>  Cancel  </Text>
           </Button>
         </View>
       </Container>
@@ -104,33 +108,37 @@ export default class ChangePassword extends Component {
     const { navigate } = this.props.navigation;
     var isValidate = true
     var errorMsg = ""
-    if ( validator.isEmpty(this.state.username)) {
+    if (validator.isEmpty(this.state.oldPassword)) {
       isValidate = false
-      Alert.alert("Please enter email")
-    }else if (validator.isEmail(this.state.username) === false) {
+      Alert.alert("Please enter old passsword")
+    } else if (validator.isEmpty(this.state.newPassword)) {
       isValidate = false
-      Alert.alert("Please enter valid emailId")
-    } else if (validator.isEmpty(this.state.password)) {
+      Alert.alert("Please enter new password")
+    } else if (validator.isEmpty(this.state.conformPassword)) {
       isValidate = false
-      Alert.alert( "Please enter password")
-    } 
-if (isValidate) {
-  const body = {
-    "email": this.state.username,
-    "password":this.state.password,
+      Alert.alert("Please enter conform Password")
+    } else if (this.state.newPassword != this.state.conformPassword) {
+      isValidate = false
+      Alert.alert("New password and Conform password must be same")
     }
-    this.setState({ isLoading: true })
-  postApiCallWithPromise(Url.userLoginUrl, body)
-    .then(response => {
-      this.setState({ isLoading: false })
-       navigate('GroupListScreen',{token:response.data.token})
-    })
-    .catch(function(error) {
-      this.setState({ isLoading: false })
-      reject(error);
-    });
-}
- }
+    if (isValidate) {
+      const body = {
+        "old_password": this.state.oldPassword,
+        "new_password": this.state.conformPassword,
+      }
+      this.setState({ isLoading: true })
+
+      postApiCallWithPromise(Url.reset, body, this.state.token)
+        .then(response => {
+          this.setState({ isLoading: false })
+          Alert.alert("Password changed successfully!")
+        })
+        .catch(function (error) {
+          this.setState({ isLoading: false })
+          reject(error);
+        });
+    }
+  }
 }
 
 const styles = {
