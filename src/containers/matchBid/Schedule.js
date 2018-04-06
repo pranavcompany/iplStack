@@ -55,8 +55,6 @@ export default class Schedule extends Component {
               <View style={{ flexDirection: 'column' }}>
                 <Text
                   style={styles.textView}>Match - {item.item.id}</Text>
-                <Text
-                  style={styles.dateTextView}> {item.item.date}  {item.item.time} </Text>
               </View>
               <View
                 style={styles.rowView}>
@@ -68,6 +66,8 @@ export default class Schedule extends Component {
                     style={styles.iconView}
                     source={this._matchIconWithServerName(item.item.abb2)} />
               </View>
+              <Text
+                  style={styles.dateTextView}> {item.item.date}  {item.item.time} </Text>
               {item.item.winner_statement ?  <View style={{ flexDirection: 'column' }}>
               <Text
                 style={styles.textView}>Winner - {item.item.winner_statement}</Text>
