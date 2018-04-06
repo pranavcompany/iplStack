@@ -6,7 +6,7 @@ export default class Headers extends Component {
   render() {
     const {navigate} = this.props.navigation
     return (
-      <Header style={{ backgroundColor: '#2A367D', height: 80 }}>
+      <Header style={{ backgroundColor: '#2A367D', height: 64 }}>
         <Left>
           <Button transparent onPress={this.props.onOpen}>
             <Icon

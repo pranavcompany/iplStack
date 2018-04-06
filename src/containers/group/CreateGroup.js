@@ -80,9 +80,12 @@ export default class CreateGroup extends Component {
     if (this.state.groupName.length == 0) {
       isValidate = false
       Alert.alert( "Please enter group name")
+    }else if (memberCount == 0) {
+      isValidate = false
+      Alert.alert( "Please enter member count")
     }else if (!(memberCount < 24)) {
       isValidate = false
-      Alert.alert( "You can add only 25 member")
+      Alert.alert( "You can add only 25 member including you")
     }
     if (isValidate){
       navigate("AddMemberScreen",{

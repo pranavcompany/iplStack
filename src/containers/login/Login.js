@@ -6,7 +6,7 @@
  */
 
 import React, { Component  } from 'react';
-import { View, Image, TouchableWithoutFeedback, Keyboard ,TouchableOpacity, Alert} from 'react-native';
+import { View, Image, TouchableWithoutFeedback, Keyboard ,TouchableOpacity,  Alert} from 'react-native';
 import SplashScreen from 'react-native-smart-splash-screen'
 import {
   Container,
@@ -38,13 +38,12 @@ export default class Login extends Component {
     };
   }
   componentDidMount () {
-    //SplashScreen.close(SplashScreen.animationType.scale, 850, 500) 
     SplashScreen.close({
-       animationType: SplashScreen.animationType.scale,
-       duration: 850,
-       delay: 500,
-    })
-}
+      animationType: SplashScreen.animationType.scale,
+      duration: 850,
+      delay: 500,
+  })
+  }
 
   render() {
     const { navigate } = this.props.navigation;

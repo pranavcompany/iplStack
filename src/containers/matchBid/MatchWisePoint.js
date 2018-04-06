@@ -41,15 +41,13 @@ class MatchWisePoint extends Component {
         return (
             <View style={styles.parentView}>
                 <View style={styles.childView}>
-]                {this._renderFlatListForMatch()}    
+               {this._renderFlatListForMatch()}    
                 </View>
             </View>
         )
     }
 
     _renderFlatList(pointDetails) {
-        console.log(pointDetails)
-        debugger
         return (
             <View style={{ flex: 6 }}>
                 <FlatList

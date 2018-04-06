@@ -60,7 +60,7 @@ export default class AddMember extends Component {
             resetScrollToCoords={{ x: 0, y: 0 }}
             scrollEnabled={true}
           >
-             <H2 style={{color: 'black', textAlign:'center', marginStart:10}}>{ params.groupName} </H2>
+             <H2 style={{color: 'black', textAlign:'center', marginStart:10, marginTop: 10}}>{ params.groupName} </H2>
                 {this._renderFlatList()}
                 </KeyboardAwareScrollView>
                 <TouchableOpacity style={{
@@ -83,7 +83,6 @@ export default class AddMember extends Component {
             data = {this.state.count}
             renderItem={({item, index}) =>
                 <View style ={{flexDirection:'row',flex: 1}}>
-                <H2 style={{flex:.8, marginLeft:10,marginTop:10}}>{index+1}</H2>
                 <View style={{
                     flex:10,
                    margin:10, alignItems: 'center',
@@ -93,14 +92,14 @@ export default class AddMember extends Component {
                         placeholder={"Member Name"}
                         underlineColorAndroid="transparent"
                         onChangeText={text => this.setState({ GroupName: text })}
-                        style={{ marginTop: 10, fontSize: 15, padding: 10, width: "90%" ,borderBottomWidth:1,borderBottomColor:'gray'}}
+                        style={{ marginTop: 10, fontSize: 15, padding: 5, width: "90%" ,borderBottomWidth:1,borderBottomColor:'gray'}}
                     />
                     <TextInput
                         placeholder={"Member email Id"}
                         keyboardType={"email-address"}
                         underlineColorAndroid="transparent"
                         onChangeText={text => this.setState({ MemberCount: text })}
-                        style={{ marginTop: 10, marginBottom: 10, fontSize: 15, padding: 10, width: "90%", borderBottomWidth:1,borderBottomColor:'gray' }}
+                        style={{marginBottom: 10, fontSize: 15, padding: 5, width: "90%", borderBottomWidth:1,borderBottomColor:'gray' }}
                     />
                 </View>
                 </View>

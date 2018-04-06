@@ -20,6 +20,7 @@ export default class PointTable extends Component {
         itemDataSource: [ ],
         isLoading: false,
         token:'',
+        groupName:'',
         groupId:''
     };
 
@@ -46,7 +47,7 @@ export default class PointTable extends Component {
             }} >
                 <View style={{ flex: 1, backgroundColor: 'white' }}>
                     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-                        <Text style={{ fontWeight: 'bold', color:'#2A367D', fontSize: 26 }}>Flat 28</Text>
+                        <Text style={{ fontWeight: 'bold', color:'#2A367D', fontSize: 26 }}>{this.state.groupName}</Text>
                     </View>
                     <View style={{flexDirection: 'row',  borderBottomWidth:1}}>
                         <View style={{  width: '70%'}}>
@@ -88,8 +89,8 @@ export default class PointTable extends Component {
         getApiCallWithPromise(mergeURL,this.state.token)
         .then(response => {
           this.setState({ isLoading: false, 
-                        itemDataSource: response.data })
-          console.log(response.data)
+                        itemDataSource: response.data,
+                        groupName: response.data.name })
         })
         .catch(function(error) {
           this.setState({ isLoading: false })

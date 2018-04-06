@@ -41,118 +41,66 @@ class MatchBid extends Component{
     render() {
         return (
             <ViewSpinner
-            style={{ flex: 1,
-              backgroundColor: 'white',
-              justifyContent: 'center'}}
-            isLoading={this.state.isLoading}
-          >
-            <View style={styles.parentView}>
-                <View style={styles.childView}>
-                <FlatList
-          data={this.state.itemDataSource}
-          renderItem={item => (
-                        <ImageBackground 
-                        source={require("../../assets/iplCard.jpg")}
-                        style = {{ backgroundColor:'#ffffff',shadowOpacity:.5,
-                                    shadowRadius:10,margin:10, padding: 5}}>
-                    <View
-                        style={styles.rowView}>
-                        {this.state.manageQuote.length == 0 ? this._renderFirstTeam(item,1) : 
-                            this.state.manageQuote.map((currentData,index)=> 
-                            {
-                                 currentData.match_id  == item.item.id ? this._renderFirstTeam(item,2,currentData) : this._renderFirstTeam(item,3)
-                            })
-                         }
-                        <H2>Vs</H2>
-                        {this.state.manageQuote.length == 0 ? this._renderSecondTeam(item,1) : 
-                            this.state.manageQuote.map((currentData,index)=> 
-                            {
-                                 currentData.match_id  == item.item.id ? this._renderSecondTeam(item,2,currentData) : this._renderSecondTeam(item,3)
-                            })
-                         }
+                style={{
+                    flex: 1,
+                    backgroundColor: 'white',
+                    justifyContent: 'center'
+                }}
+                isLoading={this.state.isLoading}>
+                <View style={styles.parentView}>
+                    <View style={styles.childView}>
+                        <FlatList
+                            data={this.state.itemDataSource}
+                            renderItem={item => (
+                                <ImageBackground
+                                    source={require("../../assets/iplCard.jpg")}
+                                    style={{
+                                        backgroundColor: '#ffffff', shadowOpacity: .5,
+                                        shadowRadius: 10, margin: 10, padding: 5
+                                    }}>
+                                    <View
+                                        style={styles.rowView}>
+                                        <TouchableOpacity
+                                            style={[styles.touchable, item.item.bids[0].bid_team == "" ? { borderColor: 'transparent' } : item.item.bids[0].bid_team == item.item.abb1 ? { borderColor: 'white' } : { borderColor: 'transparent' }]}
+                                            onPress={() => { this._createQuoteDetails(item.item, item.item.abb1, null) }}>
+                                            <Image
+                                                style={styles.iconView}
+                                                source={this._matchIconWithServerName(item.item.abb1)} />
+                                        </TouchableOpacity>
+                                        <H2>Vs</H2>
+                                        <TouchableOpacity
+                                            style={[styles.touchable, item.item.bids[0].bid_team == "" ? { borderColor: 'transparent' } : item.item.bids[0].bid_team == item.item.abb2 ? { borderColor: 'white' } : { borderColor: 'transparent' }]}
+                                            onPress={() => { this._createQuoteDetails(item.item, item.item.abb2, null) }}>
+                                            <Image
+                                                style={styles.iconView}
+                                                source={this._matchIconWithServerName(item.item.abb2)} />
+                                        </TouchableOpacity>
+                                    </View>
+                                    <View style={[styles.rowView,
+                                    { justifyContent: 'space-evenly', borderBottom: '#ffffff' }]}>
+                                        <Text
+                                            style={{ fontSize: 18, color: '#ECF0F1' }}>Quote</Text>
+                                        <TextInput
+                                            style={styles.inputText}
+                                            keyboardType={'numeric'}
+                                            maxLength={4}
+                                            underlineColorAndroid={'transparent'}
+                                            value={item.item.bids[0].bid_point}
+                                            onChangeText={(quote) => { this._createQuoteDetails(item.item, null, quote) }}
+                                        />
+                                        <TouchableOpacity style={{ marginStart: 30, backgroundColor: '#E7E7E7', borderWidth: 1, borderRadius: 10 }}
+                                            onPress={() => { this._letsQuote(item.item) }}
+                                        >
+                                            <Text
+                                                style={{ color: 'black', fontWeight: 'bold', fontSize: 18, padding: 10 }}>
+                                                let's Quote </Text>
+                                        </TouchableOpacity>
+                                    </View>
+                                </ImageBackground>
+                            )} />
                     </View>
-                    <View style={[styles.rowView,
-                         { justifyContent: 'space-evenly', borderBottom:'#ffffff' }]}>
-                        <Text 
-                        style = {{fontSize: 18 , color:'#ECF0F1'}}>Quote</Text>
-                        <TextInput
-                            style={styles.inputText}
-                            keyboardType={'numeric'}
-                            maxLength= {4}
-                            underlineColorAndroid={'transparent'}
-                            value = {item.item.bids[0].bid_point}
-                            onChangeText={(quote) =>  {this._createQuoteDetails(item.item, null ,quote)}}
-                        />
-                        <TouchableOpacity style={{ marginStart: 30, backgroundColor: '#E7E7E7', borderWidth: 1, borderRadius:10}}
-                        onPress={() => {this._letsQuote(item.item)}}
-                        >
-                            <Text
-                             style={{color: 'black', fontWeight: 'bold', fontSize: 18, padding: 10 }}>
-                              let's Quote </Text>
-                        </TouchableOpacity>
-                    </View>
-                    </ImageBackground>
-          )}/>
                 </View>
-            </View>
             </ViewSpinner>
-        )
-    }
-
-
-    _renderFirstTeam(item,number,currentData){
-        return(
-          number == 1 ? 
-          <TouchableOpacity
-          style={ [styles.touchable, item.item.bids[0].bid_team == item.item.abb1 ? {borderColor: 'white'} :  {borderColor: 'transparent'}] }
-          onPress={() => {this._createQuoteDetails(item.item, item.item.abb1,null)}}>
-          <Image
-              style={styles.iconView}
-              source={this._matchIconWithServerName(item.item.abb1)} />
-           </TouchableOpacity> :
-           number == 2 ? 
-           <TouchableOpacity
-          style={ [styles.touchable, currentData.bid_team == item.item.abb1 ? {borderColor: 'white'} :  {borderColor: 'transparent'}] }
-          onPress={() => {this._createQuoteDetails(item.item, item.item.abb1,null)}}>
-          <Image
-              style={styles.iconView}
-              source={this._matchIconWithServerName(item.item.abb1)} />
-           </TouchableOpacity>
-           :  
-          <TouchableOpacity
-          style={ [styles.touchable, item.item.bids[0].bid_team == item.item.abb1  ? {borderColor: 'transparent'} :  {borderColor: 'white'}] }
-          onPress={() => {this._createQuoteDetails(item.item, item.item.abb1,null)}}>
-          <Image
-              style={styles.iconView}
-              source={this._matchIconWithServerName(item.item.abb1)} />
-           </TouchableOpacity>
-        )
-    }
-
-    _renderSecondTeam(item,number,currentData){
-        return(
-            number == 1 ?         <TouchableOpacity
-        style={ [styles.touchable, item.item.bids[0].bid_team == item.item.abb2 ? {borderColor: 'white'} : {borderColor: 'transparent'}] }
-        onPress={() => {this._createQuoteDetails(item.item, item.item.abb2, null)}}>
-            <Image
-                style={styles.iconView}
-                source={this._matchIconWithServerName(item.item.abb2)} />
-        </TouchableOpacity>
-        : number == 2 ?         <TouchableOpacity
-        style={ [styles.touchable, currentData.bid_team == item.item.abb2 ? {borderColor: 'white'} : {borderColor: 'transparent'}] }
-        onPress={() => {this._createQuoteDetails(item.item, item.item.abb2, null)}}>
-            <Image
-                style={styles.iconView}
-                source={this._matchIconWithServerName(item.item.abb2)} />
-        </TouchableOpacity>
-        :
-        <TouchableOpacity
-        style={ [styles.touchable, item.item.bids[0].bid_team == item.item.abb2 ? {borderColor: 'transparent'} : {borderColor: 'white'}] }
-        onPress={() => {this._createQuoteDetails(item.item, item.item.abb2, null)}}>
-            <Image
-                style={styles.iconView}
-                source={this._matchIconWithServerName(item.item.abb2)} />
-        </TouchableOpacity>
         )
     }
 
