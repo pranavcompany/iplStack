@@ -30,7 +30,7 @@ import Spinner from '../../universal/components/Spinner'
 export default class AddMember extends Component {
 
   state = { 
-    count:[]
+    members:[],
   };
 
   componentDidMount(){
@@ -52,17 +52,14 @@ export default class AddMember extends Component {
             <TouchableWithoutFeedback onPress={() => {
                 Keyboard.dismiss();
             }} >
-            <View style={ {flex:1, backgroundColor: 'white'}}>
+            <View style={ { backgroundColor: 'white', flex:1}}>
             <GenericHeader
             navigation={this.props.navigation}
             headerTitle={"Add Members"} />
-            <KeyboardAwareScrollView
-            resetScrollToCoords={{ x: 0, y: 0 }}
-            scrollEnabled={true}
-          >
-             <H2 style={{color: 'black', textAlign:'center', marginStart:10, marginTop: 10}}>{ params.groupName} </H2>
+           
+             <H2 style={{color: 'black', flex:.1, textAlign:'center', marginStart:10, marginTop: 10}}>
+             { params.groupName} </H2>
                 {this._renderFlatList()}
-                </KeyboardAwareScrollView>
                 <TouchableOpacity style={{
                     flex: .1, margin: 10,backgroundColor: '#2A367D', justifyContent: 'center',
                     alignItems: 'center', borderRadius: 10
@@ -91,27 +88,84 @@ export default class AddMember extends Component {
                     <TextInput
                         placeholder={"Member Name"}
                         underlineColorAndroid="transparent"
-                        onChangeText={text => this.setState({ GroupName: text })}
+                        onChangeText={name => this._addMemberName(index, name, null)}
                         style={{ marginTop: 10, fontSize: 15, padding: 5, width: "90%" ,borderBottomWidth:1,borderBottomColor:'gray'}}
                     />
                     <TextInput
                         placeholder={"Member email Id"}
                         keyboardType={"email-address"}
                         underlineColorAndroid="transparent"
-                        onChangeText={text => this.setState({ MemberCount: text })}
+                        onChangeText={email => this._addMemberName(index, null, email)}
                         style={{marginBottom: 10, fontSize: 15, padding: 5, width: "90%", borderBottomWidth:1,borderBottomColor:'gray' }}
                     />
                 </View>
                 </View>
            }
             />
-        )
-            
+        )  
    }
+   
+    _addMemberName = (index, name, email) => {
+        if (this.state.members.length > 0) {
+            var detailsArray = this.state.members
+            this.state.manageQuote.map((currentDetails, index) => {
+                if (currentDetails.id === detailsArray.id) {
+                    var selected_email = email == null ? currentDetails.email : email
+                    var selected_name = name == null ? currentDetails.name : name
+                    var selected = {
+                        "id": index,
+                        "name": selected_name,
+                        "email": selected_email
+                    }
+                    detailsArray[index] = selected
+                } else {
+                    var selected_email = email == null ? currentDetails.email : email
+                    var selected_name = name == null ? currentDetails.name : name
+                    var selected = {
+                        "id": index,
+                        "name": selected_name,
+                        "email": selected_email
+                    }
+                    detailsArray.push(selected)
+                }
+            })
+            this.setState({
+                members: detailsArray
+            })
+        } else {
+            var detailsArray = []
+            var selected = {
+                "id": index,
+                "name": name,
+                "email": email
+            }
+            detailsArray.push(selected)
+            this.setState({ members: detailsArray })
+        }
+    }
+
  _createGroup(){
+    const { params } = this.props.navigation.state;
+
+    // {
+    //     "name": "gp name",
+    //     "members":	[
+    //     {
+    //     "name": "abc",
+    //     "email": "abc@abc.com"
+    //     },
+    //     {
+    //     "name": "xyz",
+    //     "email": "xyz@xyz.com"
+    //     }
+    //     ]
+    //     }
+    //     http://34.208.227.151/api/groups
+
     const body = {
-        "group": this.state.username,
-        "password":this.state.password,
+        "name":  params.groupName,
+
+        "members":this.state.password,
         }
         this.setState({ isLoading: true })
       postApiCallWithPromise(Url.createGroup, body)

@@ -24,7 +24,7 @@ import GenericHeader from '../../universal/components/GenericHeader'
 export default class CreateGroup extends Component {
   state = {
     groupName:'',
-    memberCount:0
+    memberCount:''
   };
   render() {
     return (
