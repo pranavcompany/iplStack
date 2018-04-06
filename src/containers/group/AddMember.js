@@ -6,7 +6,7 @@
  */
 
 import React, { Component  } from 'react';
-import { View, Image, TouchableWithoutFeedback, Keyboard, TextInput, FlatList, TouchableOpacity } from 'react-native';
+import { View, Image, TouchableWithoutFeedback, Keyboard, AsyncStorage, TextInput, FlatList, TouchableOpacity } from 'react-native';
 import {
   Container,
   Content,
@@ -30,7 +30,9 @@ import Spinner from '../../universal/components/Spinner'
 export default class AddMember extends Component {
 
   state = { 
+    count:[],
     members:[],
+    token:''
   };
 
   componentDidMount(){
@@ -43,6 +45,9 @@ export default class AddMember extends Component {
         member.push(array)
     }
     this.setState({ count: member})
+    AsyncStorage.getItem("token").then((value2) => {
+        this.setState({token:value2});
+      }).done();
   }
 
     render() {
@@ -108,7 +113,7 @@ export default class AddMember extends Component {
     _addMemberName = (index, name, email) => {
         if (this.state.members.length > 0) {
             var detailsArray = this.state.members
-            this.state.manageQuote.map((currentDetails, index) => {
+            this.state.members.map((currentDetails, index) => {
                 if (currentDetails.id === detailsArray.id) {
                     var selected_email = email == null ? currentDetails.email : email
                     var selected_name = name == null ? currentDetails.name : name
@@ -144,40 +149,45 @@ export default class AddMember extends Component {
         }
     }
 
- _createGroup(){
-    const { params } = this.props.navigation.state;
-
-    // {
-    //     "name": "gp name",
-    //     "members":	[
-    //     {
-    //     "name": "abc",
-    //     "email": "abc@abc.com"
-    //     },
-    //     {
-    //     "name": "xyz",
-    //     "email": "xyz@xyz.com"
-    //     }
-    //     ]
-    //     }
-    //     http://34.208.227.151/api/groups
-
-    const body = {
-        "name":  params.groupName,
-
-        "members":this.state.password,
+    _createGroup() {
+        const { params } = this.props.navigation.state;
+        if (this.state.members.length > 0){
+            this.state.members.map((currentDetails, index) => {
+                var isValidate = true
+                var errorMsg = ""
+                if ( validator.isEmpty(currentDetails.name)) {
+                  isValidate = false
+                  Alert.alert("Please enter email")
+                  return
+                } else if (validator.isEmpty(currentDetails.email)) {
+                  isValidate = false
+                  Alert.alert( "Please enter email")
+                  return
+                } else if (validator.isEmail(currentDetails.email) === false) {
+                    isValidate = false
+                    Alert.alert("Please enter valid emailId")
+                    return
+                 }
+            })
         }
-        this.setState({ isLoading: true })
-      postApiCallWithPromise(Url.createGroup, body)
-        .then(response => {
-          this.setState({ isLoading: false })
-           navigate('GroupListScreen')
-        })
-        .catch(function(error) {
-          this.setState({ isLoading: false })
-          reject(error);
-        });
- }
+
+        if (isValidate) {
+            const body = {
+                "name": params.groupName,
+                "members": this.state.members,
+            }
+            this.setState({ isLoading: true })
+            postApiCallWithPromise(Url.createGroup, body, this.state.token)
+                .then(response => {
+                    this.setState({ isLoading: false })
+                    navigate('GroupListScreen')
+                })
+                .catch(function (error) {
+                    this.setState({ isLoading: false })
+                    reject(error);
+                });
+        }
+    }
 }
 
 const styles = {
