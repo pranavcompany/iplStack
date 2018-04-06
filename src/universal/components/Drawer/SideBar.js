@@ -15,14 +15,14 @@ class SideBar extends Component {
           title= "Reset Password"
         />
         <Card
-          onPress={() => navigate("ChangePasswordScreen")}
-          title="Terms and Conditions "
+          onPress={() => navigate("RuleScreen")}
+          title="Rule Book"
         />
         <Card
           onPress={() =>
             Alert.alert(
               "Exit",
-              "Are you want to logout",
+              "Do you want to logout",
               [
                 { text: "Cancel", style: "cancel" },
                 { text: "OK", onPress: () => this._logoutAndClearStore() }

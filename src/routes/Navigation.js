@@ -8,6 +8,7 @@ import GroupList from '../../src/containers/group/GroupList';
 import AddMember from '../../src/containers/group/AddMember'; 
 import Dashboard from '../containers/matchBid/Dashboard'
 import ChangePassword from '../containers/menu/ChangePassword'
+import Rule from '../containers/menu/Rule'
 
 const AppNavigation = StackNavigator({
   LoginScreen: { screen: Login },
@@ -17,6 +18,7 @@ const AppNavigation = StackNavigator({
   AddMemberScreen:{screen: AddMember},
   DashboardScreen:{screen: Dashboard},
   ChangePasswordScreen:{screen: ChangePassword},
+  RuleScreen:{screen: Rule}
   
 }, {
     // see next line
