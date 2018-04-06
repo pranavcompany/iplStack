@@ -7,54 +7,38 @@ import {
     TextInput,
     ImageBackground,
     Picker,
-    FlatList
+    FlatList,
+    AsyncStorage
 } from "react-native";
 import { H1, H2, H3 } from "native-base";
+import {getApiCallWithPromise} from "../../utils/PromiseApiCall";
+import {Url} from '../../utils/constant/Url';
+import Spinner from '../../universal/components/Spinner';
+import Assets from '../../assets'
 
+let ViewSpinner = Spinner(View);
 class MatchWisePoint extends Component {
-
     state = {
-        itemDataSource: [{member_name:'Pranav Manikpure',total_point:'50'}, {member_name:'Sumit Chavan',total_point:'30'}, {member_name:'Atul Bhangire',total_point:'40'}]
+        itemDataSourceForBids: [],
+        itemDataSourceForMatch: [],
+        isLoading: false,
+        token:'',
+        groupId:''
     };
+    componentDidMount(){
+        AsyncStorage.getItem("token").then((value2) => {
+            this.setState({token:value2});
+            this._getMatchWiseDetails()
+          }).done();
+          AsyncStorage.getItem("groupId").then((value2) => {
+            this.setState({groupId:value2});
+          }).done();
+    }
+
     render() {
         return (
             <View style={styles.parentView}>
-                <View style={styles.childView}>
-                    <ImageBackground
-                        source={require("../../assets/iplCard.jpg")}
-                        style={{
-                            backgroundColor: '#ffffff', shadowOpacity: .5,
-                            shadowRadius: 10, margin: 10, padding: 5
-                        }}>
-                        <View style={{flexDirection:'column'}}>
-                        <Text
-                            style={styles.textView}>Match - 1</Text>
-                        <Text
-                            style={styles.dateTextView}> 7 Apr</Text>
-                        </View>
-                        <View
-                            style={styles.rowView}>
-                            <Image
-                                style={styles.iconView}
-                                source={require('../../assets/MI.png')} />
-                            <H2>Vs</H2>
-                            <Image
-                                style={styles.iconView}
-                                source={require('../../assets/CSK.png')} />
-                        </View>
-                    </ImageBackground>
-                </View>
-                <View style={{ flex: 10, backgroundColor: 'white' }}>
-                    <View style={{flexDirection: 'row',  borderBottomWidth:1}}>
-                        <View style={{  width: '70%'}}>
-                            <Text style={{ margin:10, fontWeight: 'bold', fontSize: 18, width: 175 }}> Member Name </Text>
-                        </View>
-                        <View style={{  width: '30%', alignItems : 'center'}}>                        
-                        <Text style={{  margin:10,  fontWeight: 'bold', fontSize: 18 }}> Points</Text>
-                        </View>
-                    </View>
-                {this._renderFlatList()}
-                </View>
+                {this._renderFlatListForMatch()}    
             </View>
         )
     }
@@ -63,7 +47,7 @@ class MatchWisePoint extends Component {
         return (
             <View style={{ flex: 6 }}>
                 <FlatList
-                    data={this.state.itemDataSource}
+                    data={this.state.itemDataSourceForBids}
                     renderItem={item => (
                         <View style={{flexDirection: 'row',  borderBottomWidth:1}}>
                         <View style={{  width: '70%'}}>
@@ -78,6 +62,97 @@ class MatchWisePoint extends Component {
             </View>
         )
     }
+    _renderFlatListForMatch(){
+        return (
+            <View style={styles.childView}>
+        <FlatList
+        data={this.state.itemDataSourceForMatch}
+        renderItem={item => (
+            <View style={{flexDirection: 'row',  borderBottomWidth:1}}>
+            <View style={{  width: '70%'}}>
+              <Text style={{ margin:10,  fontSize: 16, width: 175 }}>{item.item.member_name} </Text>
+              </View>
+              <View style={{  width: '30%', alignItems : 'center'}}>                        
+              <Text style={{  margin:10, fontSize: 16 }}> {item.item.total_point}</Text>
+              </View>
+              <ImageBackground
+              source={require("../../assets/iplCard.jpg")}
+              style={{
+                  backgroundColor: '#ffffff', shadowOpacity: .5,
+                  shadowRadius: 10, margin: 10, padding: 5
+              }}>
+              <View style={{flexDirection:'column'}}>
+              <Text
+                  style={styles.textView}>Match - 1</Text>
+              <Text
+                  style={styles.dateTextView}> 7 Apr</Text>
+              </View>
+              <View
+                  style={styles.rowView}>
+                  <Image
+                      style={styles.iconView}
+                      source={require('../../assets/MI.png')} />
+                  <H2>Vs</H2>
+                  <Image
+                      style={styles.iconView}
+                      source={require('../../assets/CSK.png')} />
+              </View>
+          </ImageBackground>
+      </View>
+    )}/>
+      <View style={{ flex: 10, backgroundColor: 'white' }}>
+          <View style={{flexDirection: 'row',  borderBottomWidth:1}}>
+              <View style={{  width: '70%'}}>
+                  <Text style={{ margin:10, fontWeight: 'bold', fontSize: 18, width: 175 }}> Member Name </Text>
+              </View>
+              <View style={{  width: '30%', alignItems : 'center'}}>                        
+              <Text style={{  margin:10,  fontWeight: 'bold', fontSize: 18 }}> Points</Text>
+              </View>
+          </View>
+         { this._renderFlatList()}
+        </View>
+    </View>
+    )
+    }
+
+
+    _getMatchWiseDetails(){
+        const mergeURL = Url.matchWisePoint +  this.state.groupId
+        getApiCallWithPromise(mergeURL, this.state.token)
+        .then(response => {
+          this.setState({ isLoading: false, 
+            itemDataSourceForMatch: response.data })
+          console.log(response.data)
+        })
+        .catch(function(error) {
+          this.setState({ isLoading: false })
+          console.log(error)
+          reject(error);
+        });
+    }
+    _matchIconWithServerName(name){
+        switch (name) {
+          case 'MI':
+            return Assets.MI
+          case 'CSK':  
+          return Assets.CSK
+          case 'SRH':  
+          return Assets.SRH
+          case 'RCB':  
+          return Assets.RCB
+          case 'KKR':
+          return Assets.KKR
+          case 'DD':
+          return Assets.DD
+          case 'KXIP':
+          return Assets.KXIP
+          case 'RR':
+          return Assets.RR
+          default:
+          return Assets.TBD
+        }
+    }
+
 }
 const styles = {
     inputText:{

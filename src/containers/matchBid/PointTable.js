@@ -18,11 +18,19 @@ let ViewSpinner = Spinner(View);
 export default class PointTable extends Component {
     state = {
         itemDataSource: [ ],
-        isLoading: false
+        isLoading: false,
+        token:'',
+        groupId:''
     };
 
     componentDidMount(){
-        {this._getPointTableDetails()}
+        AsyncStorage.getItem("token").then((value2) => {
+            this.setState({token:value2});
+          }).done();
+          AsyncStorage.getItem("groupId").then((value2) => {
+            this.setState({groupId:value2});
+            this._getPointTableDetails()
+          }).done();
     }
 
     render() {
@@ -76,8 +84,8 @@ export default class PointTable extends Component {
     }
 
     _getPointTableDetails(){
-        const mergeURL = Url.userGroupsMembersUrl + AsyncStorage.getItem('groupId') + '/members'
-        getApiCallWithPromise(mergeURL, AsyncStorage.getItem('token'))
+        const mergeURL = Url.userGroupsMembersUrl + this.state.groupId + '/members'
+        getApiCallWithPromise(mergeURL,this.state.token)
         .then(response => {
           this.setState({ isLoading: false, 
                         itemDataSource: response.data })

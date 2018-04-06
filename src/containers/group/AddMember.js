@@ -21,7 +21,7 @@ import {
 import Assets from "../../assets/index";
 import GridView from "react-native-super-grid";
 import GenericHeader from '../../universal/components/GenericHeader'
-
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 export default class AddMember extends Component {
 
   state = { 
@@ -31,10 +31,14 @@ export default class AddMember extends Component {
 
   componentDidMount(){
     const { params } = this.props.navigation.state;
+    const num = Number(params.memberCount)
+
     const array = 'Abhishek'
-    for(var int = 0; int>= parseInt(params.memberCount); int++){
-        this.state.count.push(array)
+    const member = []
+    for(var int = 1; int <= num ; int++){
+        member.push(array)
     }
+    this.setState({ count: member})
   }
 
     render() {
@@ -48,45 +52,61 @@ export default class AddMember extends Component {
             <GenericHeader
             navigation={this.props.navigation}
             headerTitle={"Add Members"} />
-             <H2 style={{color: 'black', textAlign:'center', margin:5}}>{ params.groupName} </H2>
-                {this._renderFlatList(params.memberCount)}
+            <KeyboardAwareScrollView
+
+            resetScrollToCoords={{ x: 0, y: 0 }}
+            contentContainerStyle={styles.keyboardAvoidingViewStyle}
+            scrollEnabled={true}
+          >
+             <H2 style={{color: 'black', textAlign:'center', marginStart:10}}>{ params.groupName} </H2>
+                {this._renderFlatList()}
                     <TouchableOpacity style={{
-                        flex: .1, margin: 15,backgroundColor: '#2A367D', justifyContent: 'center',
+                        flex: .1, margin: 10,backgroundColor: '#2A367D', justifyContent: 'center',
                         alignItems: 'center', borderRadius: 10
                     }} onPress={() => {
                         navigate('GroupListScreen')
                     }}>
                   <Text style={{color: 'white'}}> S U B M I T  </Text>
                 </TouchableOpacity>
+                </KeyboardAwareScrollView>
                 </View>
             </TouchableWithoutFeedback>
         );
     }
 
-    _renderFlatList(int) {
+    _renderFlatList() {
+           return(
 
-        this.state.count.map((data) => {
-            return (
+            <FlatList
+            style={{flex:.9}}
+            data = {this.state.count}
+            renderItem={({item, index}) =>
+                <View style ={{flexDirection:'row',flex: 1}}>
+                <H2 style={{flex:.8, marginLeft:10,marginTop:10}}>{index+1}</H2>
                 <View style={{
-                    marginLeft: 20, marginRight: 20, alignItems: 'center',
-                    justifyContent: 'center', borderBottomWidth: 1
+                    flex:10,
+                   margin:10, alignItems: 'center',
+                    justifyContent: 'center',
                 }}>
                     <TextInput
                         placeholder={"Member Name"}
                         underlineColorAndroid="transparent"
                         onChangeText={text => this.setState({ GroupName: text })}
-                        style={{ marginTop: 10, fontSize: 15, paddingStart: 10, width: "90%" }}
+                        style={{ marginTop: 10, fontSize: 15, padding: 10, width: "90%" ,borderBottomWidth:1,borderBottomColor:'gray'}}
                     />
                     <TextInput
                         placeholder={"Member email Id"}
                         keyboardType={"email-address"}
                         underlineColorAndroid="transparent"
                         onChangeText={text => this.setState({ MemberCount: text })}
-                        style={{ marginTop: 10, marginBottom: 10, fontSize: 15, paddingStart: 10, width: "90%" }}
+                        style={{ marginTop: 10, marginBottom: 10, fontSize: 15, padding: 10, width: "90%", borderBottomWidth:1,borderBottomColor:'gray' }}
                     />
                 </View>
-            )
-        })
+                </View>
+           }
+            />
+        )
+            
    }
 
   _loginButtonPress = () => {

@@ -25,11 +25,15 @@ class MatchBid extends Component{
         secondSelect:'transparent',
         player:'Select Player',
         itemDataSource: [],
-        isLoading: false
+        isLoading: false,
+        token:""
     }
 
     componentDidMount(){
-        {this._getTodayMatchDetails()}
+        AsyncStorage.getItem("token").then((value2) => {
+            this.setState({token:value2});
+            this._getTodayMatchDetails()
+          }).done();
     }
 
     render() {
@@ -103,7 +107,7 @@ class MatchBid extends Component{
     }
 
     _getTodayMatchDetails(){
-        getApiCallWithPromise(Url.todayUrl, AsyncStorage.getItem('token'))
+        getApiCallWithPromise(Url.todayUrl, this.state.token)
         .then(response => {
           this.setState({ isLoading: false, 
                         itemDataSource: response.data })
