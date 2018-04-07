@@ -54,14 +54,14 @@ class MatchWisePoint extends Component {
                     data={pointDetails}
                     renderItem={item => (
                         <View style={{flexDirection: 'row',  borderBottomWidth:1}}>
-                        <View style={{  width: '60%'}}>
+                        <View style={{  width: '50%'}}>
                           <Text style={{ margin:10,  fontSize: 16, width: 175 }}>{item.item.user.name}</Text>
                           </View>
-                          <View style={{  width: '20%', alignItems : 'center'}}>                        
+                          <View style={{  width: '30%', alignItems : 'center'}}>                        
                           <Text style={{  margin:10, fontSize: 16 }}> {item.item.bid_team ? item.item.bid_team : "No Quote"}</Text>
                           </View>
                           <View style={{  width: '20%', alignItems : 'center'}}>                        
-                          <Text style={{  margin:10, fontSize: 16 }}> {item.item.bid_point ? item.item.bid_point : "-"+item.item.bid_point}</Text>
+                          <Text style={{  margin:10, fontSize: 16 }}> {item.item.bid_team ? item.item.bid_point : "-"+item.item.bid_point}</Text>
                           </View>
                         </View>
                     )}
