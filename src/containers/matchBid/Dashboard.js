@@ -37,9 +37,12 @@ class Dashboard extends Component {
 }
 
   tabView(iconName, Comp) {
+    const {params}= this.props.navigation.state
     return (
       <Tab heading={this.header({ iconName})}>
-        <Comp />
+        <Comp 
+          groupId = {params.groupId} 
+        />
       </Tab>
     );
   }

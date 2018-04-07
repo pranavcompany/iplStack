@@ -138,9 +138,9 @@ class MatchBid extends Component{
  
   
     _getTodayMatchDetails(){
-
+        
         const url = '?group_id='
-        getApiCallWithPromise(Url.todayUrl+url+this.state.groupId, this.state.token)
+        getApiCallWithPromise(Url.todayUrl+url+this.props.groupId, this.state.token)
         .then(response => {
           this.setState({ isLoading: false, 
                         itemDataSource: response.data })
