@@ -140,14 +140,16 @@ export default class ChangePassword extends Component {
       postApiCallWithPromise(Url.reset, body, this.state.token)
         .then(response => {
           this.setState({ isLoading: false })
-          Alert.alert(
-            "Success",
-            "Password changed successfully!",
-            [
-              { text: "OK", onPress: () => goBack()}
-            ],
-            { cancelable: false }
-          )
+          if (response.status = 200) {
+            Alert.alert(
+              "Success",
+              "Password changed successfully!",
+              [
+                { text: "OK", onPress: () => goBack()}
+              ],
+              { cancelable: false }
+            )
+          }
         })
         .catch(function (error) {
           this.setState({ isLoading: false })

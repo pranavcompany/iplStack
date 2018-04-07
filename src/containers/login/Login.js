@@ -127,10 +127,15 @@ if (isValidate) {
     this.setState({ isLoading: true })
   postApiCallWithPromise(Url.userLoginUrl, body)
     .then(response => {
+
       this.setState({ isLoading: false })
-       replace('GroupListScreen',{token:response.data.token, userId: response.data.user_id, 
-                                  email:response.data.email, name:response.data.name})
-    })
+      if (response.status = 200) {
+        replace('GroupListScreen', {
+          token: response.data.token, userId: response.data.user_id,
+          email: response.data.email, name: response.data.name
+        })
+      }
+     })
     .catch(function(error) {
       this.setState({ isLoading: false })
       reject(error);

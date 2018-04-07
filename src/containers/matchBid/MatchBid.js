@@ -36,11 +36,11 @@ class MatchBid extends Component{
           }).done();
           AsyncStorage.getItem("memberId").then((value2) => {
             this.setState({memberId:value2});
-            this._getTodayMatchDetails()
           }).done();
 
           AsyncStorage.getItem("groupId").then((value2) => {
             this.setState({groupId:value2});
+            this._getTodayMatchDetails()
           }).done();
     }
 
