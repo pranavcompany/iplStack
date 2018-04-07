@@ -32,8 +32,8 @@ export default class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: 'atul@e-arth.in',
-      password: 'atul123',
+      username: 'aj107610@gmail.com',
+      password: '1234567890',
       isLoading: false
     };
   }
@@ -69,6 +69,8 @@ export default class Login extends Component {
             <Item floatingLabel >
               <Label>Email Id</Label>
               <Input
+              autoCapitalize = {'none'}
+                keyboardType = {'email-address'}
                 value={this.state.username}
                 onChangeText={(username) => this.setState({ username })}
               />
@@ -84,14 +86,16 @@ export default class Login extends Component {
           </Form>
         </View>
         <TouchableOpacity
-        style ={{margin:10, alignItems:'flex-end', paddingEnd:10}}  onPress={() => navigate('ForgotPasswordScreen')}>
+        style ={{margin:10, alignItems:'flex-end', paddingEnd:10}} 
+         onPress={() => navigate('ForgotPasswordScreen')}>
         <Text>Forgot Password</Text>
         </TouchableOpacity>
         <View style= {{marginTop:10,flexDirection : 'row', alignItems: 'center',  marginStart: 'auto', marginEnd: 'auto'}}>
-          <Button style= {{justifyContent:'center', marginEnd: 35, backgroundColor: '#2A367D'}} onPress={() => this._loginButtonPress()}>
+          <Button style= {{justifyContent:'center',
+          borderRadius:10, marginEnd: 35, backgroundColor: '#2A367D'}} onPress={() => this._loginButtonPress()}>
             <Text> Sign In </Text>
           </Button>
-          <Button style= {{justifyContent:'center', marginStart: 35,backgroundColor: '#2A367D'}} onPress={() => navigate('SignUpScreen')} >
+          <Button style= {{justifyContent:'center',borderRadius:10, marginStart: 35,backgroundColor: '#2A367D'}} onPress={() => navigate('SignUpScreen')} >
             <Text> Sign Up  </Text>
           </Button>
         </View>
@@ -124,7 +128,8 @@ if (isValidate) {
   postApiCallWithPromise(Url.userLoginUrl, body)
     .then(response => {
       this.setState({ isLoading: false })
-       replace('GroupListScreen',{token:response.data.token, userId: response.data.user_id})
+       replace('GroupListScreen',{token:response.data.token, userId: response.data.user_id, 
+                                  email:response.data.email, name:response.data.name})
     })
     .catch(function(error) {
       this.setState({ isLoading: false })

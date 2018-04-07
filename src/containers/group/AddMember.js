@@ -65,6 +65,7 @@ export default class AddMember extends Component {
             <View style={ { backgroundColor: 'white', flex:1}}>
             <GenericHeader
             navigation={this.props.navigation}
+
             headerTitle={"Add Members"} />
            
              <H2 style={{color: 'black', flex:.1, textAlign:'center', marginStart:10, marginTop: 10}}>
@@ -103,6 +104,7 @@ export default class AddMember extends Component {
                     <TextInput
                         placeholder={"Member email Id"}
                         keyboardType={"email-address"}
+                        autoCapitalize = {'none'}
                         underlineColorAndroid="transparent"
                         onEndEditing={(email) => this._addMemberEmailId(item, email.nativeEvent.text)}
                         style={{marginBottom: 10, fontSize: 15, padding: 5, width: "90%", borderBottomWidth:1,borderBottomColor:'gray' }}

@@ -62,18 +62,19 @@ constructor(props) {
               <Label>Email Id</Label>
               <Input
                 value={this.state.email}
+                autoCapitalize = {'none'}
+                keyboardType = {'email-address'}
                 onChangeText={(email) => this.setState({ email })}
               />
             </Item>
           </Form>
         </View>
-        <View style= {{marginTop:10,flexDirection : 'row', alignItems: 'center',  marginStart: 'auto', marginEnd: 'auto'}}>
-          <Button style= {{justifyContent:'center', marginEnd: 35, backgroundColor: '#2A367D'}} onPress={() => this._loginButtonPress()}>
+        <View style= {{marginTop:10,flexDirection : 'row', alignItems: 'center',  
+        marginStart: 'auto', marginEnd: 'auto'}}>
+          <Button style= {{justifyContent:'center', backgroundColor: '#2A367D', borderRadius:10}} onPress={() => this._loginButtonPress()}>
             <Text> Submit </Text>
           </Button>
-          <Button style= {{justifyContent:'center', marginStart: 35,backgroundColor: '#2A367D'}} onPress={() => this._backButtonPress()} >
-            <Text> Back  </Text>
-          </Button>
+          
         </View>
       </Container>
       </TouchableWithoutFeedback>

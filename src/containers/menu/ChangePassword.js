@@ -67,6 +67,7 @@ export default class ChangePassword extends Component {
             <Item floatingLabel >
               <Label>Old Password</Label>
               <Input
+              autoCapitalize = {'none'}
                 onChangeText={(oldPassword) => this.setState({ oldPassword })}
               />
             </Item>
@@ -74,6 +75,7 @@ export default class ChangePassword extends Component {
               <Label>New Password</Label>
               <Input 
               secureTextEntry={true}
+              autoCapitalize = {'none'}
                onChangeText={(newPassword) => this.setState({ newPassword })}
               />
             </Item>
@@ -81,6 +83,7 @@ export default class ChangePassword extends Component {
             <Label>Conform Password</Label>
             <Input 
             secureTextEntry={true}
+            autoCapitalize = {'none'}
              onChangeText={(conformPassword) => this.setState({ conformPassword })}
             />
           </Item>
@@ -88,7 +91,7 @@ export default class ChangePassword extends Component {
         </View>
         <View style= {{marginTop:20,
         alignItems: 'center',  marginStart: 'auto', marginEnd: 'auto'}}>
-          <Button style= {{justifyContent:'center', 
+          <Button style= {{justifyContent:'center', borderRadius:10,
            backgroundColor: '#2A367D'}} onPress={() => this._loginButtonPress()}>
             <Text> Submit </Text>
           </Button>
@@ -105,7 +108,7 @@ export default class ChangePassword extends Component {
   }
 
   _loginButtonPress = () => {
-    const { navigate } = this.props.navigation;
+    const { goBack } = this.props.navigation;
     var isValidate = true
     var errorMsg = ""
     if (validator.isEmpty(this.state.oldPassword)) {
@@ -131,7 +134,14 @@ export default class ChangePassword extends Component {
       postApiCallWithPromise(Url.reset, body, this.state.token)
         .then(response => {
           this.setState({ isLoading: false })
-          Alert.alert("Password changed successfully!")
+          Alert.alert(
+            "Success",
+            "Password changed successfully!",
+            [
+              { text: "OK", onPress: () => goBack()}
+            ],
+            { cancelable: false }
+          )
         })
         .catch(function (error) {
           this.setState({ isLoading: false })

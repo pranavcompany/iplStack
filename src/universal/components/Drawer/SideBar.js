@@ -9,10 +9,12 @@ class SideBar extends Component {
     const { navigate, replace } = this.props.navigation;
     return (
       <View style={styles.parentView}>
-        <DrawerHeader />
+        <DrawerHeader 
+         Name= {this.props.Name}
+         Email= {this.props.Email}/>
         <Card
-          onPress={() => replace("ChangePasswordScreen")}
-          title= "Reset Password"
+          onPress={() => navigate("ChangePasswordScreen")}
+          title= "Change Password"
         />
         <Card
           onPress={() => navigate("RuleScreen")}
@@ -36,8 +38,8 @@ class SideBar extends Component {
     );
   }
   _logoutAndClearStore() {
-    const { navigate } = this.props.navigation;
-     navigate("LoginScreen");
+    const { replace } = this.props.navigation;
+     replace("LoginScreen");
   }
 }
 const styles = {

@@ -80,6 +80,8 @@ export default class SignUp extends Component {
             <Item floatingLabel last>
               <Label>Email</Label>
               <Input 
+              autoCapitalize = {'none'}
+               keyboardType = {'email-address'}
                 onChangeText={(email) => this.setState({ email })}
               />
             </Item>
@@ -94,22 +96,24 @@ export default class SignUp extends Component {
             <Item floatingLabel last>
               <Label>Password</Label>
               <Input secureTextEntry={true}
+              autoCapitalize = {'none'}
                 onChangeText={(password) => this.setState({ password })}
               />
             </Item>
             <Item floatingLabel last>
               <Label>Confirm Password</Label>
               <Input secureTextEntry={true}
+              autoCapitalize = {'none'}
                 onChangeText={(conformPassword) => this.setState({ conformPassword })}
               />
             </Item>
           </Form>
         </View>
         <View style= {{flexDirection : 'row', alignItems: 'center',  marginStart: 'auto', marginEnd: 'auto', marginTop: 10}}>
-          <Button style= {{justifyContent:'center', marginEnd: 35,  backgroundColor: '#2A367D'}} onPress={() => this._loginButtonPress()}>
+          <Button style= {{justifyContent:'center',borderRadius:10, marginEnd: 35,  backgroundColor: '#2A367D'}} onPress={() => this._loginButtonPress()}>
             <Text> R E G I S T E R </Text>
           </Button>
-          <Button style= {{justifyContent:'center', marginStart: 35,  backgroundColor: '#2A367D'}} onPress={() => this._backButtonPress()}>
+          <Button style= {{justifyContent:'center', borderRadius:10,marginStart: 35,  backgroundColor: '#2A367D'}} onPress={() => this._backButtonPress()}>
           <Text> B A C K </Text>
         </Button>
         </View>

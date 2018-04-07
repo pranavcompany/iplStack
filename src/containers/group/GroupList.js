@@ -6,7 +6,8 @@
  */
 
 import React, { Component  } from 'react';
-import { View, Image, AsyncStorage, TouchableWithoutFeedback, Keyboard, TextInput, FlatList, TouchableOpacity } from 'react-native';
+import { View, Image, AsyncStorage, TouchableWithoutFeedback, ImageBackground,
+    Keyboard, TextInput, FlatList, TouchableOpacity } from 'react-native';
 import {
   Text,
 } from 'native-base';
@@ -44,6 +45,7 @@ export default class GroupList extends Component {
 
    
     render() {
+        const { params } = this.props.navigation.state
         return (
             <ViewSpinner
             style={{ flex: 1,
@@ -56,6 +58,8 @@ export default class GroupList extends Component {
             }} >
                 <View style={{ flex: 1, backgroundColor: 'white' }}>
                 <Drawer 
+                Email={params.email}
+                Name={params.name}
                 navigation={this.props.navigation}>
                     {this.state.itemDataSource.length > 0 ? this._renderFlatList() : this._emptyView()}
                 </Drawer>
@@ -73,14 +77,27 @@ export default class GroupList extends Component {
                 <FlatList
                     data={this.state.itemDataSource}
                     renderItem={item => (
-                        <TouchableOpacity onPress={() => {
+                        <ImageBackground
+                        source={require("../../assets/group2.jpg")}
+                        style={{
+                            backgroundColor: '#ffffff', shadowOpacity: .5,
+                            shadowRadius: 10, margin: 10, padding: 5, height:120,
+                             borderRadius:10, justifyContent:'flex-end'
+                
+                        }}>
+                        <TouchableOpacity 
+                        onPress={() => {
                             navigate('DashboardScreen', {groupId:item.item.id, memberId:item.item.member_id})
                         }}>
-                        <View style={{ marginStart: 30, marginEnd: 30, backgroundColor: '#919cda', alignItems: 'center', justifyContent: 'center', borderWidth: 1, borderColor: "#2A367D", borderRadius: 10 , marginTop: 20, shadowOpacity:.5, shadowRadius:1}}>
-                            <Text style={{color: 'white', fontWeight: 'bold', fontSize: 24, marginTop: 10}}>  {item.item.name}  </Text>
-                            <Text style={{color: 'white', fontWeight: 'bold', fontSize: 14, marginBottom: 10}}>  Members:  {item.item.members}  </Text>
+                         <View style={{ 
+                             backgroundColor:  'rgba(255,255,255,.5)',marginTop:30,
+                              alignItems: 'center', justifyContent: 'center', shadowOpacity:.5, shadowRadius:1}}> 
+                            <Text style={{color: '#2A367D', fontWeight: 'bold', fontSize: 24, 
+                            marginTop: 10}}>  {item.item.name}  </Text>
+                            <Text style={{color: '#34495E', fontWeight: 'bold', fontSize: 15, marginBottom: 10}}>  Members:  {item.item.members}  </Text>
                         </View>
                         </TouchableOpacity>
+                        </ImageBackground>
                     )}
                 />
             </View>

@@ -18,7 +18,7 @@ export const getApiCallWithPromise = (url,token) => {
                  })
                  .catch(error => {
                     resolve(error);
-                 Alert.alert('Error');
+                 Alert.alert('Error '+error.response.data);
                  })          
             })
     }
@@ -37,7 +37,7 @@ export const getApiCallWithPromise = (url,token) => {
                      })
                      .catch(error => {
                         resolve(error);
-                     Alert.alert(error.response.data);
+                     Alert.alert(''+error.response.data);
                      })          
                 })
         }

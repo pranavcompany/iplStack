@@ -8,7 +8,7 @@ export default class Headers extends Component {
     return (
       <Header style={{ backgroundColor: '#2A367D', height: 64 }}>
         <Left>
-          <Button transparent onPress={this.props.onOpen}>
+          <Button transparent  onPress={this.props.onOpen}>
             <Icon
               name="bars"
               style={{ color: "white" }}

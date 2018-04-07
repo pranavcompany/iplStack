@@ -18,6 +18,8 @@ export default class DrawerBar extends Component {
         }}
         content={
           <SideBar
+            Name= {this.props.Name}
+            Email= {this.props.Email}
             navigation={this.props.navigation}
           />
         }

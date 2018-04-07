@@ -2,12 +2,12 @@ import React, { Component } from "react";
 import { Image, ImageBackground, View, Text } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 
-export const DrawerHeader = () => {
+export const DrawerHeader = (props) => {
   return (
     <View style={styles.topVIew}>
       <Icon name="user-circle" color="white" size={60} style={styles.image} />
-      <Text style={styles.nameText}>Pranav Manikpure</Text>
-      <Text style={styles.nameText}>Pune</Text>
+      <Text style={styles.nameText}>{props.Email}</Text>
+      <Text style={styles.nameText}>{props.Name}</Text>
     </View>
   );
 };
