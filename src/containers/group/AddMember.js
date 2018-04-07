@@ -6,7 +6,7 @@
  */
 
 import React, { Component  } from 'react';
-import { View, Image, TouchableWithoutFeedback, Keyboard, AsyncStorage, TextInput, FlatList, TouchableOpacity } from 'react-native';
+import { View, Image, TouchableWithoutFeedback, Keyboard, AsyncStorage,Alert, TextInput, FlatList, TouchableOpacity } from 'react-native';
 import {
   Container,
   Content,
@@ -31,22 +31,27 @@ export default class AddMember extends Component {
 
   state = { 
     count:[],
-    members:[],
-    token:''
+    names:[],
+    emailIds:[],
+    token:'',
+    userId:''
+    
   };
 
   componentDidMount(){
     const { params } = this.props.navigation.state;
     const num = Number(params.memberCount)
 
-    const array = 'Abhishek'
     const member = []
     for(var int = 1; int <= num ; int++){
-        member.push(array)
+        member.push(int)
     }
     this.setState({ count: member})
     AsyncStorage.getItem("token").then((value2) => {
         this.setState({token:value2});
+      }).done();
+      AsyncStorage.getItem("userId").then((value2) => {
+        this.setState({userId:value2});
       }).done();
   }
 
@@ -68,8 +73,7 @@ export default class AddMember extends Component {
                 <TouchableOpacity style={{
                     flex: .1, margin: 10,backgroundColor: '#2A367D', justifyContent: 'center',
                     alignItems: 'center', borderRadius: 10
-                }} onPress={() => {
-                    {this._createGroup()}
+                }} onPress={() => { this._createGroup()
                 }}>
               <Text style={{color: 'white'}}> S U B M I T  </Text>
             </TouchableOpacity>
@@ -83,7 +87,7 @@ export default class AddMember extends Component {
             <FlatList
             style={{flex:.9}}
             data = {this.state.count}
-            renderItem={({item, index}) =>
+            renderItem={({item}) =>
                 <View style ={{flexDirection:'row',flex: 1}}>
                 <View style={{
                     flex:10,
@@ -93,101 +97,157 @@ export default class AddMember extends Component {
                     <TextInput
                         placeholder={"Member Name"}
                         underlineColorAndroid="transparent"
-                        onChangeText={name => this._addMemberName(index, name, null)}
+                        onEndEditing={(name) => this._addMemberName(item, name.nativeEvent.text)}
                         style={{ marginTop: 10, fontSize: 15, padding: 5, width: "90%" ,borderBottomWidth:1,borderBottomColor:'gray'}}
                     />
                     <TextInput
                         placeholder={"Member email Id"}
                         keyboardType={"email-address"}
                         underlineColorAndroid="transparent"
-                        onChangeText={email => this._addMemberName(index, null, email)}
+                        onEndEditing={(email) => this._addMemberEmailId(item, email.nativeEvent.text)}
                         style={{marginBottom: 10, fontSize: 15, padding: 5, width: "90%", borderBottomWidth:1,borderBottomColor:'gray' }}
                     />
                 </View>
                 </View>
-           }
+            }
             />
         )  
    }
    
-    _addMemberName = (index, name, email) => {
-        if (this.state.members.length > 0) {
-            var detailsArray = this.state.members
-            this.state.members.map((currentDetails, index) => {
-                if (currentDetails.id === detailsArray.id) {
-                    var selected_email = email == null ? currentDetails.email : email
+    _addMemberName = (index, name) => {
+        if (this.state.names.length > 0) {
+            var detailsArray = this.state.names
+            this.state.names.map((currentDetails, indexes) => {
+                if (currentDetails.id === index) {
                     var selected_name = name == null ? currentDetails.name : name
                     var selected = {
                         "id": index,
                         "name": selected_name,
-                        "email": selected_email
                     }
-                    detailsArray[index] = selected
+                    detailsArray[indexes] = selected
                 } else {
-                    var selected_email = email == null ? currentDetails.email : email
-                    var selected_name = name == null ? currentDetails.name : name
                     var selected = {
                         "id": index,
-                        "name": selected_name,
-                        "email": selected_email
+                        "name": name,
                     }
                     detailsArray.push(selected)
                 }
             })
             this.setState({
-                members: detailsArray
+                names: detailsArray
             })
         } else {
             var detailsArray = []
             var selected = {
                 "id": index,
                 "name": name,
+            }
+            detailsArray.push(selected)
+            this.setState({ names: detailsArray })
+        }
+    }
+
+    _addMemberEmailId = (index, email) => {
+        if (this.state.emailIds.length > 0) {
+            var detailsArray = this.state.emailIds
+            this.state.emailIds.map((currentDetails, indexes) => {
+                if (currentDetails.id === index) {
+                    var selected_email = email == null ? currentDetails.email : email
+                    var selected = {
+                        "id": index,
+                        "email": selected_email
+                    }
+                    detailsArray[indexes] = selected
+                } else {
+                        var selected = {
+                            "id": index,
+                            "email": email,
+                        }
+                        detailsArray.push(selected)
+                    }
+            })
+            this.setState({
+                emailIds: detailsArray
+            })
+        } else {
+            var detailsArray = []
+            var selected = {
+                "id": index,
                 "email": email
             }
             detailsArray.push(selected)
-            this.setState({ members: detailsArray })
+            this.setState({ emailIds: detailsArray })
         }
+    }
+
+    _validateData(){
+        if (this.state.names.length > 0){
+            var isValidate = true
+            var errorMsg = ""
+            this.state.names.map((nameDetails, index) => {
+                if ( validator.isEmpty(nameDetails.name)) {
+                  isValidate = false
+                  Alert.alert("Please enter email")
+                  return (isValidate)
+                } 
+            })
+        }     
+        if (this.state.emailIds.length > 0){
+            var isValidate = true
+            var errorMsg = ""
+            this.state.emailIds.map((emailDetails, index) => {
+                 if (validator.isEmpty(emailDetails.email)) {
+                  isValidate = false
+                  Alert.alert( "Please enter email")
+                  return (isValidate)
+                } else if (validator.isEmail(emailDetails.email) === false) {
+                    isValidate = false
+                    Alert.alert("Please enter valid emailId")
+                    return (isValidate)
+                 }
+            })
+        }
+        if  (this.state.emailIds.length == 0 ||this.state.names.length == 0 ){
+            isValidate = false
+            Alert.alert("Please enter valid emailId or name")
+            return (isValidate)
+        }
+        return (true)
     }
 
     _createGroup() {
         const { params } = this.props.navigation.state;
-        if (this.state.members.length > 0){
-            this.state.members.map((currentDetails, index) => {
-                var isValidate = true
-                var errorMsg = ""
-                if ( validator.isEmpty(currentDetails.name)) {
-                  isValidate = false
-                  Alert.alert("Please enter email")
-                  return
-                } else if (validator.isEmpty(currentDetails.email)) {
-                  isValidate = false
-                  Alert.alert( "Please enter email")
-                  return
-                } else if (validator.isEmail(currentDetails.email) === false) {
-                    isValidate = false
-                    Alert.alert("Please enter valid emailId")
-                    return
-                 }
-            })
-        }
+        const { replace } = this.props.navigation;
 
-        if (isValidate) {
+
+        if (this._validateData()) {
+            var detailsArray = []
+            this.state.names.map((nameDetails)=> {
+                this.state.emailIds.map((emailDetails)=> {
+                    if (nameDetails.id == emailDetails.id) {
+                        var selected = {
+                            "name": nameDetails.name,
+                            "email":  emailDetails.email
+                        }
+                        detailsArray.push(selected)    
+                    }
+                }
+            )}
+            )}
             const body = {
                 "name": params.groupName,
-                "members": this.state.members,
+                "members": detailsArray,
             }
             this.setState({ isLoading: true })
             postApiCallWithPromise(Url.createGroup, body, this.state.token)
                 .then(response => {
                     this.setState({ isLoading: false })
-                    navigate('GroupListScreen')
-                })
+                    replace('GroupListScreen',{token:this.state.token, userId: this.state.userId})                })
                 .catch(function (error) {
                     this.setState({ isLoading: false })
                     reject(error);
                 });
         }
-    }
 }
 
 const styles = {
