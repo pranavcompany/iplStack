@@ -220,22 +220,21 @@ export default class AddMember extends Component {
     _createGroup() {
         const { params } = this.props.navigation.state;
         const { replace } = this.props.navigation;
-
-
         if (this._validateData()) {
             var detailsArray = []
-            this.state.names.map((nameDetails)=> {
-                this.state.emailIds.map((emailDetails)=> {
+            this.state.names.map((nameDetails) => {
+                this.state.emailIds.map((emailDetails) => {
                     if (nameDetails.id == emailDetails.id) {
                         var selected = {
                             "name": nameDetails.name,
-                            "email":  emailDetails.email
+                            "email": emailDetails.email
                         }
-                        detailsArray.push(selected)    
+                        detailsArray.push(selected)
                     }
                 }
-            )}
-            )}
+                )
+            }
+            )
             const body = {
                 "name": params.groupName,
                 "members": detailsArray,
@@ -244,12 +243,14 @@ export default class AddMember extends Component {
             postApiCallWithPromise(Url.createGroup, body, this.state.token)
                 .then(response => {
                     this.setState({ isLoading: false })
-                    replace('GroupListScreen',{token:this.state.token, userId: this.state.userId})                })
+                    replace('GroupListScreen', { token: this.state.token, userId: this.state.userId })
+                })
                 .catch(function (error) {
                     this.setState({ isLoading: false })
                     reject(error);
                 });
         }
+    }
 }
 
 const styles = {
