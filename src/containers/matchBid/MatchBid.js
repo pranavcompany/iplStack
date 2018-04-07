@@ -27,6 +27,7 @@ class MatchBid extends Component{
         isLoading: false,
         token:"",
         memberId:"",
+        groupId:'',
     }
 
     componentDidMount(){
@@ -36,6 +37,10 @@ class MatchBid extends Component{
           AsyncStorage.getItem("memberId").then((value2) => {
             this.setState({memberId:value2});
             this._getTodayMatchDetails()
+          }).done();
+
+          AsyncStorage.getItem("groupId").then((value2) => {
+            this.setState({groupId:value2});
           }).done();
     }
 
@@ -133,7 +138,9 @@ class MatchBid extends Component{
  
   
     _getTodayMatchDetails(){
-        getApiCallWithPromise(Url.todayUrl, this.state.token)
+
+        const url = '?group_id='
+        getApiCallWithPromise(Url.todayUrl+url+this.state.groupId, this.state.token)
         .then(response => {
           this.setState({ isLoading: false, 
                         itemDataSource: response.data })
