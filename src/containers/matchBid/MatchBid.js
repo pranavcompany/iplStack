@@ -61,7 +61,7 @@ class MatchBid extends Component{
                                     <View
                                         style={styles.rowView}>
                                         <TouchableOpacity
-                                            style={[styles.touchable, item.item.bids[0].bid_team == "" ? { borderColor: 'transparent' } : item.item.bids[0].bid_team == item.item.abb1 ? { borderColor: 'white' } : { borderColor: 'transparent' }]}
+                                            style={[styles.touchable, item.item.bids.length > 0 ?  item.item.bids[0].bid_team == "" ? { borderColor: 'transparent' } : item.item.bids[0].bid_team == item.item.abb1 ? { borderColor: 'white' } : { borderColor: 'transparent' }: { borderColor: 'transparent' }]}
                                             onPress={() => { this._createQuoteDetails(item.item, item.item.abb1, null) }}>
                                             <Image
                                                 style={styles.iconView}
@@ -69,7 +69,7 @@ class MatchBid extends Component{
                                         </TouchableOpacity>
                                         <H2>Vs</H2>
                                         <TouchableOpacity
-                                            style={[styles.touchable, item.item.bids[0].bid_team == "" ? { borderColor: 'transparent' } : item.item.bids[0].bid_team == item.item.abb2 ? { borderColor: 'white' } : { borderColor: 'transparent' }]}
+                                            style={[styles.touchable, item.item.bids.length > 0 ? item.item.bids[0].bid_team == "" ? { borderColor: 'transparent' } : item.item.bids[0].bid_team == item.item.abb2 ? { borderColor: 'white' } : { borderColor: 'transparent' }: { borderColor: 'transparent' }]}
                                             onPress={() => { this._createQuoteDetails(item.item, item.item.abb2, null) }}>
                                             <Image
                                                 style={styles.iconView}
@@ -86,7 +86,7 @@ class MatchBid extends Component{
                                             placeholder={'Enter Quote'}
                                             placeholderTextColor={'#000'}
                                             underlineColorAndroid={'transparent'}
-                                            value={item.item.bids[0].bid_point}
+                                            value={item.item.bids.length > 0 ? item.item.bids[0].bid_point : "" }
                                             onChangeText={(quote) => { this._createQuoteDetails(item.item, null, quote) }}
                                         />
                                         <TouchableOpacity style={{ marginStart: 30, backgroundColor: '#E7E7E7', borderWidth: 1, borderRadius: 10 }}
