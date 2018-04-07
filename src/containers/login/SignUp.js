@@ -150,9 +150,15 @@ export default class SignUp extends Component {
      } else if (validator.isEmpty(this.state.password)) {
       isValidate = false
       Alert.alert( "Please enter password")
+    }else if (this.state.password.length < 6) {
+      isValidate = false
+      Alert.alert( "Passwords must be at least 6 characters")
     } else if (validator.isEmpty(this.state.conformPassword)) {
       isValidate = false
       Alert.alert( "Please enter conform conformPassword")
+    }else if (this.state.conformPassword.length < 6 ) {
+      isValidate = false
+      Alert.alert( "Passwords must be at least 6 characters")
     } else if (!validator.equals(this.state.conformPassword, this.state.password)) {
       isValidate = false
       Alert.alert( "Please enter conform conformPassword")

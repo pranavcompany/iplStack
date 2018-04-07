@@ -123,7 +123,13 @@ export default class ChangePassword extends Component {
     } else if (this.state.newPassword != this.state.conformPassword) {
       isValidate = false
       Alert.alert("New password and Conform password must be same")
-    }
+    } else if (this.state.conformPassword.length < 6) {
+      isValidate = false
+      Alert.alert("Passwords must be at least 8 characters")
+    } else if (this.state.newPassword.length < 6) {
+      isValidate = false
+      Alert.alert("Passwords must be at least 8 characters")
+    } 
     if (isValidate) {
       const body = {
         "old_password": this.state.oldPassword,
