@@ -57,6 +57,8 @@ export default class Schedule extends Component {
                   style={styles.textView}>Match - {item.item.id}</Text>
                     <Text
                   style={styles.dateTextView}> {item.item.date}  {item.item.time} </Text>
+                  <Text
+                  style={styles.textView}>{item.item.venue}</Text>
               </View>
               <View
                 style={styles.rowView}>
@@ -140,7 +142,7 @@ const styles = {
     },
   rowView: {
     alignItems: 'center',
-    marginBottom:10,
+    marginBottom:5,
     flexDirection: 'row',
     justifyContent: 'space-around'
   },
