@@ -58,10 +58,10 @@ class MatchWisePoint extends Component {
                           <Text style={{ margin:10,  fontSize: 16, width: 175 }}>{item.item.user.name}</Text>
                           </View>
                           <View style={{  width: '20%', alignItems : 'center'}}>                        
-                          <Text style={{  margin:10, fontSize: 16 }}> {item.item.bid_team}</Text>
+                          <Text style={{  margin:10, fontSize: 16 }}> {item.item.bid_team ? item.item.bid_team : "No Quote"}</Text>
                           </View>
                           <View style={{  width: '20%', alignItems : 'center'}}>                        
-                          <Text style={{  margin:10, fontSize: 16 }}> {item.item.bid_point}</Text>
+                          <Text style={{  margin:10, fontSize: 16 }}> {item.item.bid_point ? item.item.bid_point : "-"+item.item.bid_point}</Text>
                           </View>
                         </View>
                     )}
