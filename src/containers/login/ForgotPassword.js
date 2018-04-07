@@ -87,7 +87,7 @@ constructor(props) {
     goBack()
   }
   _loginButtonPress = () => {
-    const { navigate } = this.props.navigation;
+    const { replace } = this.props.navigation;
     var isValidate = true
     var errorMsg = ""
     if ( validator.isEmpty(this.state.email)) {
@@ -105,7 +105,14 @@ if (isValidate) {
   postApiCallWithPromise(Url.forgot, body)
     .then(response => {
       this.setState({ isLoading: false })
-      navigate('LoginScreen')
+      Alert.alert(
+        "Success",
+      "  New Password send to your mail !",
+        [
+          { text: "OK", onPress: () => replace('LoginScreen')}
+        ],
+        { cancelable: false }
+      )
     })
     .catch(function(error) {
       this.setState({ isLoading: false })

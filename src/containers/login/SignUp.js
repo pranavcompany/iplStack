@@ -169,7 +169,15 @@ if (isValidate) {
   postApiCallWithPromise(Url.userRegisterUrl, body)
     .then(response => {
       this.setState({ isLoading: false })
-       replace('LoginScreen')
+      Alert.alert(
+        "Success",
+        "Register successful !",
+        [
+          { text: "OK", onPress: () => replace('LoginScreen')}
+        ],
+        { cancelable: false }
+      )
+  
     })
     .catch(function(error) {
       this.setState({ isLoading: false })

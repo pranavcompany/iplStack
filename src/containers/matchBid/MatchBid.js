@@ -84,24 +84,39 @@ class MatchBid extends Component{
                                 </View>
                                 <View style={[styles.rowView,
                                 { justifyContent: 'space-evenly', borderBottom: '#ffffff' }]}>
-                                  
-                                    <TextInput
+
+                                  {
+                                        (item.bids && item.bids.length > 0) ? 
+                                     <TextInput
                                         style={styles.inputText}
                                         keyboardType={'numeric'}
                                         maxLength={4}
                                         placeholder={'Enter Quote'}
                                         placeholderTextColor={'#000'}
                                         underlineColorAndroid={'transparent'}
-                                        value={item.bids.length > 0 ? item.bids[0].bid_point : "" }
+                                        value={(item.bids && item.bids.length) ? item.bids[0].bid_point : ""}
                                         onChangeText={(quote) => { this._createQuoteDetails(item, quote) }}
-                                    />
-                                    <TouchableOpacity style={{ marginStart: 30, backgroundColor: '#E7E7E7', borderWidth: 1, borderRadius: 10 }}
-                                        onPress={() => { this._letsQuote(item) }}
-                                    >
-                                        <Text
-                                            style={{ color: 'black', fontWeight: 'bold', fontSize: 18, padding: 10 }}>
-                                            Quote </Text>
-                                    </TouchableOpacity>
+                                    /> :
+                                        <TextInput
+                                        style={styles.inputText}
+                                        keyboardType={'numeric'}
+                                        maxLength={4}
+                                        placeholder={'Enter Quote'}
+                                        placeholderTextColor={'#000'}
+                                        underlineColorAndroid={'transparent'}
+                                        onChangeText={(quote) => { this._createQuoteDetails(item, quote) }}
+                                    /> 
+                                  }
+                                        {(item.bids && item.bids.length) ? null :
+                                            <TouchableOpacity style={{ marginStart: 30, backgroundColor: '#E7E7E7', borderWidth: 1, borderRadius: 10 }}
+                                                onPress={() => { this._letsQuote(item) }}
+                                            >
+                                                <Text
+                                                    style={{ color: 'black', fontWeight: 'bold', fontSize: 18, padding: 10 }}>
+                                                    Quote </Text>
+                                            </TouchableOpacity>
+                                        }
+                                   
                                 </View>
                             </ImageBackground>
                             )
@@ -130,6 +145,21 @@ class MatchBid extends Component{
           reject(error);
         });
     }
+
+    _enterQuotesValue(item){
+        this.state.manageQuote.map((currentDetails, index) => {
+            if (item.id === currentDetails.match_id) {
+                quoteDetails = currentDetails
+                return quoteDetails.bid_point
+            }
+        })
+        if (item.bids && item.bids.length){
+          return  item.bids[0].bid_point
+        } 
+        return ""
+    }
+
+
     _matchIconWithServerName(name){
         switch (name) {
           case 'MI':
