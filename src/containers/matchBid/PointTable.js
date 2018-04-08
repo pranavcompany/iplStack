@@ -72,9 +72,9 @@ export default class PointTable extends Component {
                     renderItem={item => (
                         <View style={{flexDirection: 'row',  borderBottomWidth:1}}>
                         <View style={{  width: '70%'}}>
-                          <Text style={{ margin:10,  fontSize: 16, width: 175 }}>{item.item.user.name} </Text>
+                          <Text style={{ margin:10,  fontSize: 16, width: 175, color:'#ff8533'  }}>{item.item.user.name} </Text>
                           </View>
-                          <View style={{  width: '30%', alignItems : 'center'}}>                        
+                          <View style={{  width: '30%', alignItems : 'center',  color:'#ff8533'}}>                        
                           <Text style={{  margin:10, fontSize: 16 }}> {item.item.total_point}</Text>
                           </View>
                         </View>

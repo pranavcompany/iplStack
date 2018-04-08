@@ -221,6 +221,7 @@ export default class AddMember extends Component {
         const { params } = this.props.navigation.state;
         const { replace } = this.props.navigation;
         if (this._validateData()) {
+            this.setState({ isLoading: true })
             var detailsArray = []
             this.state.names.map((nameDetails) => {
                 this.state.emailIds.map((emailDetails) => {
@@ -239,11 +240,22 @@ export default class AddMember extends Component {
                 "name": params.groupName,
                 "members": detailsArray,
             }
-            this.setState({ isLoading: true })
             postApiCallWithPromise(Url.createGroup, body, this.state.token)
                 .then(response => {
                     this.setState({ isLoading: false })
-                    replace('GroupListScreen', { token: this.state.token, userId: this.state.userId })
+                    if (response.status == 200){
+                        Alert.alert(
+                            "Success",
+                            "Group Created Successfully !",
+                            [
+                              { text: "OK", onPress: () =>  replace('GroupListScreen', { token: this.state.token, userId: this.state.userId })
+                            }
+                            ],
+                            { cancelable: false }
+                          )
+                    }else {
+                        alert(response.data);
+                    }
                 })
                 .catch(function (error) {
                     this.setState({ isLoading: false })

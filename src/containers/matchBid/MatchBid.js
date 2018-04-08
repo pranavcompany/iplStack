@@ -293,8 +293,12 @@ class MatchBid extends Component{
         this.setState({ isLoading: true })
       postApiCallWithPromise(Url.letsBid, body, this.state.token)
         .then(response => {
-          this.setState({ isLoading: false })
-          alert("Quote placed successfully!!")
+            if (response.status == 200) {
+                this.setState({ isLoading: false })
+                alert("Quote added successfully!!")
+            }else {
+                alert("Quote not added. Try again")
+            }
         })
         .catch(function(error) {
           this.setState({ isLoading: false })

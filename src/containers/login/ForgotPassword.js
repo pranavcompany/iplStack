@@ -105,14 +105,16 @@ if (isValidate) {
   postApiCallWithPromise(Url.forgot, body)
     .then(response => {
       this.setState({ isLoading: false })
-      Alert.alert(
-        "Success",
-      "  New Password send to your mail !",
-        [
-          { text: "OK", onPress: () => replace('LoginScreen')}
-        ],
-        { cancelable: false }
-      )
+      if (response.status == 200){
+        Alert.alert(
+          "Success",
+        "  New Password send to your mail !",
+          [
+            { text: "OK", onPress: () => replace('LoginScreen')}
+          ],
+          { cancelable: false }
+        )        
+      }
     })
     .catch(function(error) {
       this.setState({ isLoading: false })

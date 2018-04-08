@@ -129,7 +129,7 @@ if (isValidate) {
     .then(response => {
 
       this.setState({ isLoading: false })
-      if (response.status = 200) {
+      if (response.status == 200) {
         replace('GroupListScreen', {
           token: response.data.token, userId: response.data.user_id,
           email: response.data.email, name: response.data.name
