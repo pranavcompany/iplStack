@@ -56,9 +56,8 @@ export default class Schedule extends Component {
                 <Text
                   style={styles.textView}>Match - {item.item.id}</Text>
                     <Text
-                  style={styles.dateTextView}> {item.item.date}  {item.item.time} </Text>
-                  <Text
-                  style={styles.textView}>{item.item.venue}</Text>
+                  style={styles.dateTextView}> {item.item.date}  {item.item.time} ({item.item.venue})</Text>
+            
               </View>
               <View
                 style={styles.rowView}>
@@ -73,7 +72,7 @@ export default class Schedule extends Component {
             
               {item.item.winner_statement ?  <View style={{ flexDirection: 'column' }}>
               <Text
-                style={styles.textView}>Winner - {item.item.winner_statement}</Text>
+                style={styles.textView}>{item.item.winner_statement}</Text>
             </View>: null }
            </ImageBackground>
           )}
@@ -151,12 +150,12 @@ const styles = {
     color: '#fff',
     textAlign: 'center',
     fontWeight: '500',
-    margin: 10
+    marginBottom:10 
   },
   iconView: {
     resizeMode: 'contain',
-    height: 100,
-    width: 120
+    height: 80,
+    width: 100
   },
   secondChildView: {
     flex: .8,
@@ -176,6 +175,6 @@ const styles = {
     fontSize:18,
     color:'#ffffff',
     textAlign:'center',
-    fontWeight:'500', 
+    fontWeight:'400', 
 }
 }

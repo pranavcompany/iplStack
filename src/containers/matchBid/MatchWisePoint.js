@@ -97,6 +97,8 @@ class MatchWisePoint extends Component {
                                 style={styles.iconView}
                                 source={this._matchIconWithServerName(item.item.abb2)} />
                         </View>
+                        <Text
+                style={[styles.textView, { fontSize:18, margin:5, color:'white'}]}>{item.item.winner_statement}</Text>
                     </ImageBackground>
                     {this._renderFlatList(item.item.bids)}
                     </View>

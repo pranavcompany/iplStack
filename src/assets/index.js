@@ -4,9 +4,9 @@ const Assets = {
     DD : require('./DD.png'),
     CSK : require('./CSK.png'),
     KXIP : require('./KXIP.png'),
-    KKR : require('./KKR.jpg'),
+    KKR : require('./KK_R.jpg'),
     RCB : require('./RCB.png'),
-    SRH : require('./SRH.jpg'),
+    SRH : require('./SR_H.jpg'),
     RR : require('./RR.png'),
     TBD : require('./TBD.png'),
 }

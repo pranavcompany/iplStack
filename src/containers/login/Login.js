@@ -24,16 +24,19 @@ import {postApiCallWithPromise} from "../../utils/PromiseApiCall"
 import {Url} from '../../utils/constant/Url'
 import validator from 'validator';
 import Spinner from '../../universal/components/Spinner'
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
+import {setToken } from '../../action'
 
 
 let ViewSpinner = Spinner(View);
-export default class Login extends Component {
+class Login extends Component {
 //atul@e-arth.in, atul123
   constructor(props) {
     super(props);
     this.state = {
-      username: 'Swati@yahoo.co.in',
-      password: '123456',
+      username: '',
+      password: '',
       isLoading: false
     };
   }
@@ -130,6 +133,7 @@ if (isValidate) {
 
       this.setState({ isLoading: false })
       if (response.status == 200) {
+        this.props.setToken( response.data.token)
         replace('GroupListScreen', {
           token: response.data.token, userId: response.data.user_id,
           email: response.data.email, name: response.data.name
@@ -162,3 +166,17 @@ const styles = {
     marginBottom: 5,
   },
 }
+
+function mapStateToProps(state) {
+  return {
+    
+  }
+}
+
+const  mapDispatchToProps = (dispatch) => {
+  return {
+    setToken:setToken 
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login)

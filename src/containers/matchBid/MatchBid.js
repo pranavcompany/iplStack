@@ -16,6 +16,8 @@ import {getApiCallWithPromise, postApiCallWithPromise} from "../../utils/Promise
 import {Url} from '../../utils/constant/Url';
 import Spinner from '../../universal/components/Spinner';
 import Assets from '../../assets'
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 let ViewSpinner = Spinner(View);
@@ -31,11 +33,10 @@ class MatchBid extends Component{
     }
 
     componentDidMount(){
-        AsyncStorage.getItem("token").then((value2) => {
-            this.setState({token:value2});
-          }).done();
+       
           AsyncStorage.getItem("memberId").then((value2) => {
             this.setState({memberId:value2});
+          
           }).done();
 
           AsyncStorage.getItem("groupId").then((value2) => {
@@ -140,7 +141,7 @@ class MatchBid extends Component{
     _getTodayMatchDetails(){
         
         const url = '?group_id='
-        getApiCallWithPromise(Url.todayUrl+url+this.props.groupId, this.state.token)
+        getApiCallWithPromise(Url.todayUrl+url+this.props.groupId, this.props.token)
         .then(response => {
           this.setState({ isLoading: false, 
                         itemDataSource: response.data })
@@ -291,7 +292,7 @@ class MatchBid extends Component{
             "bid_point": quoteDetails.bid_point
         }
         this.setState({ isLoading: true })
-      postApiCallWithPromise(Url.letsBid, body, this.state.token)
+      postApiCallWithPromise(Url.letsBid, body, this.props.token)
         .then(response => {
             if (response.status == 200) {
                 this.setState({ isLoading: false })
@@ -360,4 +361,16 @@ const styles = {
         backgroundColor:'#fff'
     }
 }
-export default MatchBid;
+function mapStateToProps(state) {
+    return {
+      token: state.storeData.text
+    }
+  }
+  
+  function mapDispatchToProps(dispatch) {
+    return {
+     // setToken:setToken 
+    }
+  }
+  
+  export default connect(mapStateToProps, mapDispatchToProps)(MatchBid)
