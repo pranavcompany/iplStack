@@ -13,6 +13,7 @@ export const Url = {
     createGroup: baseURL + 'groups',
     reset: baseURL + 'password/reset', 
     forgot: baseURL + 'password/forgot', 
+    addMember: baseURL + 'group/', 
 }
 
 

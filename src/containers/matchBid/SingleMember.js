@@ -107,16 +107,16 @@ export default class SingleMember extends Component {
         "email": this.state.emailId,
       }
       this.setState({ isLoading: true })
-
-      postApiCallWithPromise(Url.reset, body, this.state.token)
+      const finalURL  = Url.addMember + this.props.groupId +"/member/add"
+      postApiCallWithPromise(finalURL, body, this.props.token)
         .then(response => {
           this.setState({ isLoading: false })
-          if (response.status = 200) {
+          if (response.status == 200) {
             Alert.alert(
               "Success",
               "Member Added successfully!",
               [
-                { text: "OK", onPress: {} }
+                { text: "OK" }
               ],
               { cancelable: false }
             )
