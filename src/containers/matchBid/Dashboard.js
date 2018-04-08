@@ -5,8 +5,8 @@ import Schedule from "./Schedule";
 import GenericHeader from '../../universal/components/GenericHeader';
 import MatchBid from './MatchBid'
 import PointTable from './PointTable'
-// import Icon from 'react-native-vector-icons/FontAwesome';
 import MatchWisePoint from './MatchWisePoint'
+import SingleMember from './SingleMember'
 
 
 class Dashboard extends Component {
@@ -42,6 +42,7 @@ class Dashboard extends Component {
       <Tab heading={this.header({ iconName})}>
         <Comp 
           groupId = {params.groupId} 
+          token = {param.token}
         />
       </Tab>
     );
@@ -63,12 +64,13 @@ class Dashboard extends Component {
             backgroundColor: "#2A367D"
           }}
           onChangeTab={(index) => this.setState({
-            headerTitle: index.i == 0 ? "Today's Matches" : index.i == 1 ?  "Point Table" : index.i == 2 ? "Matchwise Quotes" :  index.i == 3 ? "Schedule" : "Home"
+            headerTitle: index.i == 0 ? "Today's Matches" : index.i == 1 ?  "Points Table" : index.i == 2 ? "Matchwise Quotes" :  index.i == 3 ? "Schedule" : index.i == 4 ? "Add Member" : "Home"
         })}>
           {this.tabView("bell-ring", MatchBid)}
           {this.tabView("chart-bar", PointTable)}
           {this.tabView("table", MatchWisePoint)}
           {this.tabView("format-list-bulleted", Schedule)}
+          {this.tabView("plus", SingleMember)}
         </Tabs>
         </View>
     );

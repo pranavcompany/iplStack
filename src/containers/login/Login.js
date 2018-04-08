@@ -35,8 +35,8 @@ class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: '',
-      password: '',
+      username: 'Swati@yahoo.co.in',
+      password: 'Swati123',
       isLoading: false
     };
   }
@@ -133,7 +133,7 @@ if (isValidate) {
 
       this.setState({ isLoading: false })
       if (response.status == 200) {
-        this.props.setToken( response.data.token)
+        // this.props.setToken( response.data.token)
         replace('GroupListScreen', {
           token: response.data.token, userId: response.data.user_id,
           email: response.data.email, name: response.data.name
@@ -167,16 +167,16 @@ const styles = {
   },
 }
 
-function mapStateToProps(state) {
-  return {
+// function mapStateToProps(state) {
+//   return {
     
-  }
-}
+//   }
+// }
 
-const  mapDispatchToProps = (dispatch) => {
-  return {
-    setToken:setToken 
-  }
-}
+// const  mapDispatchToProps = (dispatch) => {
+//   return {
+//     setToken:setToken 
+//   }
+// }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Login)
+export default Login

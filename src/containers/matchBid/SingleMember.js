@@ -17,24 +17,22 @@ import {
   Label,
   Button,
   Text,
-  Toast
 } from 'native-base';
 import Assets from "../../assets/index";
 import {postApiCallWithPromise} from "../../utils/PromiseApiCall"
 import {Url} from '../../utils/constant/Url'
 import validator from 'validator';
 import Spinner from '../../universal/components/Spinner'
-import GenericHeader from '../../universal/components/GenericHeader'
+
 
 let ViewSpinner = Spinner(View);
-export default class ChangePassword extends Component {
+export default class SingleMember extends Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      oldPassword: '',
-      newPassword: '',
-      conformPassword: '',
+      name: '',
+      emailId: '',
       isLoading: false,
       token:''
     };
@@ -47,7 +45,6 @@ export default class ChangePassword extends Component {
 }
 
   render() {
-    const { navigate } = this.props.navigation;
     return (
       <ViewSpinner
           style={{ flex: 1,
@@ -59,42 +56,29 @@ export default class ChangePassword extends Component {
         Keyboard.dismiss();
       }} >
       <Container style = {{backgroundColor:'white'}}>
-      <GenericHeader
-      navigation={this.props.navigation}
-      headerTitle={'Change Password'} />
         <View style = {{margin : 10, padding:10}}>
           <Form>
             <Item floatingLabel >
-              <Label>Old Password</Label>
+              <Label>Name</Label>
               <Input
-                secureTextEntry={true}
               autoCapitalize = {'none'}
-                onChangeText={(oldPassword) => this.setState({ oldPassword })}
+                onChangeText={(name) => this.setState({ name })}
               />
             </Item>
             <Item floatingLabel last>
-              <Label>New Password</Label>
+              <Label>Email Id</Label>
               <Input 
-              secureTextEntry={true}
               autoCapitalize = {'none'}
-               onChangeText={(newPassword) => this.setState({ newPassword })}
+               onChangeText={(emailId) => this.setState({ emailId })}
               />
             </Item>
-            <Item floatingLabel last>
-            <Label>Conform Password</Label>
-            <Input 
-            secureTextEntry={true}
-            autoCapitalize = {'none'}
-             onChangeText={(conformPassword) => this.setState({ conformPassword })}
-            />
-          </Item>
           </Form>
         </View>
         <View style= {{marginTop:20,
         alignItems: 'center',  marginStart: 'auto', marginEnd: 'auto'}}>
           <Button style= {{justifyContent:'center', borderRadius:10,
            backgroundColor: '#2A367D'}} onPress={() => this._loginButtonPress()}>
-            <Text> Submit </Text>
+            <Text> Add </Text>
           </Button>
         </View>
       </Container>
@@ -103,38 +87,24 @@ export default class ChangePassword extends Component {
     );
   }
 
-  _backButtonPress = () => {
-    const { goBack } = this.props.navigation;
-    goBack()
-  }
 
   _loginButtonPress = () => {
-    const { goBack } = this.props.navigation;
     var isValidate = true
     var errorMsg = ""
-    if (validator.isEmpty(this.state.oldPassword)) {
+    if (validator.isEmpty(this.state.name)) {
       isValidate = false
-      Alert.alert("Please enter old passsword")
-    } else if (validator.isEmpty(this.state.newPassword)) {
+      Alert.alert("Please enter member name")
+    } else if (validator.isEmpty(this.state.emailId)) {
       isValidate = false
-      Alert.alert("Please enter new password")
-    } else if (validator.isEmpty(this.state.conformPassword)) {
-      isValidate = false
-      Alert.alert("Please enter conform Password")
-    } else if (this.state.newPassword != this.state.conformPassword) {
-      isValidate = false
-      Alert.alert("New password and Conform password must be same")
-    } else if (this.state.conformPassword.length < 6) {
-      isValidate = false
-      Alert.alert("Passwords must be at least 8 characters")
-    } else if (this.state.newPassword.length < 6) {
-      isValidate = false
-      Alert.alert("Passwords must be at least 8 characters")
-    } 
+      Alert.alert("Please enter email Id")
+    } else if (validator.isEmail(this.state.emailId) == false) {
+        isValidate = false
+        Alert.alert("Please enter valid email Id")
+      } 
     if (isValidate) {
       const body = {
-        "old_password": this.state.oldPassword,
-        "new_password": this.state.conformPassword,
+        "name": this.state.name,
+        "email": this.state.emailId,
       }
       this.setState({ isLoading: true })
 
@@ -144,9 +114,9 @@ export default class ChangePassword extends Component {
           if (response.status = 200) {
             Alert.alert(
               "Success",
-              "Password changed successfully!",
+              "Member Added successfully!",
               [
-                { text: "OK", onPress: () => goBack()}
+                { text: "OK", onPress: {} }
               ],
               { cancelable: false }
             )

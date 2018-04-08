@@ -6,7 +6,7 @@
  */
 
 import React, { Component  } from 'react';
-import { View, Image, TouchableWithoutFeedback, Keyboard, TextInput, FlatList, AsyncStorage, TouchableOpacity } from 'react-native';
+import { View, Image, TouchableWithoutFeedback, Keyboard, TextInput, FlatList, AsyncStorage, TouchableOpacity, ScrollView } from 'react-native';
 import {
   Text, Row,
 } from 'native-base';
@@ -19,19 +19,12 @@ export default class PointTable extends Component {
     state = {
         itemDataSource: [ ],
         isLoading: false,
-        token:'',
         groupName:'',
         groupId:''
     };
 
     componentDidMount(){
-        AsyncStorage.getItem("token").then((value2) => {
-            this.setState({token:value2});
-          }).done();
-          AsyncStorage.getItem("groupId").then((value2) => {
-            this.setState({groupId:value2});
-            this._getPointTableDetails()
-          }).done();
+      this._getPointTableDetails()
     }
 
     render() {
@@ -45,7 +38,7 @@ export default class PointTable extends Component {
             <TouchableWithoutFeedback onPress={() => {
                 Keyboard.dismiss();
             }} >
-                <View style={{ flex: 1, backgroundColor: 'white' }}>
+                <ScrollView style={{ flex: 1, backgroundColor: 'white' }}>
                     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
                         <Text style={{ fontWeight: 'bold', color:'#2A367D', fontSize: 26 }}>{this.state.groupName}</Text>
                     </View>
@@ -58,7 +51,7 @@ export default class PointTable extends Component {
                         </View>
                     </View>
                 {this._renderFlatList()}
-                </View>
+                </ScrollView>
             </TouchableWithoutFeedback>
             </ViewSpinner>
         );
@@ -72,9 +65,9 @@ export default class PointTable extends Component {
                     renderItem={item => (
                         <View style={{flexDirection: 'row',  borderBottomWidth:1}}>
                         <View style={{  width: '70%'}}>
-                          <Text style={{ margin:10,  fontSize: 16, width: 175, color:'#ff8533'  }}>{item.item.user.name} </Text>
+                          <Text style={{ margin:10,  fontSize: 16, width: 175, }}>{item.item.user.name} </Text>
                           </View>
-                          <View style={{  width: '30%', alignItems : 'center',  color:'#ff8533'}}>                        
+                          <View style={{  width: '30%', alignItems : 'center'}}>                        
                           <Text style={{  margin:10, fontSize: 16 }}> {item.item.total_point}</Text>
                           </View>
                         </View>
@@ -85,8 +78,8 @@ export default class PointTable extends Component {
     }
 
     _getPointTableDetails(){
-        const mergeURL = Url.userGroupsMembersUrl + this.state.groupId + '/members'
-        getApiCallWithPromise(mergeURL,this.state.token)
+        const mergeURL = Url.userGroupsMembersUrl + this.props.groupId + '/members'
+        getApiCallWithPromise(mergeURL,this.props.token)
         .then(response => {
           this.setState({ isLoading: false, 
                         itemDataSource: response.data.members,

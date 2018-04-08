@@ -260,19 +260,19 @@ class MatchBid extends Component{
             }
         })
         if (quoteDetails.bid_point == null || quoteDetails.bid_point.length == 0) {
-          isValidate = false
           Alert.alert("Please enter quote")
-        } else if (quoteDetails.bid_point < matchDetails.min_bid || quoteDetails.bid_point >= matchDetails.max_bid) {
-            isValidate = false
-            Alert.alert("Please enter quote between "+ matchDetails.min_bid+ "to"+ matchDetails.max_bid+"")
+          return isValidate = false
+        } else if (!(quoteDetails.bid_point >= matchDetails.min_bid && quoteDetails.bid_point <= matchDetails.max_bid)) {
+            Alert.alert("Please enter quote between "+ matchDetails.min_bid + " to " +  matchDetails.max_bid+"")
+            return isValidate = false
         }
 
         this.state.itemDataSource.map((currentDetails, index) => {
             if (matchDetails.id === currentDetails.id) {
                 details = currentDetails
                 if (details.team1.selected == false && details.team2.selected == false) {
-                    isValidate = false
                     Alert.alert("Please select teams")
+                    return isValidate = false
                   }else {
                       if (details.team1.selected) {
                           selectedTeam = details.team1.abb
@@ -296,7 +296,19 @@ class MatchBid extends Component{
         .then(response => {
             if (response.status == 200) {
                 this.setState({ isLoading: false })
-                alert("Quote added successfully!!")
+                Alert.alert(
+                    "Success",
+                    "Quote added successfully!!",
+                    [
+                      { text: "OK", onPress: () =>          
+                       AsyncStorage.getItem("groupId").then((value2) => {
+                        this.setState({groupId:value2});
+                        this._getTodayMatchDetails()
+                      }).done()}
+                    ],
+                    { cancelable: false }
+                  )
+
             }else {
                 alert("Quote not added. Try again")
             }
@@ -361,16 +373,16 @@ const styles = {
         backgroundColor:'#fff'
     }
 }
-function mapStateToProps(state) {
-    return {
-      token: state.storeData.text
-    }
-  }
+// function mapStateToProps(state) {
+//     return {
+//       token: state.storeData.text
+//     }
+//   }
   
-  function mapDispatchToProps(dispatch) {
-    return {
-     // setToken:setToken 
-    }
-  }
+//   function mapDispatchToProps(dispatch) {
+//     return {
+//      // setToken:setToken 
+//     }
+//   }
   
-  export default connect(mapStateToProps, mapDispatchToProps)(MatchBid)
+  export default MatchBid

@@ -22,19 +22,11 @@ class MatchWisePoint extends Component {
         itemDataSourceForBids: [],
         itemDataSourceForMatch: [],
         isLoading: false,
-        token:'',
         groupId:''
     };
 
     componentDidMount(){
-        AsyncStorage.getItem("groupId").then((value2) => {
-            this.setState({groupId:value2});
-            this._getMatchWiseDetails()
-          }).done();
-        AsyncStorage.getItem("token").then((value2) => {
-            this.setState({token:value2});
-          }).done();
-          
+      this._getMatchWiseDetails()          
     }
 
     render() {
@@ -109,8 +101,8 @@ class MatchWisePoint extends Component {
 
 
 _getMatchWiseDetails(){
-    const mergeURL = Url.matchWisePoint +  this.state.groupId
-    getApiCallWithPromise(mergeURL, this.state.token)
+    const mergeURL = Url.matchWisePoint +  this.props.groupId
+    getApiCallWithPromise(mergeURL, this.props.token)
     .then(response => {
         this.setState({ isLoading: false, 
         itemDataSourceForMatch: response.data })

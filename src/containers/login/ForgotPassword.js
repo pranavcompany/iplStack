@@ -69,12 +69,14 @@ constructor(props) {
             </Item>
           </Form>
         </View>
-        <View style= {{marginTop:10,flexDirection : 'row', alignItems: 'center',  
-        marginStart: 'auto', marginEnd: 'auto'}}>
-          <Button style= {{justifyContent:'center', backgroundColor: '#2A367D', borderRadius:10}} onPress={() => this._loginButtonPress()}>
+        <View style= {{marginTop:10,flexDirection : 'row', alignItems: 'center',  marginStart: 'auto', marginEnd: 'auto'}}>
+          <Button style= {{justifyContent:'center',
+          borderRadius:10, marginEnd: 35, backgroundColor: '#2A367D'}} onPress={() => this._loginButtonPress()}>
             <Text> Submit </Text>
           </Button>
-          
+          <Button style= {{justifyContent:'center',borderRadius:10, marginStart: 35,backgroundColor: '#2A367D'}} onPress={() => {this._backButtonPress()}} >
+            <Text> Back  </Text>
+          </Button>
         </View>
       </Container>
       </TouchableWithoutFeedback>

@@ -20,7 +20,7 @@ const AppNavigation = StackNavigator({
   DashboardScreen:{screen: Dashboard},
   ChangePasswordScreen:{screen: ChangePassword},
   RuleScreen:{screen: Rule},
-  ForgotPasswordScreen: {screen: ForgotPassword}
+  ForgotPasswordScreen: {screen: ForgotPassword},
 }, {
     // see next line
     mode: "none",

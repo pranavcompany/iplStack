@@ -29,7 +29,7 @@ export default class GroupList extends Component {
 
     componentDidMount(){
         const {params}= this.props.navigation.state
-        {this._getAllGroup(params.token)}
+        this._getAllGroup(params.token)
         this.saveKey(params.token,params.userId)
     }
 
@@ -70,7 +70,6 @@ export default class GroupList extends Component {
     }
 
     _renderFlatList() {
-        console.log("#$#$#"+ AsyncStorage.getItem('userId'))
         const { navigate } = this.props.navigation;
         return (
             <View style={{ flex: 6 , marginTop:20}}>
@@ -83,11 +82,10 @@ export default class GroupList extends Component {
                             backgroundColor: '#ffffff', shadowOpacity: .5,
                             shadowRadius: 10, margin: 10, padding: 5, height:120,
                              borderRadius:10, justifyContent:'flex-end'
-                
                         }}>
                         <TouchableOpacity 
                         onPress={() => {
-                            navigate('DashboardScreen', {groupId:item.item.id, memberId:item.item.member_id})
+                            navigate('DashboardScreen', {groupId:item.item.id, memberId:item.item.member_id, token: this.state.token})
                         }}>
                          <View style={{ 
                              backgroundColor:  'rgba(255,255,255,.5)',marginTop:30,
