@@ -23,12 +23,16 @@ let ViewSpinner = Spinner(View);
 
 export default class GroupList extends Component {
     state = {
-        itemDataSource: []
+        itemDataSource: [],
+        token:""
     };
 
 
     componentDidMount(){
         const {params}= this.props.navigation.state
+        this.setState({
+            token: params.token  
+        })
         this._getAllGroup(params.token)
         this.saveKey(params.token,params.userId)
     }

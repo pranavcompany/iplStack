@@ -42,7 +42,7 @@ class Dashboard extends Component {
       <Tab heading={this.header({ iconName})}>
         <Comp 
           groupId = {params.groupId} 
-          token = {param.token}
+          token = {params.token}
         />
       </Tab>
     );
