@@ -64,6 +64,12 @@ export default class AddMember extends Component {
         const { navigate } = this.props.navigation;
         const { params } = this.props.navigation.state;
         return (
+            <ViewSpinner
+            style={{ flex: 1,
+              backgroundColor: 'white',
+              justifyContent: 'center'}}
+            isLoading={this.state.isLoading}
+          >
             <TouchableWithoutFeedback onPress={() => {
                 Keyboard.dismiss();
             }} >
@@ -83,6 +89,7 @@ export default class AddMember extends Component {
             </TouchableOpacity>
                 </View>
             </TouchableWithoutFeedback>
+            </ViewSpinner>
         );
     }
 

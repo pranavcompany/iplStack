@@ -36,7 +36,6 @@ class MatchBid extends Component{
        
           AsyncStorage.getItem("memberId").then((value2) => {
             this.setState({memberId:value2});
-          
           }).done();
 
           AsyncStorage.getItem("groupId").then((value2) => {
@@ -287,7 +286,7 @@ class MatchBid extends Component{
     if (isValidate) {
         const body = {
             "match_id": quoteDetails.match_id,
-            "member_id": this.state.memberId,
+            "member_id": this.props.memberId,
             "bid_team": selectedTeam,
             "bid_point": quoteDetails.bid_point
         }
