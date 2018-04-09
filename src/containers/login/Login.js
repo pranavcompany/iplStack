@@ -67,9 +67,9 @@ class Login extends Component {
           source={Assets.iPLLogo}
         />
         </View>
-        <View style = {{margin : 10, padding:10}}>
+        <View style = {{margin : 10, padding:5}}>
           <Form>
-            <Item floatingLabel >
+            <Item stackedLabel >
               <Label>Email Id</Label>
               <Input
               autoCapitalize = {'none'}
@@ -78,7 +78,7 @@ class Login extends Component {
                 onChangeText={(username) => this.setState({ username })}
               />
             </Item>
-            <Item floatingLabel last>
+            <Item stackedLabel >
               <Label>Password</Label>
               <Input 
               value={this.state.password}

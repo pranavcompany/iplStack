@@ -58,14 +58,15 @@ export default class SingleMember extends Component {
       <Container style = {{backgroundColor:'white'}}>
         <View style = {{margin : 10, padding:10}}>
           <Form>
-            <Item floatingLabel >
+            <Item stackedLabel >
               <Label>Name</Label>
               <Input
               autoCapitalize = {'none'}
+              keyboardType = {'email-address'}
                 onChangeText={(name) => this.setState({ name })}
               />
             </Item>
-            <Item floatingLabel last>
+            <Item stackedLabel >
               <Label>Email Id</Label>
               <Input 
               autoCapitalize = {'none'}

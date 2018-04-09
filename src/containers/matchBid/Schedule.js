@@ -72,7 +72,7 @@ export default class Schedule extends Component {
             
               {item.item.winner_statement ?  <View style={{ flexDirection: 'column' }}>
               <Text
-                style={styles.textView}>{item.item.winner_statement}</Text>
+              style={[styles.textView,{color:'#000'}]}>{item.item.winner_statement}</Text>
             </View>: null }
            </ImageBackground>
           )}

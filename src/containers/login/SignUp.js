@@ -59,9 +59,7 @@ export default class SignUp extends Component {
       scrollEnabled={true}
     >
 
-      <TouchableWithoutFeedback onPress={() => {
-        Keyboard.dismiss();
-      }} >
+     
       <Container style = {{backgroundColor:'white'}}>
         <View  style = {{ marginTop: 10, flexDirection : 'row',justifyContent:'center'}}>
         <Image
@@ -71,13 +69,13 @@ export default class SignUp extends Component {
         </View>
         <View style = {{margin : 5, padding:10}}>
           <Form>
-            <Item floatingLabel >
+            <Item stackedLabel >
               <Label>Name</Label>
               <Input
                 onChangeText={(name) => this.setState({ name })}
               />
             </Item>
-            <Item floatingLabel last>
+            <Item stackedLabel >
               <Label>Email</Label>
               <Input 
               autoCapitalize = {'none'}
@@ -85,7 +83,7 @@ export default class SignUp extends Component {
                 onChangeText={(email) => this.setState({ email })}
               />
             </Item>
-            <Item floatingLabel last>
+            <Item stackedLabel >
               <Label>Phone Number</Label>
               <Input 
               keyboardType = {'numeric'}
@@ -93,14 +91,14 @@ export default class SignUp extends Component {
                 onChangeText={(phone) => this.setState({ phone })}
               />
             </Item>
-            <Item floatingLabel last>
+            <Item stackedLabel >
               <Label>Password</Label>
               <Input secureTextEntry={true}
               autoCapitalize = {'none'}
                 onChangeText={(password) => this.setState({ password })}
               />
             </Item>
-            <Item floatingLabel last>
+            <Item stackedLabel >
               <Label>Confirm Password</Label>
               <Input secureTextEntry={true}
               autoCapitalize = {'none'}
@@ -118,7 +116,7 @@ export default class SignUp extends Component {
         </Button>
         </View>
       </Container>
-      </TouchableWithoutFeedback>
+  
       </KeyboardAwareScrollView>
       </ViewSpinner>
     );

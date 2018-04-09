@@ -70,7 +70,7 @@ class Dashboard extends Component {
           {this.tabView("chart-bar", PointTable)}
           {this.tabView("table", MatchWisePoint)}
           {this.tabView("format-list-bulleted", Schedule)}
-          {this.tabView("plus", SingleMember)}
+          {this.tabView("account-plus", SingleMember)}
         </Tabs>
         </View>
     );
