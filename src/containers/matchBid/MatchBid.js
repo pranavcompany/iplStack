@@ -309,6 +309,7 @@ class MatchBid extends Component{
                   )
 
             }else {
+                this.setState({ isLoading: false })
                 alert("Quote not added. Try again")
             }
         })

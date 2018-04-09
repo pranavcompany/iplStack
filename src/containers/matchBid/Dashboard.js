@@ -43,6 +43,7 @@ class Dashboard extends Component {
         <Comp 
           groupId = {params.groupId} 
           token = {params.token}
+          memberId= {params.memberId}
         />
       </Tab>
     );

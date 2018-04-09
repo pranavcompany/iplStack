@@ -58,7 +58,7 @@ A->400, B->600, C-> -300 and D-> -200 .
                        </Text>
 
                     <Text style={{ marginTop: 5,marginEnd:5,  fontSize: 17, width: '100%' }}>
-                    5. If a person doesn't quote for a match by the deadline of 3 PM then a penalty of 500 points will be deducted from his total.
+                    5. If a person doesn't quote for a match by the deadline of 3 PM then a penalty of 300 points will be deducted from his total.
                  </Text>
 
                     <Text style={{  marginTop: 5,marginEnd:5, fontSize: 17, width: '100%' }}>
@@ -67,7 +67,7 @@ A->400, B->600, C-> -300 and D-> -200 .
 
                     <Text style={{ marginTop: 5,marginEnd:5, fontSize: 17, width: '100%' }}>
                         7. If the points are not quoted before deadline, it will be treated as
-                         "Not Played" & a penalty of -500 points for each match will be imposed.
+                         "Not Played" & a penalty of -300 points for each match will be imposed.
                 </Text>
 
                     <Text style={{marginTop: 5,marginEnd:5, fontSize: 17, width: '100%' }}>

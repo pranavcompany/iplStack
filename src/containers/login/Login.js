@@ -35,10 +35,10 @@ class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: '',
-      password: '',
+      username: 'swati@yahoo.co.in',
+      password: 'Swati123',
       isLoading: false
-    };
+    }
   }
   componentDidMount () {
     SplashScreen.close({
