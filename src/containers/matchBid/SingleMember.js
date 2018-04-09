@@ -113,6 +113,8 @@ export default class SingleMember extends Component {
         .then(response => {
           this.setState({ isLoading: false })
           if (response.status == 200) {
+            this.state.name  = ""
+            this.state.emailId = ""
             Alert.alert(
               "Success",
               "Member Added successfully!",
