@@ -27,6 +27,8 @@ import {Url} from '../../utils/constant/Url'
 import validator from 'validator';
 import Spinner from '../../universal/components/Spinner'
 
+let ViewSpinner = Spinner(View);
+
 export default class AddMember extends Component {
 
   state = { 
