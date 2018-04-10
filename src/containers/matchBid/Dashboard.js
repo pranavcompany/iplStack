@@ -54,6 +54,7 @@ class Dashboard extends Component {
   }
 
   render() {
+    const {params}= this.props.navigation.state
     return (
       <View style ={{flex:1}}>
       <GenericHeader
@@ -71,7 +72,7 @@ class Dashboard extends Component {
           {this.tabView("chart-bar", PointTable)}
           {this.tabView("table", MatchWisePoint)}
           {this.tabView("format-list-bulleted", Schedule)}
-          {this.tabView("account-plus", SingleMember)}
+          {params.userId == params.createBy ?  this.tabView("account-plus", SingleMember) : null }
         </Tabs>
         </View>
     );

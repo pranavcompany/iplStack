@@ -74,6 +74,7 @@ export default class GroupList extends Component {
     }
 
     _renderFlatList() {
+        const { params } = this.props.navigation.state
         const { navigate } = this.props.navigation;
         return (
             <View style={{ flex: 6 , marginTop:20}}>
@@ -89,7 +90,7 @@ export default class GroupList extends Component {
                         }}>
                         <TouchableOpacity 
                         onPress={() => {
-                            navigate('DashboardScreen', {groupId:item.item.id, memberId:item.item.member_id, token: this.state.token})
+                            navigate('DashboardScreen', {groupId:item.item.id, memberId:item.item.member_id, token: this.state.token, createBy: item.item.created_by, userId: params.userId})
                         }}>
                          <View style={{ 
                              backgroundColor:  'rgba(255,255,255,.5)',marginTop:30,
