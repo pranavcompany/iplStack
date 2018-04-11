@@ -6,7 +6,7 @@
  */
 
 import React, { Component  } from 'react';
-import { View, Image, TouchableWithoutFeedback, Keyboard ,TouchableOpacity, Alert, PermissionsAndroid } from 'react-native';
+import { View, Image, TouchableWithoutFeedback, Keyboard ,TouchableOpacity, Alert, PermissionsAndroid, AsyncStorage} from 'react-native';
 import SplashScreen from 'react-native-smart-splash-screen'
 import {
   Container,
@@ -37,16 +37,59 @@ class Login extends Component {
     this.state = {
       username: '',
       password: '',
-      isLoading: false
+      isLoading: false,
+      token: ''
     }
   }
-  componentDidMount () {
+  componentDidMount() {
     SplashScreen.close({
-       animationType: SplashScreen.animationType.scale,
-       duration: 850,
-       delay: 500,
+      animationType: SplashScreen.animationType.scale,
+      duration: 850,
+      delay: 500,
     })
-}
+  }
+
+
+  componentWillMount(){
+    const { replace } = this.props.navigation;
+    AsyncStorage.getItem("email").then((value) => {
+      this.setState({ "email": value });
+    })
+      .then(res => {
+        //do something else
+      });
+
+    AsyncStorage.getItem("userId").then((value) => {
+      this.setState({ "userId": value });
+    })
+      .then(res => {
+        //do something else
+      });
+
+    AsyncStorage.getItem("token").then((value) => {
+      this.setState({ "token": value });
+    })
+      .then(res => {
+        //do something else
+      });
+
+    AsyncStorage.getItem("name").then((value) => {
+      this.setState({ "name": value });
+    })
+      .then(res => {
+        var token = this.state.token
+        var userId = this.state.userId
+        var email = this.state.email
+        var name = this.state.name
+        if (token != null && userId != null && email != null && name != null) {
+          replace('GroupListScreen', {
+            token: token, userId: userId,
+            email: email, name: name
+          })
+        }
+      });
+    
+  }
 
   render() {
     const { navigate } = this.props.navigation;
@@ -130,7 +173,6 @@ if (isValidate) {
     this.setState({ isLoading: true })
   postApiCallWithPromise(Url.userLoginUrl, body)
     .then(response => {
-
       this.setState({ isLoading: false })
       if (response.status == 200) {
         // this.props.setToken( response.data.token)

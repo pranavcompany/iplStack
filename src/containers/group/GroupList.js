@@ -34,13 +34,15 @@ export default class GroupList extends Component {
             token: params.token  
         })
         this._getAllGroup(params.token)
-        this.saveKey(params.token,params.userId)
+        this.saveKey(params.token,params.userId, params.email, params.name)
     }
 
-    async saveKey(token,userId ) {
+    async saveKey(token, userId, email, name) {
         try {
           await AsyncStorage.setItem('token', token);
           await AsyncStorage.setItem('userId', userId.toString());
+          await AsyncStorage.setItem('email', email);
+          await AsyncStorage.setItem('name', name);
         } catch (error) {
           console.log("Error saving data" + error);
         }

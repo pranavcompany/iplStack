@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, Text, Image, Alert, Dimensions } from "react-native";
+import { View, Text, Image, Alert, Dimensions, AsyncStorage } from "react-native";
 import { DrawerHeader } from "./DrawerHeader";
 import { Card } from "./SideBarCard";
 const { width, height } = Dimensions.get("window");
@@ -39,6 +39,7 @@ class SideBar extends Component {
   }
   _logoutAndClearStore() {
     const { replace } = this.props.navigation;
+    AsyncStorage.clear();
      replace("LoginScreen");
   }
 }
